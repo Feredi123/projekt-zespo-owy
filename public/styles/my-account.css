@@ -1,0 +1,9 @@
+my-account{
+    background-color: rgb(227, 227, 227); 
+    flex:1; 
+    margin:5px; 
+    border-radius: 20px; 
+    margin-top: 20px;
+    min-width: auto;
+    max-height: auto;
+}

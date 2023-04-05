@@ -1,0 +1,64 @@
+.user-bar{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 160px;
+    min-width: 100ch;
+    align-items: center;
+  }
+  
+.user-bar-logo{
+    height: 50%;
+  }
+  
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+  }
+
+.dropdown name-surname{ 
+    padding: 40px;
+    color: rgb(0,120,185);
+    font-size: 25px;
+    background-color: transparent;
+    border-color: transparent;
+  }
+  
+  .dropdown name-surname:hover {
+    color: rgba(0,120,185,0.6);
+    cursor:pointer;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+    top: 100%;
+    background-color: rgb(227, 227, 227); 
+    left: -40px; 
+    border-radius:25px;
+  }
+
+
+  .dropdown-content button{
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: rgba(0,120,185,0.6);
+    border-radius: 5px;
+    z-index: 2;
+    transition: background-color 15ms;
+    margin: 5px;
+    width:95%;
+  }
+
+    
+  .dropdown-content button:hover {
+    background-color: rgba(0,120,185,0.3);
+    border-radius: 5px;
+  }
+
+  .dropdown:hover .dropdown-content {display: block;}

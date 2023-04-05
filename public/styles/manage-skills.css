@@ -1,0 +1,85 @@
+manage-skills{
+    background-color: rgb(227, 227, 227); 
+    flex:1; 
+    margin:5px; 
+    border-radius: 20px; 
+    margin-top: 20px;
+    min-width: auto;
+    max-height: auto;
+}
+
+.manage-skills{
+    margin:5px; 
+    border-radius: 20px; 
+    margin-top: 20px; 
+    overflow:auto;
+    display:flex;
+    min-height:97%;
+
+}
+
+.manage-skills content{
+    display:flex;
+    flex-direction: column;
+    flex:1;
+    background-color: white;
+    min-height:100%;
+    margin: 5px;
+    flex-direction: column;
+    border-radius: 20px;
+    padding:15px;
+}
+
+.manage-skills label {
+    padding-top:50px;
+    font-size: auto;
+    
+
+}
+
+.manage-skills select {
+    font-size: auto;
+    height:100px;
+    margin:5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding: 10px;
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+    color: #555;
+    background-color: rgb(255, 255, 255);
+    background-image: none;
+    border: 1px solid rgb(41, 18, 18);
+}
+
+.manage-skills option{
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+    color: #555;
+    background-color: rgb(247, 247, 247);
+    background-image: none;
+    font-size: 18px;
+    height: 50px;
+    padding: 15px;
+    border: 1px solid rgb(41, 18, 18);
+}
+
+.manage-skills label-input{
+    display:flex;
+}
+
+.manage-skills label{
+    font-size:30px;
+    align-self:right;
+    margin:0px;
+}
+
+.manage-skills input{
+    height: 30px;
+    align-self:center;
+}
+
+.manage-skills button{
+    max-height:60px
+}

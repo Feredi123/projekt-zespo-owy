@@ -1,0 +1,47 @@
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    max-width: 210px;
+    background: rgb(0,120,185);
+    background: linear-gradient(0deg, rgba(0,120,185,1) 73%, rgba(0,212,255,1) 115%);
+    max-height: auto;
+    border-radius: 20px;
+  }
+  
+  .side-bar logo{
+    width: 100%;
+  }
+  
+  .side-bar button{ 
+    padding: 30px 30px;
+    color: white; 
+    font-size: 20px;
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 8px;
+    cursor:pointer;
+    transition: background-color 15ms;
+    align-self:center;
+    width:100%;
+  }
+  
+  .side-bar button:hover { 
+    background-color:  rgb(131, 197, 232);
+    
+  }
+  
+  .side-bar button:active { 
+    background-color:  rgba(131, 197, 232, 0.6);
+  }
+  
+  .side-bar button-active {
+    padding: 30px 30px;
+    color: white; 
+    font-size: 20px;
+    background-color:rgba(131, 197, 232, 0.6);
+    border-radius: 8px;
+    border-color:transparent;
+    align-self:center;
+    transition: background-color 15ms;
+    width:72%; 
+  }
