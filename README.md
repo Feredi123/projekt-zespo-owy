@@ -1,4 +1,4 @@
-zainstalowany node i xampp
+zainstalować trzeba node i xampp
 w folderze database jest SQL tworzący bazę danych i wypełnia ją 12 pracownikami
 
 otworzyć konsolę w głównym folderze projektu i
