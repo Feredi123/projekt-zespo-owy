@@ -2,10 +2,12 @@
     display: flex;
     flex-direction: column;
     position:sticky;
+    min-height: 100vh;
     max-width: 210px;
     background: rgb(0,120,185);
     background: linear-gradient(0deg, rgba(0,120,185,1) 73%, rgba(0,212,255,1) 115%);
     max-height: auto;
+    box-shadow: 3px 0 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   }
   
   .side-bar logo{
@@ -22,7 +24,7 @@
     transition: background-color 15ms;
     align-self:center;
     width:100%;
-    transition:0.2s;
+    text-align:left;
   }
   
   .side-bar button:hover { 
