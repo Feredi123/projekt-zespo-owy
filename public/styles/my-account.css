@@ -1,9 +1,83 @@
 my-account{
     background-color: rgb(227, 227, 227); 
-    flex:1; 
-    margin:5px; 
+    flex:1;  
     border-radius: 20px; 
     margin-top: 20px;
-    min-width: auto;
-    max-height: auto;
+    display: flex;
+    align-items:top;
+    margin: 5px;
+    
+}
+
+my-account user-info{
+    display:flex; 
+    flex-direction: column; 
+    flex:1; 
+    border-width:5px; 
+    border-color:white;
+    max-width:400px;
+    padding-top:50px;
+}
+
+user-info text{
+    align-self:center;
+    font-size:30px;
+    width: 100%;
+    text-align:center;
+    margin-top:15px;
+}
+
+user-info button{
+    align-self:center;
+    font-size: 30px;
+    background-color: rgb(0,120,185);
+    color:white;
+    border:none;
+    border-radius:15px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+user-info button:hover{
+
+    background-color:  rgb(131, 197, 232);
+}
+
+      
+user-info button:active { 
+    background-color:  rgba(131, 197, 232, 0.6);
+}
+
+user-info absence-button{
+    align-self:center;
+    font-size: 30px;
+    background-color: red;
+    color:white;
+    border:none;
+    border-radius:15px;
+    width: 90%;
+    margin-top: 20px;
+    text-align:center;
+}
+
+user-info absence-button:hover{
+
+    background-color:  rgb(232, 131, 131);
+}
+
+      
+user-info absence-button:active{ 
+    background-color:  rgba(232, 131, 131, 0.6);
+}
+
+user-info img{
+    display:flex; 
+    width:100%;  
+    align-self:center; 
+    padding: 10%; 
+    margin-top:10%;
+}
+
+my-account list-of-skills{
+    display:flex;
 }
