@@ -10,6 +10,9 @@
   
   .side-bar logo{
     width: 100%;
+    border-radius:50%;
+    border-color:black;
+    border-width: 5px;
   }
   
   .side-bar button{ 

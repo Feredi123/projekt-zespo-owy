@@ -21,14 +21,14 @@ const app = Vue.createApp({
   methods: {
     addCondition() {
       this.conditions.push(this.newCondition);
-      this.newCondition = '';
+      this.newCondition = "";
     },
     removeCondition(index) {
-      this.conditions.splice(index,1);
+      this.conditions.splice(index, 1);
     },
-    saveEmployeeData(employeeData){
-      this.employeesData=Object.assign({}, employeeData);
-    }
+    saveEmployeeData(employeeData) {
+      this.employeesData = Object.assign({}, employeeData);
+    },
   },
 });
 

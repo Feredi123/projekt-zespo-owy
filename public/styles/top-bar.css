@@ -9,6 +9,9 @@
   
 .user-bar-logo{
     height: 50%;
+    border-radius:50%;
+    border-color:black;
+    border-width: 5px;
   }
   
 .dropdown {

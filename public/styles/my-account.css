@@ -17,6 +17,7 @@ my-account user-info{
     border-color:white;
     max-width:400px;
     padding-top:50px;
+    margin-left:10px;
 }
 
 user-info text{
@@ -80,4 +81,11 @@ user-info img{
 
 my-account list-of-skills{
     display:flex;
+}
+
+list-of-skills p{
+    font-size:40px; 
+}
+list-of-skills skill{
+    font-size:30px;
 }
