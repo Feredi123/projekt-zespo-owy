@@ -2,151 +2,260 @@
 
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PPG </title>
+    <title>PPG</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/side-bar.css">
-    <link rel="stylesheet" href="styles/workspace.css">
-    <link rel="stylesheet" href="styles/top-bar.css">
-    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/side-bar.css" />
+    <link rel="stylesheet" href="styles/workspace.css" />
+    <link rel="stylesheet" href="styles/top-bar.css" />
+    <link rel="stylesheet" href="styles/table.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="workspace-table.js" defer></script>
   </head>
 
   <body>
     <main>
       <div class="side-bar">
-        <img class="logo" src="styles/logo.webp" alt="logo">
-        <button-active onclick="window.location.href='index.html';">&#9733; Dashboard</button-active>
-        <button onclick="window.location.href='manage-skills.html';">&#9733; Manage skills</button>
-        <button onclick="window.location.href='my-account.html';">&#9733; My account</button>
-        <button onclick="window.location.href='growth.html';">&#9733; Growth</button>
+        <img class="logo" src="styles/logo.webp" alt="logo" />
+        <button-active onclick="window.location.href='index.html';"
+          >&#9733; Dashboard</button-active
+        >
+        <button onclick="window.location.href='manage-skills.html';">
+          &#9733; Manage skills
+        </button>
+        <button onclick="window.location.href='my-account.html';">
+          &#9733; My account
+        </button>
+        <button onclick="window.location.href='growth.html';">
+          &#9733; Growth
+        </button>
       </div>
 
       <div class="workspace-body">
         <div class="user-bar">
-          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo">
-
+          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo" />
           <div class="dropdown">
             <name-surname> Name Surname ></name-surname>
             <div class="dropdown-content">
-              <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
-              <input type="text" placeholder="Login ID" class="login-info">
-              <input type="text" placeholder="password" class="login-info">
+              <img
+                class="user-bar-logo"
+                src="styles/logo.webp"
+                alt="logo"
+                style="border-radius: 50%; background-color: transparent"
+              />
+              <input type="text" placeholder="Login ID" class="login-info" />
+              <input type="text" placeholder="password" class="login-info" />
               <button>Login</button>
               <button>Forgot password</button>
             </div>
+          </div>
+        </div>
+
+        <div class="workspace">
+          <bar>
+            <div class="dropdown" id="workspace-table" id="result">
+              <button>> Person</button>
+              <div class="dropdown-content-workspace">
+                <button v-if="conditions.length===0">Add new condition</button>
+                <button
+                  v-else
+                  v-for="(condition, index) in conditions"
+                  v-on:click="removeCondition(index)"
+                  v-on:key="condition"
+                >
+                  {{condition }} - {{index }}
+                </button>
+                <input
+                  style="width: 100%"
+                  type="text"
+                  v-model="newCondition"
+                  v-on:keyup.enter="addCondition"
+                />
+              </div>
+            </div>
+
+            <div class="dropdown" id="workspace-table" id="result">
+              <button>> Skill</button>
+              <div class="dropdown-content-workspace">
+                <button v-if="conditions.length===0">Add new condition</button>
+                <button
+                  v-else
+                  v-for="(condition, index) in conditions"
+                  v-on:click="removeCondition(index)"
+                  v-on:key="condition"
+                >
+                  {{condition }} - {{index }}
+                </button>
+                <input
+                  style="width: 100%"
+                  type="text"
+                  v-model="newCondition"
+                  v-on:keyup.enter="addCondition"
+                />
+              </div>
+            </div>
+
+            <div class="dropdown" id="workspace-table" id="result">
+              <button>> Level</button>
+              <div class="dropdown-content-workspace">
+                <button v-if="conditions.length===0">Add new condition</button>
+                <button
+                  v-else
+                  v-for="(condition, index) in conditions"
+                  v-on:click="removeCondition(index)"
+                  v-on:key="condition"
+                >
+                  {{condition }} - {{index }}
+                </button>
+                <input
+                  style="width: 100%"
+                  type="text"
+                  v-model="newCondition"
+                  v-on:keyup.enter="addCondition"
+                />
+              </div>
+            </div>
+
+            <div class="dropdown" id="workspace-table" id="result">
+              <button>> Person</button>
+              <div class="dropdown-content-workspace">
+                <button v-if="conditions.length===0">Add new condition</button>
+                <button
+                  v-else
+                  v-for="(condition, index) in conditions"
+                  v-on:click="removeCondition(index)"
+                  v-on:key="condition"
+                >
+                  {{condition }} - {{index }}
+                </button>
+                <input
+                  style="width: 100%"
+                  type="text"
+                  v-model="newCondition"
+                  v-on:keyup.enter="addCondition"
+                />
+              </div>
+            </div>
+          </bar>
+
+          <div
+            style="
+              background-color: rgb(227, 227, 227);
+              flex: 1;
+              margin: 5px;
+              border-radius: 20px;
+              margin-top: 20px;
+              overflow: auto;
+            "
+            >
+            <!-- <p>{{employeesData.first_name}}</p> -->
+            <table id="result"></table>
+          </div>
         </div>
       </div>
-
-      
-    <div class="workspace">
-      <bar>
-        <div class="dropdown">
-          <button>> Person</button>
-          <div class="dropdown-content-workspace">
-            <workspace-button>&#128465;Name Surname</workspace-button>
-            <workspace-button>&#128465;Name Surname</workspace-button>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button>> Skill</button>
-          <div class="dropdown-content-workspace">
-            <workspace-button>&#128465;Name Surname</workspace-button>
-            <workspace-button>&#128465;Name Surname</workspace-button>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button>> Level</button>
-          <div class="dropdown-content-workspace">
-            <workspace-button>&#128465;Name Surname</workspace-button>
-            <workspace-button>&#128465;Name Surname</workspace-button>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button>> Process</button>
-          <div class="dropdown-content-workspace">
-            <workspace-button>&#128465;Name Surname</workspace-button>
-            <workspace-button>&#128465;Name Surname</workspace-button>
-          </div>
-        </div>
-      </bar>
-
-      <div style="background-color: rgb(227, 227, 227); flex:1; margin:5px; border-radius: 20px; margin-top: 20px; overflow:auto;">
-        <table id="result">
-
-        </table>
-
-      </div>
-    </div>
-
-
-    </div>
-  </main>
-  <script
+    </main>
+    <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
       crossorigin="anonymous"
     ></script>
-  <script>
-      const result = document.querySelector('#result')
+    <script>
+      const result = document.querySelector("#result");
 
-      const today = new Date()
-      const tomorrow = new Date(today)
-      const dayAfterTomorrow = new Date(today)
+      const today = new Date();
+      const tomorrow = new Date(today);
+      const dayAfterTomorrow = new Date(today);
 
-      tomorrow.setDate(tomorrow.getDate() +1)
-      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() +2)
-      
-      const tr = document.createElement("tr")
-      tr.append(document.createElement("td"))
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
-      var td = document.createElement("td")
-      td.textContent = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`
-      tr.append(td)
+      const tr = document.createElement("tr");
+      tr.append(document.createElement("td"));
 
-      td = document.createElement("td")
-      td.textContent = `${tomorrow.getDate()}/${tomorrow.getMonth()+1}/${tomorrow.getFullYear()}`
-      tr.append(td)
+      var td = document.createElement("td");
+      td.textContent = `${today.getDate()}/${
+        today.getMonth() + 1
+      }/${today.getFullYear()}`;
+      tr.append(td);
 
-      td = document.createElement("td")
-      td.textContent = `${dayAfterTomorrow.getDate()}/${dayAfterTomorrow.getMonth()+1}/${dayAfterTomorrow.getFullYear()}`
-      tr.append(td)
+      td = document.createElement("td");
+      td.textContent = `${tomorrow.getDate()}/${
+        tomorrow.getMonth() + 1
+      }/${tomorrow.getFullYear()}`;
+      tr.append(td);
 
-      result.append(tr)
+      td = document.createElement("td");
+      td.textContent = `${dayAfterTomorrow.getDate()}/${
+        dayAfterTomorrow.getMonth() + 1
+      }/${dayAfterTomorrow.getFullYear()}`;
+      tr.append(td);
+
+      result.append(tr);
 
       const fetchPeople = async () => {
         try {
-          const { data } = await axios.get('/dashboard')
-          //const data = [{"employee_id":1,"first_name":"Amdrzej","second_name":"Nowak","email":null,"phone":null,"password":null,"photo":null,"admin_rights":null,"manager_id":null},{"employee_id":2,"first_name":"Roger","second_name":"Duffy","email":null,"phone":null,"password":null,"photo":null,"admin_rights":null,"manager_id":null},{"employee_id":3,"first_name":"Leona","second_name":"Trujillo","email":null,"phone":null,"password":null,"photo":null,"admin_rights":null,"manager_id":null}]
-          
+          //const { data } = await axios.get('/dashboard')
+          const data = [
+            {
+              employee_id: 1,
+              first_name: "Amdrzej",
+              second_name: "Nowak",
+              email: null,
+              phone: null,
+              password: null,
+              photo: null,
+              admin_rights: null,
+              manager_id: null,
+            },
+            {
+              employee_id: 2,
+              first_name: "Roger",
+              second_name: "Duffy",
+              email: null,
+              phone: null,
+              password: null,
+              photo: null,
+              admin_rights: null,
+              manager_id: null,
+            },
+            {
+              employee_id: 3,
+              first_name: "Leona",
+              second_name: "Trujillo",
+              email: null,
+              phone: null,
+              password: null,
+              photo: null,
+              admin_rights: null,
+              manager_id: null,
+            },
+          ];
+
           data.forEach((element) => {
-            const tr = document.createElement("tr")
-            const td = document.createElement("td")
-            td.textContent = `${element.first_name} ${element.second_name}`
-            tr.appendChild(td)
-            tr.appendChild(document.createElement("td"))
-            tr.appendChild(document.createElement("td"))
-            tr.appendChild(document.createElement("td"))
-            result.append(tr)
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+            td.textContent = `${element.first_name} ${element.second_name}`;
+            tr.appendChild(td);
+            tr.appendChild(document.createElement("td"));
+            tr.appendChild(document.createElement("td"));
+            tr.appendChild(document.createElement("td"));
+            result.append(tr);
           });
-          
         } catch (error) {
-          result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`
+          result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`;
         }
-      }
-      fetchPeople()
-
-
-  </script>
+      };
+      fetchPeople();
+    </script>
   </body>
 </html>
-
