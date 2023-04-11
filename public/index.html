@@ -126,16 +126,25 @@
       const fetchPeople = async () => {
         try {
           const { data } = await axios.get('/dashboard')
-          //const data = [{"employee_id":1,"first_name":"Amdrzej","second_name":"Nowak","email":null,"phone":null,"password":null,"photo":null,"admin_rights":null,"manager_id":null},{"employee_id":2,"first_name":"Roger","second_name":"Duffy","email":null,"phone":null,"password":null,"photo":null,"admin_rights":null,"manager_id":null},{"employee_id":3,"first_name":"Leona","second_name":"Trujillo","email":null,"phone":null,"password":null,"photo":null,"admin_rights":null,"manager_id":null}]
           
           data.forEach((element) => {
             const tr = document.createElement("tr")
             const td = document.createElement("td")
             td.textContent = `${element.first_name} ${element.second_name}`
             tr.appendChild(td)
-            tr.appendChild(document.createElement("td"))
-            tr.appendChild(document.createElement("td"))
-            tr.appendChild(document.createElement("td"))
+
+            const td2 = document.createElement("td")
+            td2.textContent = element.is_absent_today ? 'Out of work' : '';
+
+            const td3 = document.createElement("td")
+            td3.textContent = element.is_absent_tomorrow ? 'Out of work' : '';
+
+            const td4 = document.createElement("td")
+            td4.textContent = element.is_absent_day_after_tomorow ? 'Out of work' : '';
+
+            tr.appendChild(td2)
+            tr.appendChild(td3)
+            tr.appendChild(td4)
             result.append(tr)
           });
           
