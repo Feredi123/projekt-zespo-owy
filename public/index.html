@@ -150,10 +150,8 @@
 
           <div
             style="
-              background-color: rgb(227, 227, 227);
               flex: 1;
-              margin: 5px;
-              border-radius: 20px;
+              margin: 0px;
               margin-top: 20px;
               overflow: auto;
             "
@@ -204,9 +202,9 @@
 
       const fetchPeople = async () => {
         try {
-          //const { data } = await axios.get('/dashboard')
+          const { data } = await axios.get('/dashboard')
 
-          const data = [
+          /*const data = [
             {
               employee_id: 1,
               first_name: "Amdrzej",
@@ -240,7 +238,7 @@
               admin_rights: null,
               manager_id: null,
             },
-          ];
+          ];*/
 
           data.forEach((element) => {
             const tr = document.createElement("tr")
