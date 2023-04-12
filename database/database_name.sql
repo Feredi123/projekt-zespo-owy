@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 05 Kwi 2023, 14:18
+-- Czas generowania: 11 Kwi 2023, 20:35
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -35,6 +35,20 @@ CREATE TABLE `absences` (
   `absences_types_absencetype_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Zrzut danych tabeli `absences`
+--
+
+INSERT INTO `absences` (`absence_id`, `employees_employee_id`, `start_date`, `end_date`, `absences_types_absencetype_id`) VALUES
+(1, 4, '2023-04-12', '2023-04-15', 2),
+(2, 5, '2023-04-12', '2023-04-12', 3),
+(3, 6, '2023-04-12', '2023-04-13', 1),
+(4, 5, '2023-04-04', '2023-04-06', 2),
+(5, 4, '2023-04-18', '2023-04-20', 3),
+(6, 10, '2023-04-13', '2023-04-13', 2),
+(7, 10, '2023-04-12', '2023-04-12', 1),
+(8, 11, '2023-04-02', '2023-04-26', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +59,15 @@ CREATE TABLE `absences_types` (
   `absencetype_id` int(11) NOT NULL,
   `name` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `absences_types`
+--
+
+INSERT INTO `absences_types` (`absencetype_id`, `name`) VALUES
+(1, 'Sick leave'),
+(2, 'Holiday'),
+(3, 'Other');
 
 -- --------------------------------------------------------
 

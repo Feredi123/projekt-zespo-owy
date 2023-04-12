@@ -1,11 +1,13 @@
 .side-bar {
     display: flex;
     flex-direction: column;
+    position:sticky;
+    min-height: 100vh;
     max-width: 210px;
     background: rgb(0,120,185);
     background: linear-gradient(0deg, rgba(0,120,185,1) 73%, rgba(0,212,255,1) 115%);
     max-height: auto;
-    border-radius: 20px;
+    box-shadow: 3px 0 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   }
   
   .side-bar logo{
@@ -21,16 +23,16 @@
     font-size: 20px;
     background-color: transparent;
     border-color: transparent;
-    border-radius: 8px;
     cursor:pointer;
     transition: background-color 15ms;
     align-self:center;
     width:100%;
+    text-align:left;
   }
   
   .side-bar button:hover { 
     background-color:  rgb(131, 197, 232);
-    
+    transition:0.2s;    
   }
   
   .side-bar button:active { 
@@ -42,7 +44,6 @@
     color: white; 
     font-size: 20px;
     background-color:rgba(131, 197, 232, 0.6);
-    border-radius: 8px;
     border-color:transparent;
     align-self:center;
     transition: background-color 15ms;
