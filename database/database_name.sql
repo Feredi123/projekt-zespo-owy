@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 11 Kwi 2023, 20:35
+-- Czas generowania: 17 Kwi 2023, 17:28
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -126,9 +126,18 @@ CREATE TABLE `employee_skill` (
 
 CREATE TABLE `processes` (
   `process_id` int(11) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `owner_id` int(11) NOT NULL
+  `name` varchar(40) DEFAULT NULL,
+  `owner_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `processes`
+--
+
+INSERT INTO `processes` (`process_id`, `name`, `owner_id`) VALUES
+(1, 'Customer Service (FR B1, SAP Basic)', NULL),
+(2, 'Customer Service (EN B2, SAP Basic)', NULL),
+(3, 'Sales Coordination (EN B2)', NULL);
 
 -- --------------------------------------------------------
 

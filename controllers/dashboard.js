@@ -39,6 +39,19 @@ async function getDashboard(req, res) {
     }
 }
 
+async function getProcesses(req, res) {
+  try {
+    const [processes] = await pool.query('SELECT process_id, name FROM processes');
+
+    res.status(200).json(processes);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 module.exports = {
     getDashboard,
+    getProcesses,
 }
