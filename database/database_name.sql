@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 17 Kwi 2023, 17:28
+-- Czas generowania: 19 Kwi 2023, 13:44
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -118,6 +118,21 @@ CREATE TABLE `employee_skill` (
   `level` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Zrzut danych tabeli `employee_skill`
+--
+
+INSERT INTO `employee_skill` (`skills_skills_id`, `employees_employee_id`, `level`) VALUES
+(4, 4, 2),
+(1, 4, 3),
+(3, 4, 4),
+(2, 5, 3),
+(1, 5, 4),
+(4, 5, 4),
+(2, 6, 1),
+(4, 6, 4),
+(1, 6, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -151,6 +166,21 @@ CREATE TABLE `process_skill` (
   `min_lvl` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Zrzut danych tabeli `process_skill`
+--
+
+INSERT INTO `process_skill` (`skills_skills_id`, `processes_process_id`, `min_lvl`) VALUES
+(4, 1, NULL),
+(2, 1, NULL),
+(1, 1, NULL),
+(3, 2, NULL),
+(4, 2, NULL),
+(1, 2, NULL),
+(3, 3, NULL),
+(5, 3, NULL),
+(1, 3, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -161,6 +191,17 @@ CREATE TABLE `skills` (
   `skills_id` int(11) NOT NULL,
   `name` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `skills`
+--
+
+INSERT INTO `skills` (`skills_id`, `name`) VALUES
+(1, 'Customer service'),
+(2, 'Francuski B1'),
+(3, 'Angielski B2'),
+(4, 'SAP Basic'),
+(5, 'Team management');
 
 --
 -- Indeksy dla zrzutów tabel
