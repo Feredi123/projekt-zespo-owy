@@ -65,13 +65,6 @@ async function getEmployees(req, res) {
 
 async function getAbsences(req, res) {
   try {
-    // const [absent_day1] = await pool.query('SELECT employees_employee_id employee_id FROM absences WHERE CURRENT_DATE() BETWEEN start_date AND end_date');
-    // const [absent_day2] = await pool.query('SELECT employees_employee_id employee_id FROM absences WHERE CURRENT_DATE()+1 BETWEEN start_date AND end_date');
-    // const [absent_day3] = await pool.query('SELECT employees_employee_id employee_id FROM absences WHERE CURRENT_DATE()+2 BETWEEN start_date AND end_date');
-    // const [absent_day4] = await pool.query('SELECT employees_employee_id employee_id FROM absences WHERE CURRENT_DATE()+3 BETWEEN start_date AND end_date');
-    // const [absent_day5] = await pool.query('SELECT employees_employee_id employee_id FROM absences WHERE CURRENT_DATE()+4 BETWEEN start_date AND end_date');
-
-    // res.status(200).json(absent_day1);
 
     const queries = [
       'SELECT employees_employee_id employee_id FROM absences WHERE CURRENT_DATE() BETWEEN start_date AND end_date',

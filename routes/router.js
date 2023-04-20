@@ -7,9 +7,9 @@ const {
 
 
 router.route('/dashboard').get(getDashboard)
-router.route('/dashboard/processes').get(getProcesses)
-router.route('/dashboard/employees').get(getEmployees)
-router.route('/dashboard/absences').get(getAbsences)
+router.route('/processes').get(getProcesses)
+router.route('/employees').get(getEmployees)
+router.route('/absences').get(getAbsences)
 //router.route('/postman').post(createPersonPostman)
 //router.route('/:id').put(updatePerson).delete(deletePerson)
 
