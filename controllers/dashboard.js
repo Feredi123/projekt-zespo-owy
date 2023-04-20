@@ -51,18 +51,6 @@ async function getProcesses(req, res) {
   }
 }
 
-async function getEmployees(req, res) {
-  try {
-    const [employees] = await pool.query('SELECT employee_id, first_name, second_name FROM employees');
-
-    res.status(200).json(employees);
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
 async function getAbsences(req, res) {
   try {
 
@@ -78,7 +66,7 @@ async function getAbsences(req, res) {
     const combinedResults = {};
     
     for (const [index, result] of results.entries()) {
-      const absentDay = index + 1;
+      const absentDay = true;
       for (const row of result[0]) {
         const employeeId = row.employee_id;
         if (!combinedResults[employeeId]) {
@@ -96,9 +84,60 @@ async function getAbsences(req, res) {
   }
 }
 
+async function getSkills(req, res) {
+  try {
+    const [skills] = await pool.query('SELECT skills_id skill_id, name FROM skills');
+
+    res.status(200).json(skills);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+async function getAbsencesByDate(req, res) {
+  try {
+
+    const { date } = req.params
+
+
+    const queries = [
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}') BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+1 BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+2 BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+3 BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+4 BETWEEN start_date AND end_date`
+    ];
+    
+    const results = await Promise.all(queries.map(query => pool.query(query)));
+    const combinedResults = {};
+    
+    for (const [index, result] of results.entries()) {
+      const absentDay = true;
+      for (const row of result[0]) {
+        const employeeId = row.employee_id;
+        if (!combinedResults[employeeId]) {
+          combinedResults[employeeId] = [];
+        }
+        combinedResults[employeeId].push(absentDay);
+      }
+    }
+    
+    res.status(200).json(combinedResults);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
 module.exports = {
     getDashboard,
     getProcesses,
-    getEmployees,
-    getAbsences
+    getAbsences,
+    getSkills,
+    getAbsencesByDate,
+
 }
