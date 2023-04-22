@@ -21,6 +21,12 @@
     <link rel="stylesheet" href="styles/table.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="workspace-table.js" defer></script>
+    <script src="logging.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -44,7 +50,7 @@
       <div class="workspace-body">
         <div class="user-bar">
           <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
-          <div class="dropdown">
+          <!-- <div class="dropdown">
             <name-surname> Name Surname ></name-surname>
             <div class="dropdown-content">
               <img
@@ -58,12 +64,11 @@
               <button>Login</button>
               <button>Forgot password</button>
             </div>
-          </div>
+          </div> -->
         </div>
-
-        <div class="workspace">
+        <div class="workspace" id="workspace-table">
           <bar>
-            <div class="dropdown" id="workspace-table" id="result">
+            <div class="dropdown">
               <button>> Person</button>
               <div class="dropdown-content-workspace">
                 <button v-if="conditions.length===0">Add new condition</button>
@@ -84,7 +89,7 @@
               </div>
             </div>
 
-            <div class="dropdown" id="workspace-table" id="result">
+            <div class="dropdown">
               <button>> Skill</button>
               <div class="dropdown-content-workspace">
                 <button v-if="conditions.length===0">Add new condition</button>
@@ -105,7 +110,7 @@
               </div>
             </div>
 
-            <div class="dropdown" id="workspace-table" id="result">
+            <div class="dropdown">
               <button>> Level</button>
               <div class="dropdown-content-workspace">
                 <button v-if="conditions.length===0">Add new condition</button>
@@ -126,7 +131,7 @@
               </div>
             </div>
 
-            <div class="dropdown" id="workspace-table" id="result">
+            <div class="dropdown">
               <button>> Process</button>
               <div class="dropdown-content-workspace">
                 <button v-if="conditions.length===0">Add new condition</button>
@@ -148,123 +153,22 @@
             </div>
           </bar>
 
-          <div
-            style="
-              flex: 1;
-              margin: 0px;
-              margin-top: 20px;
-              overflow: auto;
-            "
-          >
-            <!-- <p>{{employeesData.first_name}}</p> -->
-            <table id="result"></table>
-          </div>
+            <table>
+              <li
+                v-for="(person,index) in test.data"
+              >
+                <h2>{{person.first_name}} {{person.second_name}}</h2>
+                <h2 v-if="person.is_absent_today!==true">Obecny </h2>
+                <h2 v-else>nieobecny </h2>
+                <h2 v-if="person.is_absent_tomorrow!==true">Obecny </h2>
+                <h2 v-else>Nieobecny </h2>
+                <h2 v-if="person.is_absent!==true">Obecny </h2>
+                <h2 v-else>nieobecny </h2>
+              </li>
+            </table>
+
         </div>
       </div>
     </main>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
-      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      const result = document.querySelector("#result");
-
-      const today = new Date();
-      const tomorrow = new Date(today);
-      const dayAfterTomorrow = new Date(today);
-
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
-
-      const tr = document.createElement("tr");
-      tr.append(document.createElement("td"));
-
-      var td = document.createElement("td");
-      td.textContent = `${today.getDate()}/${
-        today.getMonth() + 1
-      }/${today.getFullYear()}`;
-      tr.append(td);
-
-      td = document.createElement("td");
-      td.textContent = `${tomorrow.getDate()}/${
-        tomorrow.getMonth() + 1
-      }/${tomorrow.getFullYear()}`;
-      tr.append(td);
-
-      td = document.createElement("td");
-      td.textContent = `${dayAfterTomorrow.getDate()}/${
-        dayAfterTomorrow.getMonth() + 1
-      }/${dayAfterTomorrow.getFullYear()}`;
-      tr.append(td);
-
-      result.append(tr);
-
-      const fetchPeople = async () => {
-        try {
-          const { data } = await axios.get('/dashboard')
-
-          /*const data = [
-            {
-              employee_id: 1,
-              first_name: "Amdrzej",
-              second_name: "Nowak",
-              email: null,
-              phone: null,
-              password: null,
-              photo: null,
-              admin_rights: null,
-              manager_id: null,
-            },
-            {
-              employee_id: 2,
-              first_name: "Roger",
-              second_name: "Duffy",
-              email: null,
-              phone: null,
-              password: null,
-              photo: null,
-              admin_rights: null,
-              manager_id: null,
-            },
-            {
-              employee_id: 3,
-              first_name: "Leona",
-              second_name: "Trujillo",
-              email: null,
-              phone: null,
-              password: null,
-              photo: null,
-              admin_rights: null,
-              manager_id: null,
-            },
-          ];*/
-
-          data.forEach((element) => {
-            const tr = document.createElement("tr")
-            const td = document.createElement("td")
-            td.textContent = `${element.first_name} ${element.second_name}`
-            tr.appendChild(td)
-
-            const td2 = document.createElement("td")
-            td2.textContent = element.is_absent_today ? 'Out of work' : '';
-
-            const td3 = document.createElement("td")
-            td3.textContent = element.is_absent_tomorrow ? 'Out of work' : '';
-
-            const td4 = document.createElement("td")
-            td4.textContent = element.is_absent_day_after_tomorow ? 'Out of work' : '';
-
-            tr.appendChild(td2)
-            tr.appendChild(td3)
-            tr.appendChild(td4)
-            result.append(tr)
-          });
-        } catch (error) {
-          result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`;
-        }
-      };
-      fetchPeople();
-    </script>
   </body>
 </html>

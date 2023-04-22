@@ -3,10 +3,10 @@ const app = Vue.createApp({
     return {
       conditions: [],
       newCondition: "",
+      test: {},
       employeesData: {
-        type: Object,
         employee_id: 0,
-        first_name: "balls",
+        first_name: "ballisław",
         second_name: "",
         email: null,
         phone: null,
@@ -26,10 +26,19 @@ const app = Vue.createApp({
     removeCondition(index) {
       this.conditions.splice(index, 1);
     },
-    saveEmployeeData(employeeData) {
-      this.employeesData = Object.assign({}, employeeData);
+    async getUser() {
+        try {
+          this.test = await axios.get("/dashboard");
+          console.log(tes.data);
+        } catch (error) {
+          console.error(error);
+        }
     },
   },
+  beforeMount(){
+    this.getUser()
+  }
 });
 
 app.mount("#workspace-table");
+

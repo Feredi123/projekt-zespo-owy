@@ -1,9 +1,8 @@
 .user-bar{
     display:flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: end;
     height: 160px;
-    min-width: 100ch;
     align-items: center;
   }
   
