@@ -71,7 +71,7 @@
             <div class="dropdown">
               <button>> Person</button>
               <div class="dropdown-content-workspace">
-                <button v-if="conditions.length===0">Add new condition</button>
+                <button v-if="conditions.length===0">Add new condition and Press Enter</button>
                 <button
                   v-else
                   v-for="(condition, index) in conditions"
@@ -81,7 +81,7 @@
                   {{condition }} - {{index }}
                 </button>
                 <input
-                  style="width: 100%"
+                  style="width: 100%; padding-bottom: 5px;"
                   type="text"
                   v-model="newCondition"
                   v-on:keyup.enter="addCondition"
@@ -153,20 +153,34 @@
             </div>
           </bar>
 
-            <table>
-              <li
-                v-for="(person,index) in test.data"
-              >
-                <h2>{{person.first_name}} {{person.second_name}}</h2>
-                <h2 v-if="person.is_absent_today!==true">Obecny </h2>
-                <h2 v-else>nieobecny </h2>
-                <h2 v-if="person.is_absent_tomorrow!==true">Obecny </h2>
-                <h2 v-else>Nieobecny </h2>
-                <h2 v-if="person.is_absent!==true">Obecny </h2>
-                <h2 v-else>nieobecny </h2>
-              </li>
-            </table>
+          <table >
+            <li v-for="(person,index) in filteredList">
+              <h2>{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-if="person.is_absent_today!==true">Obecny</h2>
+              <h2 v-else>nieobecny</h2>
+              <h2 v-if="person.is_absent_tomorrow!==true">Obecny</h2>
+              <h2 v-else>Nieobecny</h2>
+              <h2 v-if="person.is_absent!==true">Obecny</h2>
+              <h2 v-else>nieobecny</h2>
+            </li>
+          </table>
 
+          <h2 v-if="conditions.length!==0">_________</h2>
+
+          <table >
+            <li v-for="(person,index) in employeesData.data">
+              <h2>{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-if="person.is_absent_today!==true">Obecny</h2>
+              <h2 v-else>nieobecny</h2>
+              <h2 v-if="person.is_absent_tomorrow!==true">Obecny</h2>
+              <h2 v-else>Nieobecny</h2>
+              <h2 v-if="person.is_absent!==true">Obecny</h2>
+              <h2 v-else>nieobecny</h2>
+            </li>
+          </table>
+
+          <li>{{test.data}}</li>
+        
         </div>
       </div>
     </main>
