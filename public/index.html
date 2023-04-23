@@ -84,7 +84,7 @@
                   {{condition }} - {{index }}
                 </button>
                 <input
-                  style="width: 100%; padding-bottom: 5px;"
+                  style="width: 90%; align-self:center;"
                   type="text"
                   v-model="newCondition"
                   v-on:keyup.enter="addCondition"
@@ -104,12 +104,10 @@
                 >
                   {{condition }} - {{index }}
                 </button>
-                <input
-                  style="width: 100%"
-                  type="text"
-                  v-model="newCondition"
-                  v-on:keyup.enter="addCondition"
-                />
+              <select name="skill" id="skill-select" style="width: 100%;">
+                <option value="Select Skill">Select Skill</option>
+              <option value="{{tes.name}}"  v-for="tes in test.data">{{tes.name}}</option>
+          </select>
               </div>
             </div>
 
@@ -157,6 +155,9 @@
           </bar>
 
           <table >
+            <li>
+              <h2 v-for="date in dates">{{date}}</h2>
+            </li>
             <li v-for="(person,index) in filteredList">
               <h2>{{person.first_name}} {{person.second_name}}</h2>
               <h2 v-if="person.is_absent_today!==true">Obecny</h2>
@@ -182,7 +183,7 @@
             </li>
           </table>
 
-          <li>{{test.data}}</li>
+          <li>{{test}}</li>
         
         </div>
       </div>

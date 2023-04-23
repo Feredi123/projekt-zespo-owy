@@ -1,9 +1,23 @@
+function getDate(nexthop) {
+  const today = new Date();
+  let day = today.getDate()+nexthop;
+  let month = today.getMonth();
+  let year = today.getFullYear();
+  console.log(today);
+  console.log(day);
+  console.log(month);
+  console.log(year);
+  return day+'-'+month+'-'+year;
+}
+
 const app = Vue.createApp({
   data() {
     return {
       conditions: [],
       newCondition: "",
+      skillsConditions: [],
       employeesData: {},
+      dates: [""],
       test: {},
     };
   },
@@ -13,6 +27,12 @@ const app = Vue.createApp({
       return this.employeesData.data.filter((item) => {
         return this.conditions.includes(item.first_name);
       });
+    },
+    tableDate() {
+      for (let i=0; i<3; i++){
+      this.dates.push(getDate(i));
+      console.log(this.dates);
+      };
     },
   },
 
@@ -27,15 +47,16 @@ const app = Vue.createApp({
     async getUser() {
       try {
         this.employeesData = await axios.get("/dashboard");
-        console.log(employeesData.data);
+        this.tableDate();
+        console.log(this.employeesData.data);
       } catch (error) {
-        console.error(error);
+        console.error(this.error);
       }
     },
     async getSkill() {
       try {
         this.test = await axios.get("/skills");
-        console.log(test.data);
+        console.log(this.test.data);
       } catch (error) {
         console.error(error);
       }
