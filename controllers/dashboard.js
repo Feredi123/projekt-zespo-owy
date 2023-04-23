@@ -39,6 +39,83 @@ async function getDashboard(req, res) {
     }
 }
 
+async function getDashboardAll(req, res) {
+  try {
+
+    const { date } = req.params
+
+
+    const queries = [
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}') BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+1 BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+2 BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+3 BETWEEN start_date AND end_date`,
+      `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}')+4 BETWEEN start_date AND end_date`
+    ];
+    
+    const results = await Promise.all(queries.map(query => pool.query(query)));
+    const combinedAbsences = {};
+    
+    for (const [index, result] of results.entries()) {
+      const absentDay = true;
+      for (const row of result[0]) {
+        const employeeId = row.employee_id;
+        if (!combinedAbsences[employeeId]) {
+          combinedAbsences[employeeId] = [];
+        }
+        combinedAbsences[employeeId].push(absentDay);
+      }
+    }
+
+    const [employeeResults] = await pool.query('SELECT e.employee_id, e.first_name, e.second_name FROM employees as e');
+    const [skillResults] = await pool.query('SELECT es.skills_skills_id skills_id, es.employees_employee_id employee_id, es.level, s.name skill_name FROM `employee_skill` as es INNER JOIN skills as s ON s.skills_id = es.skills_skills_id');
+
+    const employees = {};
+
+    for (let result of employeeResults) {
+      const { employee_id, first_name, second_name } = result;
+      
+      if (!employees[employee_id]) {
+        employees[employee_id] = {
+          employee_id,
+          first_name,
+          second_name,
+          skills: [],
+          absences: [],
+        };
+      }
+    }
+
+    for (let result of skillResults) {
+      const { employee_id, skills_id, skill_name } = result;
+      
+      if (employees[employee_id]) {
+        employees[employee_id].skills.push({
+          skills_id,
+          skill_name,
+        });
+      }
+    }
+
+    for (const employeeId in combinedAbsences) {
+      const absences = combinedAbsences[employeeId];
+      
+      if (employees[employeeId]) {
+        employees[employeeId].absences = absences;
+      }
+    }
+
+    const employeeSkills = Object.values(employees);
+    
+    res.status(200).json(employeeSkills);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
 async function getProcesses(req, res) {
   try {
     const [processes] = await pool.query('SELECT process_id, name FROM processes');
@@ -139,5 +216,6 @@ module.exports = {
     getAbsences,
     getSkills,
     getAbsencesByDate,
+    getDashboardAll
 
 }
