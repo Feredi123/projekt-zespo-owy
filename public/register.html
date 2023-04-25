@@ -39,9 +39,12 @@
             <name-surname> Name Surname ></name-surname>
             <div class="dropdown-content">
               <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
-              <input type="text" placeholder="Login ID" class="login-info">
-              <input type="text" placeholder="password" class="login-info">
-              <button>Login</button>
+
+              <form action="/login" method="POST">
+              <input type="text" id="name" name="name" required>
+              <input type="password" id="password" name="password" required>
+              <button type="submit">Login</button>
+            </form>
               <button>Forgot password</button>
             </div>
         </div>

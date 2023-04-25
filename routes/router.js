@@ -25,5 +25,4 @@ router.route('/employees/skill/:id').get(getEmployeesBySkill) // :id - id umiej�
 router.route('/employees/process/:id').get(getEmployeesByProcess) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
 //router.route('/postman').post(createPersonPostman)
 //router.route('/:id').put(updatePerson).delete(deletePerson)
-
 module.exports = router

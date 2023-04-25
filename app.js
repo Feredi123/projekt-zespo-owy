@@ -13,7 +13,8 @@ const initializePassport = require('./passport-config')
 
 initializePassport(
   passport,
-  login => users.find(user => user.login === login)
+  name => users.find(user => user.name === name),
+  id => users.find(user => user.id === id)
   )
 
 const users = []; //tymczasowe przechowywanie urzytkowników do testów
@@ -46,6 +47,15 @@ app.use('/', router)
 })
 BO KOMU POTRZEBNA OBSŁUGA BŁĘDÓW*/
 
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname,'./public/login.html')
+})
+
+app.post('/login', passport.authenticate('local', {
+  failureRedirect: 'loginfail.html',
+  successRedirect: 'index.html'
+}))
+
 app.post('/register', async  (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -56,7 +66,7 @@ app.post('/register', async  (req, res) => {
     })
     res.redirect('/register.html')
   } catch {
-    res.redirect('/register.html')
+    res.redirect('/loginfail.html')
   }
   console.log(users)
 })
