@@ -10,6 +10,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 
 const initializePassport = require('./passport-config')
+
 initializePassport(
   passport,
   login => users.find(user => user.login === login)
@@ -31,11 +32,6 @@ app.use(express.static('./public'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/',
-  failureFlash : true
-}))
 
 const router = require('./routes/router')
 
@@ -45,27 +41,26 @@ app.get('/', (req, res) => {
 
 app.use('/', router)
 
-app.all('*', (req, res) => {
-    res.status(404).send('resource not found')
+/* app.all('*', (req, res) => {
+  res.status(404).send('resource not found')
 })
-
-
-app.listen(8000, () => {
-  console.log('Server is listaning on 8000...')
-})
+BO KOMU POTRZEBNA OBSŁUGA BŁĘDÓW*/
 
 app.post('/register', async  (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     users.push({
       id: Date.now().toString(),
-      first_name: req.body.first_name,
+      name: req.body.name,
       password: hashedPassword
     })
-    res.redirect('/index.html')
+    res.redirect('/register.html')
   } catch {
-    res.redirect('/index.html')
-    console.log(users)
+    res.redirect('/register.html')
   }
   console.log(users)
+})
+
+app.listen(8000, () => {
+  console.log('Server is listaning on 8000...')
 })
