@@ -61,9 +61,9 @@ async function getDashboardAll(req, res) {
       for (const row of result[0]) {
         const employeeId = row.employee_id;
         if (!combinedAbsences[employeeId]) {
-          combinedAbsences[employeeId] = [];
+          combinedAbsences[employeeId] = Array(5).fill(false);
         }
-        combinedAbsences[employeeId].push(absentDay);
+        combinedAbsences[employeeId][index] = absentDay;
       }
     }
 
@@ -81,7 +81,7 @@ async function getDashboardAll(req, res) {
           first_name,
           second_name,
           skills: [],
-          absences: [],
+          absences: Array(5).fill(false),
         };
       }
     }
