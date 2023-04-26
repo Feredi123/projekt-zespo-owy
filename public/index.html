@@ -74,17 +74,19 @@
             <div class="dropdown">
               <button>> Person</button>
               <div class="dropdown-content-workspace">
-                <button v-if="conditions.length===0">Add new condition and Press Enter</button>
+                <button v-if="conditions.length===0">
+                  Add new condition and Press Enter
+                </button>
                 <button
                   v-else
                   v-for="(condition, index) in conditions"
-                  v-on:click="removeCondition(index)"
+                  v-on:click="removeCondition(conditions,index)"
                   v-on:key="condition"
                 >
-                  {{condition }} - {{index }}
+                  {{condition }}
                 </button>
                 <input
-                  style="width: 90%; align-self:center;"
+                  style="width: 90%; align-self: center"
                   type="text"
                   v-model="newCondition"
                   v-on:keyup.enter="addCondition"
@@ -95,19 +97,29 @@
             <div class="dropdown">
               <button>> Skill</button>
               <div class="dropdown-content-workspace">
-                <button v-if="conditions.length===0">Add new condition</button>
+                <button v-if="skillsConditions.length===0">
+                  Add new condition
+                </button>
                 <button
                   v-else
-                  v-for="(condition, index) in conditions"
-                  v-on:click="removeCondition(index)"
-                  v-on:key="condition"
+                  v-for="(skills, skillsIndex) in skillsConditions"
+                  v-on:click="removeCondition(skillsConditions,skillsIndex)"
+                  v-on:key="skill"
                 >
-                  {{condition }} - {{index }}
+                  {{ skills.name }}
                 </button>
-              <select name="skill" id="skill-select" style="width: 100%;">
-                <option value="Select Skill">Select Skill</option>
-              <option value="{{tes.name}}"  v-for="tes in test.data">{{tes.name}}</option>
-          </select>
+                <select
+                  name="skill"
+                  id="skill-select"
+                  style="width: 100%"
+                  v-model="newSkillsCondition"
+                >
+                  <option value="Select Skill">Select Skill</option>
+                  <option v-for="skill in skills.data" v-model="newSkillsCondition">
+                    {{skill.name}}
+                  </option>
+                </select>
+                <button v-on:click="addSkillsCondition(newSkillsCondition)">Accept</button>
               </div>
             </div>
 
@@ -133,29 +145,26 @@
             </div>
 
             <div class="dropdown">
-              <button>> Process</button>
-              <div class="dropdown-content-workspace">
-                <button v-if="conditions.length===0">Add new condition</button>
-                <button
-                  v-else
-                  v-for="(condition, index) in conditions"
-                  v-on:click="removeCondition(index)"
-                  v-on:key="condition"
-                >
-                  {{condition }} - {{index }}
-                </button>
-                <input
+              <button v-on:click="getProcessesById">> Process</button>
+            <div class="dropdown-content-workspace">
+                <select
+                  name="process"
+                  id="process-select"
                   style="width: 100%"
-                  type="text"
-                  v-model="newCondition"
-                  v-on:keyup.enter="addCondition"
-                />
+                  v-model="processCondition"
+                >
+                  <option value="Select Process">Select Process</option>
+                  <option v-for="skill in processes.data" v-model="newProcessCondition">
+                    {{skill.name}}
+                  </option>
+                </select>
               </div>
             </div>
           </bar>
 
-          <table >
-            <li>
+          <table>
+            <div v-if="skillsConditions.length===0">
+                      <li>
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li v-for="(person,index) in filteredList">
@@ -167,13 +176,41 @@
               <h2 v-if="person.is_absent!==true">Obecny</h2>
               <h2 v-else>nieobecny</h2>
             </li>
-          </table>
+            </div>
+             <div v-else-if="skillsConditions.length!==0&&conditions.length===0">
+                          <li>
+              <h2 v-for="date in dates">{{date}}</h2>
+            </li>
+            <li style="background-color:red;" v-for="(person,index) in employeesData.data">
+            <h2 v-if="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-if="person.is_absent_today!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+              <h2 v-if="person.is_absent_tomorrow!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
+              <h2 v-if="person.is_absent!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+            </li>
+            </div>
+            <div v-else>
+                        <li>
+              <h2 v-for="date in dates">{{date}}</h2>
+            </li>
+            <li v-for="(person,index) in filteredList">
+              <h2 v-if="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-if="person.is_absent_today!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+              <h2 v-if="person.is_absent_tomorrow!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
+              <h2 v-if="person.is_absent!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+            </li>
+            </div>
 
           <h2 v-if="conditions.length!==0">_________</h2>
 
-          <table >
+          <table>
             <li v-for="(person,index) in employeesData.data">
-              <h2>{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-on:click="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
               <h2 v-if="person.is_absent_today!==true">Obecny</h2>
               <h2 v-else>nieobecny</h2>
               <h2 v-if="person.is_absent_tomorrow!==true">Obecny</h2>
@@ -182,9 +219,6 @@
               <h2 v-else>nieobecny</h2>
             </li>
           </table>
-
-          <li>{{test}}</li>
-        
         </div>
       </div>
     </main>

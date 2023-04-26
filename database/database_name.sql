@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
+-- 
 -- Baza danych: `database_name`
 --
 
@@ -104,7 +104,60 @@ INSERT INTO `employees` (`employee_id`, `first_name`, `second_name`, `email`, `p
 (10, 'George', 'Wilson', 'george.wilson@example.com', NULL, NULL, NULL, 0, 4),
 (11, 'Hannah', 'Garcia', 'hannah.garcia@example.com', NULL, NULL, NULL, 0, 4),
 (12, 'Isaac', 'Martinez', 'isaac.martinez@example.com', NULL, NULL, NULL, 0, 5),
-(13, 'Julia', 'Hernandez', 'julia.hernandez@example.com', NULL, NULL, NULL, 0, 5);
+(13, 'Julia', 'Hernandez', 'julia.hernandez@example.com', NULL, NULL, NULL, 0, 5),
+(14, 'Karen', 'Clark', 'karen.clark@example.com', NULL, NULL, NULL, 0, 6),
+(15, 'Liam', 'Garcia', 'liam.garcia@example.com', NULL, NULL, NULL, 0, 6),
+(16, 'Maggie', 'Lee', 'maggie.lee@example.com', NULL, NULL, NULL, 0, 7),
+(17, 'Nathan', 'Wright', 'nathan.wright@example.com', NULL, NULL, NULL, 0, 7),
+(18, 'Olivia', 'Brown', 'olivia.brown@example.com', NULL, NULL, NULL, 0, 8),
+(19, 'Peter', 'Nguyen', 'peter.nguyen@example.com', NULL, NULL, NULL, 0, 8),
+(20, 'Quinn', 'Chen', 'quinn.chen@example.com', NULL, NULL, NULL, 0, 9),
+(21, 'Rachel', 'Sanchez', 'rachel.sanchez@example.com', NULL, NULL, NULL, 0, 9),
+(22, 'Seth', 'Patel', 'seth.patel@example.com', NULL, NULL, NULL, 0, 10),
+(23, 'Tara', 'Singh', 'tara.singh@example.com', NULL, NULL, NULL, 0, 10),
+(24, 'Victoria', 'Zhang', 'victoria.zhang@example.com', NULL, NULL, NULL, 0, 11),
+(25, 'William', 'Gupta', 'william.gupta@example.com', NULL, NULL, NULL, 0, 11),
+(26, 'Xavier', 'Ng', 'xavier.ng@example.com', NULL, NULL, NULL, 0, 12),
+(27, 'Yasmine', 'Kim', 'yasmine.kim@example.com', NULL, NULL, NULL, 0, 12),
+(28, 'Zachary', 'Liu', 'zachary.liu@example.com', NULL, NULL, NULL, 0, 13),
+(29, 'Aaliyah', 'Sato', 'aaliyah.sato@example.com', NULL, NULL, NULL, 0, 13),
+(30, 'Brandon', 'Kumar', 'brandon.kumar@example.com', NULL, NULL, NULL, 0, 14),
+(31, 'Chloe', 'Lee', 'chloe.lee@example.com', NULL, NULL, NULL, 0, 14),
+(32, 'Derek', 'Wong', 'derek.wong@example.com', NULL, NULL, NULL, 0, 15),
+(33, 'Emma', 'Singh', 'emma.singh@example.com', NULL, NULL, NULL, 0, 15),
+(34, 'Finn', 'Jain', 'finn.jain@example.com', NULL, NULL, NULL, 0, 16),
+(35, 'Grace', 'Huang', 'grace.huang@example.com', NULL, NULL, NULL, 0, 16),
+(36, 'Harrison', 'Zhang', 'harrison.zhang@example.com', NULL, NULL, NULL, 0, 17),
+(37, 'Isabella', 'Kim', 'isabella.kim@example.com', NULL, NULL, NULL, 0, 17),
+(38, 'Jack', 'Kumar', 'jack.kumar@example.com', NULL, NULL, NULL, 0, 18),
+(39, 'Kaitlyn', 'Patel', 'kaitlyn.patel@example.com', NULL, NULL, NULL, 0, 18),
+(40, 'Landon', 'Chen', 'landon.chen@example.com', NULL, NULL, NULL, 0, 19),
+(41, 'Mia', 'Nguyen', 'mia.nguyen@example.com', NULL, NULL, NULL, 0, 19),
+(42, 'Nathaniel', 'Sato', 'nathaniel.sato@example.com', NULL, NULL, NULL, 0, 20),
+(43, 'Olivia', 'Shah', 'olivia.shah@example.com', NULL, NULL, NULL, 0, 20),
+(44, 'Penelope', 'Gupta', 'penelope.gupta@example.com', NULL, NULL, NULL, 0, 21),
+(45, 'Quinn', 'Kim', 'quinn.kim@example.com', NULL, NULL, NULL, 0, 21),
+(46, 'Landon', 'Chen', 'landon.chen@example.com', NULL, NULL, NULL, 0, 19),
+(47, 'Mia', 'Nguyen', 'mia.nguyen@example.com', NULL, NULL, NULL, 0, 19),
+(48, 'Nathaniel', 'Sato', 'nathaniel.sato@example.com', NULL, NULL, NULL, 0, 20),
+(49, 'Olivia', 'Shah', 'olivia.shah@example.com', NULL, NULL, NULL, 0, 20),
+(50, 'Penelope', 'Gupta', 'penelope.gupta@example.com', NULL, NULL, NULL, 0, 21),
+(51, 'Quinn', 'Kim', 'quinn.kim@example.com', NULL, NULL, NULL, 0, 21),
+(52, 'Landon', 'Chen', 'landon.chen@example.com', NULL, NULL, NULL, 0, 19),
+(53, 'Mia', 'Nguyen', 'mia.nguyen@example.com', NULL, NULL, NULL, 0, 19),
+(54, 'Nathaniel', 'Sato', 'nathaniel.sato@example.com', NULL, NULL, NULL, 0, 20),
+(55, 'Olivia', 'Shah', 'olivia.shah@example.com', NULL, NULL, NULL, 0, 20),
+(56, 'Penelope', 'Gupta', 'penelope.gupta@example.com', NULL, NULL, NULL, 0, 21),
+(57, 'Quinn', 'Kim', 'quinn.kim@example.com', NULL, NULL, NULL, 0, 21),
+(58, 'Landon', 'Chen', 'landon.chen@example.com', NULL, NULL, NULL, 0, 19),
+(59, 'Mia', 'Nguyen', 'mia.nguyen@example.com', NULL, NULL, NULL, 0, 19),
+(60, 'Nathaniel', 'Sato', 'nathaniel.sato@example.com', NULL, NULL, NULL, 0, 20),
+(61, 'Olivia', 'Shah', 'olivia.shah@example.com', NULL, NULL, NULL, 0, 20),
+(62, 'Penelope', 'Gupta', 'penelope.gupta@example.com', NULL, NULL, NULL, 0, 21),
+(63, 'Quinn', 'Kim', 'quinn.kim@example.com', NULL, NULL, NULL, 0, 21),
+(64, 'Alex', 'Lee', 'alex.lee@example.com', NULL, NULL, NULL, 0, 19),
+(65, 'Isabella', 'Nguyen', 'isabella.nguyen@example.com', NULL, NULL, NULL, 0, 19);
+
 
 -- --------------------------------------------------------
 

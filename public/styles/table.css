@@ -1,8 +1,9 @@
 .table {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  overflow-y: scroll;
+  overflow:scroll;
+  white-space:nowrap;
+  flex:1;
 }
 
 li {
