@@ -1,66 +1,32 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt'); // hashowanie haseł
 const passport = require('passport'); //obsługa logowania
 const flash = require('express-flash')
 const session = require('express-session')
-
+const users = []; //tymczasowe przechowywanie urzytkowników do testów
 const initializePassport = require('./passport-config')
+const router = require('./routes/router')
 
 initializePassport(
   passport,
   email => users.find(user => user.email === email),
   id => users.find(user => user.id === id)
-  )
+)
 
-const users = []; //tymczasowe przechowywanie urzytkowników do testów
-app.use(flash())
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {path: '/', secure: false, maxAge: 60*60*15*60}
-}))
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 app.use(express.static('./public'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(flash())
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+}))
 
 
-const router = require('./routes/router')
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname,'./public/index.html')
-})
-
-app.use('/', router)
-
-/* app.all('*', (req, res) => {
-  res.status(404).send('resource not found')
-})
-BO KOMU POTRZEBNA OBSŁUGA BŁĘDÓW*/
-
-app.get('/login', (req, res) => {
-  res.sendFile(__dirname,'./public/login.html')
-})
-
-app.post('/login', passport.authenticate('local', {
-  failureRedirect: 'loginfail.html',
-  successRedirect: 'index.html'
-}),
-  function(req, res) {
-    res.redirect('/~' + req.user.email);
-  });
-
-app.use(session(/* ... */));
-app.use(passport.authenticate('session'));
+app.use(passport.session())
 
 app.post('/register', async  (req, res) => {
   try {
@@ -76,9 +42,37 @@ app.post('/register', async  (req, res) => {
     })
     res.redirect('/login.html')
   } catch {
-    res.redirect('/loginfail.html')
+    res.redirect('/register.html')
   }
   console.log(users)
+})
+app.post('/login', passport.authenticate('local', {
+  failureRedirect: '/login.html',
+  successRedirect: '/index.html'
+}))
+
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname,'./public/login.html')
+})
+
+
+
+app.use('/', checkAuthenticated, router)
+app.get('/', checkAuthenticated, (req, res) => {
+  res.redirect('/index.html')
+})
+
+function checkAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    console.log("user is logged in")
+    return next()
+  }
+  console.log("not logged in")
+  res.redirect('/login.html')
+}
+
+app.all('*', (req, res) => {
+  res.status(404).send('resource not found')
 })
 
 app.listen(8000, () => {

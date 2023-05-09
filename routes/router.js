@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const {
   getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll,
 } = require('../controllers/dashboard')
