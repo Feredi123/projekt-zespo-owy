@@ -13,17 +13,17 @@ const initializePassport = require('./passport-config')
 
 initializePassport(
   passport,
-  name => users.find(user => user.name === name),
+  email => users.find(user => user.email === email),
   id => users.find(user => user.id === id)
   )
 
 const users = []; //tymczasowe przechowywanie urzytkowników do testów
-
 app.use(flash())
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: 'secret',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {path: '/', secure: false, maxAge: 60*60*15*60}
 }))
 
 app.use(passport.initialize())
@@ -54,17 +54,27 @@ app.get('/login', (req, res) => {
 app.post('/login', passport.authenticate('local', {
   failureRedirect: 'loginfail.html',
   successRedirect: 'index.html'
-}))
+}),
+  function(req, res) {
+    res.redirect('/~' + req.user.email);
+  });
+
+app.use(session(/* ... */));
+app.use(passport.authenticate('session'));
 
 app.post('/register', async  (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     users.push({
       id: Date.now().toString(),
-      name: req.body.name,
-      password: hashedPassword
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      phone: req.body.phone, 
+      password: hashedPassword,
+      manager_id: req.body.manager_id
     })
-    res.redirect('/register.html')
+    res.redirect('/login.html')
   } catch {
     res.redirect('/loginfail.html')
   }
