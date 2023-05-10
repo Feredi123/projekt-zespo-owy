@@ -124,26 +124,21 @@
             </div>
 
             <div class="dropdown">
-              <button>> Level</button>
-              <div class="dropdown-content-workspace">
-                <button v-if="conditions.length===0">Add new condition</button>
-                <button
-                  v-else
-                  v-for="(condition, index) in conditions"
-                  v-on:click="removeCondition(index)"
-                  v-on:key="condition"
-                >
-                  {{condition }} - {{index }}
-                </button>
-                <input
+              <button v-on:click="getProcessesById">> Process</button>
+            <div class="dropdown-content-workspace">
+                <select
+                  name="process"
+                  id="process-select"
                   style="width: 100%"
-                  type="text"
-                  v-model="newCondition"
-                  v-on:keyup.enter="addCondition"
-                />
+                  v-model="processCondition"
+                >
+                  <option value="Select Process">Select Process</option>
+                  <option v-for="skill in processes.data" v-model="newProcessCondition">
+                    {{skill.name}}
+                  </option>
+                </select>
               </div>
             </div>
-
           </bar>
 
           <table>
