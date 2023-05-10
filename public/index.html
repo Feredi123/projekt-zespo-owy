@@ -144,22 +144,6 @@
               </div>
             </div>
 
-            <div class="dropdown">
-              <button v-on:click="getProcessesById">> Process</button>
-            <div class="dropdown-content-workspace">
-                <select
-                  name="process"
-                  id="process-select"
-                  style="width: 100%"
-                  v-model="processCondition"
-                >
-                  <option value="Select Process">Select Process</option>
-                  <option v-for="skill in processes.data" v-model="newProcessCondition">
-                    {{skill.name}}
-                  </option>
-                </select>
-              </div>
-            </div>
           </bar>
 
           <table>

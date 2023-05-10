@@ -22,9 +22,11 @@ app.use(flash())
 app.use(session({
   secret: 'secret',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  rolling: true,
+  /*maxAge: new Date(Date.now() + /*900000 60000),*/
+  cookie: {path: '/', secure: false, maxAge: 30000},
 }))
-
 
 app.use(passport.session())
 
@@ -55,13 +57,6 @@ app.get('/login', (req, res) => {
   res.sendFile(__dirname,'./public/login.html')
 })
 
-
-
-app.use('/', checkAuthenticated, router)
-app.get('/', checkAuthenticated, (req, res) => {
-  res.redirect('/index.html')
-})
-
 function checkAuthenticated(req, res, next) {
   if(req.isAuthenticated()) {
     console.log("user is logged in")
@@ -70,6 +65,11 @@ function checkAuthenticated(req, res, next) {
   console.log("not logged in")
   res.redirect('/login.html')
 }
+
+app.use('/', checkAuthenticated, router)
+app.get('/', checkAuthenticated, (req, res) => {
+  res.redirect('/index.html')
+})
 
 app.all('*', (req, res) => {
   res.status(404).send('resource not found')
