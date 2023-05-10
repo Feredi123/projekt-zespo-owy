@@ -8,6 +8,7 @@ const users = []; //tymczasowe przechowywanie urzytkowników do testów
 const initializePassport = require('./passport-config')
 const router = require('./routes/router')
 
+const pool = require('./config/database')
 initializePassport(
   passport,
   email => users.find(user => user.email === email),
@@ -33,6 +34,15 @@ app.use(passport.session())
 app.post('/register', async  (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    
+      first_name = req.body.first_name;
+      last_name = req.body.last_name;
+      email = req.body.email;
+      phone = req.body.phone;
+      password = hashedPassword;
+      manager_id = req.body.manager_id;
+
+    pool.query(`INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id) VALUES (NULL, '${first_name}', '${last_name}', '${email}', '${phone}', '${password}', NULL, '0', '${manager_id}')`);
     users.push({
       id: Date.now().toString(),
       first_name: req.body.first_name,
@@ -46,7 +56,6 @@ app.post('/register', async  (req, res) => {
   } catch {
     res.redirect('/register.html')
   }
-  console.log(users)
 })
 app.post('/login', passport.authenticate('local', {
   failureRedirect: '/login.html',

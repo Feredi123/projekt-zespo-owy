@@ -76,16 +76,18 @@ INSERT INTO `absences_types` (`absencetype_id`, `name`) VALUES
 --
 
 CREATE TABLE `employees` (
-  `employee_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(20) DEFAULT NULL,
   `second_name` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `phone` int(11) DEFAULT NULL,
-  `password` varchar(25) DEFAULT NULL,
+  `password` varchar(61) DEFAULT NULL,
   `photo` varchar(50) DEFAULT NULL,
   `admin_rights` int(11) DEFAULT NULL,
-  `manager_id` int(11) DEFAULT NULL
+  `manager_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Zrzut danych tabeli `employees`
@@ -278,7 +280,6 @@ ALTER TABLE `absences_types`
 -- Indeksy dla tabeli `employees`
 --
 ALTER TABLE `employees`
-  ADD PRIMARY KEY (`employee_id`),
   ADD KEY `employees_employees_fk` (`manager_id`);
 
 --
