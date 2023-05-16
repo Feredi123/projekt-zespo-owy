@@ -4,18 +4,17 @@ const bcrypt = require('bcrypt'); // hashowanie haseł
 const passport = require('passport'); //obsługa logowania
 const flash = require('express-flash')
 const session = require('express-session')
-const users = []; //tymczasowe przechowywanie urzytkowników do testów
 const initializePassport = require('./passport-config')
 const router = require('./routes/router')
 
-const pool = require('./config/database')
+
 initializePassport(
   passport,
   email => users.find(user => user.email === email),
   id => users.find(user => user.id === id)
 )
 
-
+const pool = require('./config/database')
 app.use(express.static('./public'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -31,6 +30,8 @@ app.use(session({
 
 app.use(passport.session())
 
+
+
 app.post('/register', async  (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -43,15 +44,6 @@ app.post('/register', async  (req, res) => {
       manager_id = req.body.manager_id;
 
     pool.query(`INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id) VALUES (NULL, '${first_name}', '${last_name}', '${email}', '${phone}', '${password}', NULL, '0', '${manager_id}')`);
-    users.push({
-      id: Date.now().toString(),
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      phone: req.body.phone, 
-      password: hashedPassword,
-      manager_id: req.body.manager_id
-    })
     res.redirect('/login.html')
   } catch {
     res.redirect('/register.html')
