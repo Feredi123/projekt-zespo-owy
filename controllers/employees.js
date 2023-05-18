@@ -1,6 +1,20 @@
 const { json } = require('express');
 const pool = require('../config/database')
 
+
+async function getEmployee(req, res) {
+  try {
+    employee_id = req.user.employee_id
+    const [employee] = await pool.query('SELECT employee_id, first_name, second_name FROM employees WHERE employee_id=?',[employee_id]);
+
+    res.status(200).json(employee);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 async function getEmployees(req, res) {
     try {
       const [employees] = await pool.query('SELECT employee_id, first_name, second_name FROM employees');
@@ -45,6 +59,7 @@ async function getEmployees(req, res) {
 
 
 module.exports = {
+    getEmployee,
     getEmployees,
     getEmployeesBySkill,
     getEmployeesByProcess,

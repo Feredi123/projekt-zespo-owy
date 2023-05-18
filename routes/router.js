@@ -5,6 +5,7 @@ const {
 } = require('../controllers/dashboard')
 
 const {
+  getEmployee,
   getEmployees,
   getEmployeesBySkill,
   getEmployeesByProcess,
@@ -20,6 +21,7 @@ router.route('/absences').get(getAbsences)  // zwraca id pracownika i kiedy ich 
 router.route('/absences/:date').get(getAbsencesByDate)  //:date - YYYY-MM-DD , zwraca id pracowników i kiedy ich nie będzie od podanej daty przez 4 kolejne dni(Łącznie 5 dni)
 
 router.route('/employees').get(getEmployees) // zwraca pracowników id, imię, nazwisko
+router.route('/employee').get(getEmployee) // zwraca pracownika id, imię, nazwisko zalogowanegho pracownika
 router.route('/employees/skill/:id').get(getEmployeesBySkill) // :id - id umiejętności, zwraca pracowników id, imię, nazwisko i poziom umiejętności
 router.route('/employees/process/:id').get(getEmployeesByProcess) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
 //router.route('/postman').post(createPersonPostman)
