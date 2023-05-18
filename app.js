@@ -25,7 +25,7 @@ app.use(session({
   saveUninitialized: false,
   rolling: true,
   /*maxAge: new Date(Date.now() + /*900000 60000),*/
-  cookie: {path: '/', secure: false, maxAge: 30000},
+  cookie: {path: '/', secure: false, maxAge: (15*60*1000)},
 }))
 
 app.use(passport.session())
