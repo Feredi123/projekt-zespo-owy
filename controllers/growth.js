@@ -4,8 +4,11 @@ const pool = require('../config/database')
 async function postGrowthSkill(req, res) {
     try {
         const employee_id = req.user.employee_id;
-        const { id, level } = req.params;
-        await pool.query('INSERT INTO employee_skill (skills_skills_id, employees_employee_id, level) VALUES (?,?,?);',[id,employee_id,level]);
+        const skill_id = req.body.skills_id;
+        const start_date = req.body.start_date;
+        const level = req.body.level;
+        const end_date = req.body.end_date;
+        await pool.query('INSERT INTO `growth` (`growth_id`, `employees_employee_id`, `skills_skill_id`, `level`, `start_date`, `end_date`) VALUES (NULL, ?, ?, ?, ?, ?);',[employee_id,skill_id,level,`"${start_date}"`,`"${end_date}"`]);
     
         res.status(201);
     
@@ -18,10 +21,15 @@ async function postGrowthSkill(req, res) {
   async function putGrowthSkill(req, res) {
     try {
         const employee_id = req.user.employee_id;
-        const { id, level } = req.params;
-        await pool.query('UPDATE employee_skill SET level = ? WHERE employees_employee_id = ? AND skills_skills_id = ?;',[level,employee_id,id]);
+        const { id } = req.params;
+        const start_date = req.body.start_date;
+        const end_date = req.body.end_date;
+        const level = req.body.level;
+        const skill_id = req.body.skills_id;
+        
+        await pool.query('UPDATE growth SET skills_skill_id = ?, level = ?, start_date = ?, end_date = ? WHERE growth_id = ? AND employees_employee_id = ?;',[skill_id,level,`"${start_date}"`,`"${end_date}"`,id,employee_id]);
     
-        res.status(200).send('Resource updated successfully');
+        res.status(200);
     
       } catch (err) {
         console.error(err);
@@ -33,7 +41,7 @@ async function postGrowthSkill(req, res) {
     try {
         const employee_id = req.user.employee_id;
         const { id } = req.params;
-        await pool.query('DELETE FROM employee_skill WHERE employees_employee_id = ? AND skills_skills_id = ?;',[employee_id,id]);
+        await pool.query('DELETE FROM growth WHERE employees_employee_id = ? AND growth_id = ?;',[employee_id,id]);
     
         res.status(204);
     
@@ -46,7 +54,21 @@ async function postGrowthSkill(req, res) {
   async function getGrowthSkill(req, res) {
     try {
         const employee_id = req.user.employee_id
-        const [result] =  await pool.query('SELECT skills_skills_id skill_id, level FROM employee_skill WHERE employees_employee_id = ?',[employee_id]);
+        const [result] =  await pool.query('SELECT * FROM growth where employees_employee_id = ?;',[employee_id]);
+
+        res.status(200).json(result);
+    
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+  }
+
+  async function getGrowthSkillById(req, res) {
+    try {
+        const employee_id = req.user.employee_id;
+        const { id } = req.params;
+        const [result] =  await pool.query('SELECT * FROM growth where employees_employee_id = ? and growth_id =?;',[employee_id,id]);
 
         res.status(200).json(result);
     
@@ -62,4 +84,5 @@ module.exports = {
     putGrowthSkill,
     deleteGrowthSkill,
     getGrowthSkill,
+    getGrowthSkillById,
 }

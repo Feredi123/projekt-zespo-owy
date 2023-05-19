@@ -17,7 +17,7 @@ const {
 } = require('../controllers/employeeSkill')
 
 const {
-    postGrowthSkill, putGrowthSkill, deleteGrowthSkill, getGrowthSkill,
+    postGrowthSkill, putGrowthSkill, deleteGrowthSkill, getGrowthSkill, getGrowthSkillById,
 } = require('../controllers/growth')
 
 const {
@@ -40,10 +40,11 @@ router.route('/employee-skill/:id/:level').put(putEmployeeSkill) // :id - id umi
 router.route('/employee-skill/:id').delete(deleteEmployeeSkill) // :id - id umiejętności usuwa umiejętność zalogowanego użytkownika
 router.route('/employee-skill').get(getEmployeeSkill) // zwraca id umiejętności i ich poziom zalogowanego użytkownika
 
-router.route('/growth-skill').post(postGrowthSkill) // PLACEHOLDER
-router.route('/growth-skill').put(putGrowthSkill) // PLACEHOLDER
-router.route('/growth-skill').delete(deleteGrowthSkill) // PLACEHOLDER
-router.route('/growth-skill').get(getGrowthSkill) // PLACEHOLDER
+router.route('/growth-skill').post(postGrowthSkill) // tworzy growth w request skill_id: start_date: end_date: level:
+router.route('/growth-skill/:id').put(putGrowthSkill) // :id - growth_id aktualizuje growth w request skill_id: start_date: end_date: level:
+router.route('/growth-skill/:id').delete(deleteGrowthSkill) // :id - growth_id usuwa growth o id = :id obecnie zalogwanemu użytkownikowi
+router.route('/growth-skill').get(getGrowthSkill) // zwraca growth_id,	id pracownika, id umiejętności, datę początkową i końcową wszystkich growth zalogowanego pracownika
+router.route('/growth-skill/:id').get(getGrowthSkillById) // zwraca growth_id,	id pracownika, id umiejętności, datę początkową i końcową wszystkich wybranego growth zalogowanego pracownika
 
 router.route('/employees').get(getEmployees) // zwraca pracowników id, imię, nazwisko
 router.route('/employee/:id').get(getEmployeeById) // :id - id pracownika,  zwraca pracownika id, imię

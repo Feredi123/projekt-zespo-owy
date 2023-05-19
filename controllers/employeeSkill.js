@@ -21,7 +21,7 @@ async function postEmployeeSkill(req, res) {
         const { id, level } = req.params;
         await pool.query('UPDATE employee_skill SET level = ? WHERE employees_employee_id = ? AND skills_skills_id = ?;',[level,employee_id,id]);
     
-        res.status(200).send('Resource updated successfully');
+        res.status(200);
     
       } catch (err) {
         console.error(err);

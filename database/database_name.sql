@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Maj 2023, 23:31
+-- Czas generowania: 19 Maj 2023, 18:26
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -161,7 +161,8 @@ INSERT INTO `employees` (`employee_id`, `first_name`, `second_name`, `email`, `p
 (63, 'Quinn', 'Kim', 'quinn.kim@example.com', NULL, NULL, NULL, 0, 21, 0),
 (64, 'Alex', 'Lee', 'alex.lee@example.com', NULL, NULL, NULL, 0, 19, 0),
 (65, 'Isabella', 'Nguyen', 'isabella.nguyen@example.com', NULL, NULL, NULL, 0, 19, 0),
-(66, 'Jan', 'Kowalski', 'jan@kowalski.com', 789456123, '789564123103223,', 'c:/photos/photo1', 0, 1, 0);
+(66, 'Jan', 'Kowalski', 'jan@kowalski.com', 789456123, '789564123103223,', 'c:/photos/photo1', 0, 1, 0),
+(76, 'jan', 'kow', 'a@b.c', 789456123, '$2b$10$m0XRPuMziU8NtY/beZJQSuuAt1xBv.it0YcANWaPB22SJ8eGmyS1q', NULL, 0, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -189,6 +190,29 @@ INSERT INTO `employee_skill` (`skills_skills_id`, `employees_employee_id`, `leve
 (2, 6, 1),
 (4, 6, 4),
 (1, 6, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `growth`
+--
+
+CREATE TABLE `growth` (
+  `growth_id` int(11) NOT NULL,
+  `employees_employee_id` int(11) NOT NULL,
+  `skills_skill_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `growth`
+--
+
+INSERT INTO `growth` (`growth_id`, `employees_employee_id`, `skills_skill_id`, `level`, `start_date`, `end_date`) VALUES
+(1, 4, 4, 4, '2023-05-19', '2023-09-30'),
+(3, 76, 4, 7, '2023-05-17', '2023-05-27');
 
 -- --------------------------------------------------------
 
@@ -293,6 +317,14 @@ ALTER TABLE `employee_skill`
   ADD KEY `employee_skill_skills_fk` (`skills_skills_id`);
 
 --
+-- Indeksy dla tabeli `growth`
+--
+ALTER TABLE `growth`
+  ADD PRIMARY KEY (`growth_id`),
+  ADD KEY `employees_employee_id` (`employees_employee_id`),
+  ADD KEY `skills_skill_id` (`skills_skill_id`);
+
+--
 -- Indeksy dla tabeli `processes`
 --
 ALTER TABLE `processes`
@@ -326,7 +358,13 @@ ALTER TABLE `absences`
 -- AUTO_INCREMENT dla tabeli `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT dla tabeli `growth`
+--
+ALTER TABLE `growth`
+  MODIFY `growth_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -351,6 +389,13 @@ ALTER TABLE `employees`
 ALTER TABLE `employee_skill`
   ADD CONSTRAINT `employee_skill_employees_fk` FOREIGN KEY (`employees_employee_id`) REFERENCES `employees` (`employee_id`),
   ADD CONSTRAINT `employee_skill_skills_fk` FOREIGN KEY (`skills_skills_id`) REFERENCES `skills` (`skills_id`);
+
+--
+-- Ograniczenia dla tabeli `growth`
+--
+ALTER TABLE `growth`
+  ADD CONSTRAINT `growth_ibfk_1` FOREIGN KEY (`employees_employee_id`) REFERENCES `employees` (`employee_id`),
+  ADD CONSTRAINT `growth_ibfk_2` FOREIGN KEY (`skills_skill_id`) REFERENCES `skills` (`skills_id`);
 
 --
 -- Ograniczenia dla tabeli `processes`
