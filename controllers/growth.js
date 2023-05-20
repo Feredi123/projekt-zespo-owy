@@ -54,7 +54,7 @@ async function postGrowthSkill(req, res) {
   async function getGrowthSkill(req, res) {
     try {
         const employee_id = req.user.employee_id
-        const [result] =  await pool.query('SELECT * FROM growth where employees_employee_id = ?;',[employee_id]);
+        const [result] =  await pool.query('SELECT g.growth_id, g.employees_employee_id, g.skills_skill_id, g.level, g.start_date, g.end_date, s.name skill_name FROM growth as g join skills as s ON s.skills_id = g.skills_skill_id where employees_employee_id = ?;',[employee_id]);
 
         res.status(200).json(result);
     

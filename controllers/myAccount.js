@@ -20,7 +20,7 @@ async function getMyAbsences(req, res) {
         const absence_type = req.body.absence_type;
         const start_date = req.body.start_date;
         const end_date = req.body.end_date;
-        await pool.query('INSERT INTO absences (employees_employee_id, start_date,end_date, absences_types_absencetype_id) VALUES (?, ?, ?, ?);',[employee_id,`"${start_date}"`, `"${end_date}"`,absence_type]);
+        await pool.query('INSERT INTO absences (employees_employee_id, start_date,end_date, absences_types_absencetype_id) VALUES (?, ?, ?, ?);',[employee_id,start_date,end_date,absence_type]);
     
         res.status(201);
     
