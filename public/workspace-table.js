@@ -2,9 +2,17 @@ function getDate(nexthop) {
   const today = new Date();
   today.setDate(today.getDate() + nexthop);
   let day = today.getDate();
-  let month = today.getMonth();
+  let month = today.getMonth() + 1;
   let year = today.getFullYear();
   return day + "-" + month + "-" + year;
+}
+
+function getDate() {
+  const today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  return year + "-" + month + "-" + day;
 }
 
 const app = Vue.createApp({
@@ -44,7 +52,7 @@ const app = Vue.createApp({
       }
     },
     tableDate() {
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         this.dates.push(getDate(i));
       }
     },
@@ -78,7 +86,8 @@ const app = Vue.createApp({
     // },
     async getUser() {
       try {
-        this.employeesData = await axios.get("/dashboard/all/2023-04-25");
+        this.employeesData = await axios.get("/dashboard/all/"+getDate());
+        console.log(this.employeesData)
         this.tableDate();
       } catch (error) {
         console.error(error);

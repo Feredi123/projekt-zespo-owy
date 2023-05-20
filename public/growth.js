@@ -46,13 +46,11 @@ const app = Vue.createApp({
       console.log("abba");
       try {
         console.log("lubie abbe");
-        let date = new Date("2023-05-19");
-        let date2 =new Date("2023-07-30");
         const res = await axios.post("/growth-skill", {
           skills_id: 4,
           level: 4,
-          start_date: date,
-          end_date: date2,
+          start_date: "2023-05-19",
+          end_date: "2023-07-30",
         });
       } catch (error) {
         console.error(error);

@@ -143,17 +143,17 @@
 
           <table>
             <div v-if="skillsConditions.length===0">
-                      <li>
+              <li>
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li v-for="(person,index) in filteredList">
               <h2>{{person.first_name}} {{person.second_name}}</h2>
               <h2 v-if="person.is_absent_today!==true">Obecny</h2>
-              <h2 v-else>nieobecny</h2>
+              <h2 v-else>Nieobecny</h2>
               <h2 v-if="person.is_absent_tomorrow!==true">Obecny</h2>
               <h2 v-else>Nieobecny</h2>
               <h2 v-if="person.is_absent!==true">Obecny</h2>
-              <h2 v-else>nieobecny</h2>
+              <h2 v-else>Nieobecny</h2>
             </li>
             </div>
              <div v-else-if="skillsConditions.length!==0&&conditions.length===0">
@@ -161,13 +161,13 @@
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li style="background-color:red;" v-for="(person,index) in employeesData.data">
-            <h2 v-if="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-if="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
               <h2 v-if="person.is_absent_today!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
               <h2 v-if="person.is_absent_tomorrow!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
               <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
               <h2 v-if="person.is_absent!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
             </li>
             </div>
             <div v-else>
