@@ -94,12 +94,12 @@
               <button>b</button>
             </div>
             <div style="display: flex; flex: 1; flex-direction: column">
-              <div style="background-color: green" v-bind:style="barSize(0)">
-                {{growth.data[0].end_date}}
+              <div v-for="(object, index) in growth.data">
+              <div style="background-color: green" v-bind:style="barSize(index)">
+                {{object.end_date}}
               </div>
-              <div style="background-color: green" v-bind:style="barSize(1)">
-                {{growth.data[1].end_date}}
               </div>
+
               <div
                 style="
                   background-color: blue;
