@@ -2,22 +2,24 @@
 
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PPG </title>
+    <title>PPG</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/side-bar.css">
-    <link rel="stylesheet" href="styles/workspace.css">
-    <link rel="stylesheet" href="styles/top-bar.css">
-        <script src="https://unpkg.com/vue@next" defer></script>
-    <script src="workspace-table.js" defer></script>
-        <script src="logging.js" defer></script>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/side-bar.css" />
+    <link rel="stylesheet" href="styles/workspace.css" />
+    <link rel="stylesheet" href="styles/top-bar.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="growth.js" defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
@@ -28,40 +30,91 @@
   <body>
     <main>
       <div class="side-bar">
-        <img class="logo" src="styles/logo.webp" alt="logo">
-        <button onclick="window.location.href='index.html';">&#9733; Dashboard</button>
-        <button onclick="window.location.href='manage-skills.html';">&#9733; Manage skills</button>
-        <button onclick="window.location.href='my-account.html';">&#9733; My account</button>
-        <button-active onclick="window.location.href='growth.html';">&#9733; Growth</button-active>
+        <img class="logo" src="styles/logo.webp" alt="logo" />
+        <button onclick="window.location.href='index.html';">
+          &#9733; Dashboard
+        </button>
+        <button onclick="window.location.href='manage-skills.html';">
+          &#9733; Manage skills
+        </button>
+        <button onclick="window.location.href='my-account.html';">
+          &#9733; My account
+        </button>
+        <button-active onclick="window.location.href='growth.html';"
+          >&#9733; Growth</button-active
+        >
       </div>
 
       <div class="workspace-body">
         <div class="user-bar">
-          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo">
+          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo" />
 
           <div class="dropdown">
             <name-surname> Name Surname ></name-surname>
             <div class="dropdown-content">
-              <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
-              <input type="text" placeholder="Login ID" class="login-info">
-              <input type="text" placeholder="password" class="login-info">
+              <img
+                class="user-bar-logo"
+                src="styles/logo.webp"
+                alt="logo"
+                style="border-radius: 50%; background-color: transparent"
+              />
+              <input type="text" placeholder="Login ID" class="login-info" />
+              <input type="text" placeholder="password" class="login-info" />
               <button>Login</button>
               <button>Forgot password</button>
             </div>
+          </div>
+        </div>
+
+        <div class="workspace" id="growth">
+          <div
+            style="
+              background-color: rgb(227, 227, 227);
+              flex: 1;
+              margin: 5px;
+              border-radius: 20px;
+              margin-top: 20px;
+              overflow: auto;
+              display: flex;
+              flex-direction: row;
+            "
+          >
+            <div
+              style="
+                background-color: red;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              napis
+              <button>a</button>
+              <button>a</button>
+              <button>a</button>
+              <button>b</button>
+            </div>
+            <div style="display: flex; flex: 1; flex-direction: column">
+              <div style="background-color: green" v-bind:style="barSize(0)">
+                {{growth.data[0].end_date}}
+              </div>
+              <div style="background-color: green" v-bind:style="barSize(1)">
+                {{growth.data[1].end_date}}
+              </div>
+              <div
+                style="
+                  background-color: blue;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: end;
+                "
+              >
+                <li v-for="q in qInTable">{{q}} |</li>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      
-    <div class="workspace" id="workspace-table">
-      <div style="background-color: rgb(227, 227, 227); flex:1; margin:5px; border-radius: 20px; margin-top: 20px; overflow:auto;">
-
-
-      </div>
-    </div>
-
-
-    </div>
-  </main>
+    </main>
   </body>
 </html>
-

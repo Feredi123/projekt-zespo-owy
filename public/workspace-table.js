@@ -1,6 +1,7 @@
 function getDate(nexthop) {
   const today = new Date();
-  let day = today.getDate() + nexthop;
+  today.setDate(today.getDate() + nexthop);
+  let day = today.getDate();
   let month = today.getMonth();
   let year = today.getFullYear();
   return day + "-" + month + "-" + year;
