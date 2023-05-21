@@ -40,7 +40,12 @@ const app = Vue.createApp({
 
     async getGrowth() {
       try {
-        this.growth = await axios.get("/growth-skill");
+        const response = await axios.get("/growth-skill");
+        if(!Array.isArray(response.data)){
+          window.location.href = '/login.html';
+        } else {
+          this.growth = response;
+        }
       } catch (error) {
         console.error(error);
       }

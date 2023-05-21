@@ -7,6 +7,14 @@ function getDate(nexthop) {
   return day + "-" + month + "-" + year;
 }
 
+function getStartDate(){
+  const today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  return day + "-" + month + "-" + year;
+}
+
 
 function tableDate(datesTable) {
       for (let i = 0; i < 5; i++) {
@@ -73,7 +81,6 @@ const app = Vue.createApp({
         } else {
           this.employeesData = response;
         }
-        this.employeesData = await axios.get("/dashboard/all/" + getDate());
       } catch (error) {
         console.error(error);
       }
