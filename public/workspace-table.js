@@ -67,6 +67,12 @@ const app = Vue.createApp({
     },
     async getUser() {
       try {
+        const response = await axios.get("/dashboard/all/" + getStartDate());
+        if(!Array.isArray(response.data)){
+          window.location.href = '/login.html';
+        } else {
+          this.employeesData = response;
+        }
         this.employeesData = await axios.get("/dashboard/all/" + getDate());
       } catch (error) {
         console.error(error);
