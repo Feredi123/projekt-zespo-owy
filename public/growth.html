@@ -87,16 +87,19 @@
                 flex-direction: column;
               "
             >
-              napis
-              <button v-on:click="putData()">a</button>
-              <button>a</button>
-              <button>a</button>
-              <button>b</button>
+              <button v-on:click="putData()">put data</button>
+              <button v-on:click="deleteData()">delete data</button>
+              <input                   style="width: 90%; align-self: center"
+                  type="text"
+                  v-model="delData">
+              <input                   style="width: 90%; align-self: center"
+                  type="text"
+                  v-model="bufforDate">
             </div>
             <div style="display: flex; flex: 1; flex-direction: column">
               <div v-for="(object, index) in growth.data">
               <div style="background-color: green" v-bind:style="barSize(index)">
-                {{object.end_date}}
+                {{object.growth_id}}
               </div>
               </div>
 

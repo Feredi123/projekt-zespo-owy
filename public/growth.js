@@ -17,6 +17,8 @@ const app = Vue.createApp({
       growth: {},
       dateToday: "",
       dateTable: "",
+      delData: "id do usunięcia",
+      bufforDate: "dodaj date w tym formacie 2023-05-19",
     };
   },
 
@@ -32,7 +34,8 @@ const app = Vue.createApp({
       let lower = timeDifference(this.dateToday, dateObject);
       let bigger = timeDifference(this.dateToday, this.dateTable);
       size = (lower / bigger) * 100;
-      return { width: size + "%" };
+      if(size<=100){      return { width: size + "%" };}
+      else{return { width: 100 + "%" };}
     },
 
     async getGrowth() {
@@ -43,21 +46,26 @@ const app = Vue.createApp({
       }
     },
     async putData() {
-      console.log("abba");
       try {
-        console.log("lubie abbe");
         const res = await axios.post("/growth-skill", {
           skills_id: 4,
           level: 4,
           start_date: "2023-05-19",
-          end_date: "2023-07-30",
+          end_date: this.bufforDate,
         });
       } catch (error) {
         console.error(error);
       }
     },
+    async deleteData() {
+      try {
+        const res = await axios.delete("/growth-skill/" + this.delData);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
-  beforeMount() {
+  created() {
     this.getGrowth();
   },
 });
