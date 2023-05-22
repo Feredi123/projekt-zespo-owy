@@ -146,8 +146,10 @@
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li v-for="(person,index) in filteredList">
-              <h2>{{person.first_name}} {{person.second_name}}</h2>
-              <h2 v-for="date in person">{{date.absences ? "wolne":""}}</h2>
+              <h2 >{{person.first_name}} {{person.second_name}}
+                <a style="font-size:auto;" v-for="skill in person.skills">{{skill.skill_name}}<br></a>
+              </h2>
+              <h2 v-for="date in person.absences">{{date ? "urlop":"jest"}} {{date}}</h2>
             </li>
             </div>
              <div v-else-if="skillsConditions.length!==0&&conditions.length===0">
@@ -158,7 +160,7 @@
 
               <div v-if="compareObjects(person.skills, skillsConditions)" style="display:flex; flex-direction: row; flex:1;">
               <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}</h2>
-              <h2 style="flex:1;" v-for="date in person">{{date.absences ? "wolne":""}}</h2></div>
+              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "wolne":""}}</h2></div>
             </li>
             </div>
             <div v-else>
@@ -168,7 +170,7 @@
             <li v-for="(person,index) in filteredList">
               <div v-if="compareObjects(person.skills, skillsConditions)" style="display:flex; flex-direction: row; flex:1;">
               <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}</h2>
-              <h2 style="flex:1;" v-for="date in person">{{date.absences ? "wolne":""}}</h2></div>
+              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "wolne":""}}</h2></div>
             </li>
             </div>
 
@@ -177,7 +179,7 @@
           <table>
             <li v-for="(person,index) in employeesData.data">
               <h2>{{person.first_name}} {{person.second_name}}</h2>
-              <h2 v-for="date in person">{{date.absences ? "wolne":""}}</h2>
+              <h2 v-for="date in person.absences">{{date ? "wolne":""}}</h2>
             </li>
           </table>
         </div>
