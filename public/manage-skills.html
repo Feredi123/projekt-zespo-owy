@@ -16,35 +16,77 @@
     <link rel="stylesheet" href="styles/workspace.css">
     <link rel="stylesheet" href="styles/top-bar.css">
     <link rel="stylesheet" href="styles/manage-skills.css">
+        <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="side-bar.js" defer></script>
+    <script src="top-bar.js" defer></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
     <main>
-      <div class="side-bar">
-        <img class="logo" src="styles/logo.webp" alt="logo">
-        <button onclick="window.location.href='index.html';">&#9733; Dashboard</button>
-        <button-active onclick="window.location.href='manage-skills.html';">&#9733; Manage skills</button-active>
-        <button onclick="window.location.href='my-account.html';">&#9733; My account</button>
-        <button onclick="window.location.href='growth.html';">&#9733; Growth</button>
-      </div>
+        <div id="side-bar">
+        <div v-if="isShown" class="side-bar">
 
-      <div class="workspace-body">
-        <div class="user-bar">
-          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo">
+        <img class="logo" src="styles/logo.webp" alt="logo" />
+        <button onclick="window.location.href='index.html';"
+          >&#9733; Dashboard</button
+        >
+        <button-active onclick="window.location.href='manage-skills.html';">
+          &#9733; Manage skills
+        </button-active>
+        <button onclick="window.location.href='my-account.html';">
+          &#9733; My account
+        </button>
+        <button onclick="window.location.href='growth.html';">
+          &#9733; Growth
+        </button>
+        <button onclick="window.location.href='register.html';">
+          &#9733; Add worker
+        </button>
 
-          <div class="dropdown">
-            <name-surname> Name Surname ></name-surname>
-            <div class="dropdown-content">
-              <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
-              <input type="text" placeholder="Login ID" class="login-info">
-              <input type="text" placeholder="password" class="login-info">
-              <button>Login</button>
-              <button>Forgot password</button>
-            </div>
+        <button v-on:click="toggleMenu()">Toggle Menu</button>
+        </div>
+
+        <div v-else class="side-bar2">
+          <img src="styles/logo.webp" alt="logo"/>
+          <img src="styles/dashboard.png" alt="logo" onclick="window.location.href='index.html';"/>
+          <img src="styles/star.png" onclick="window.location.href='manage-skills.html';" alt="logo" style="background-color:  rgb(131, 197, 232);"/>
+          <img src="styles/person.png" alt="logo" onclick="window.location.href='my-account.html';" />
+          <img src="styles/growth.png" alt="logo" onclick="window.location.href='growth.html';"/>
+          <img src="styles/star.png" alt="logo" onclick="window.location.href='register.html';"/>
+          <img v-on:click="toggleMenu()" src="styles/star.png" alt="logo" />
         </div>
       </div>
 
-      
+      <div class="workspace-body">
+        <div class="user-bar" id="top-bar">
+          <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
+          <div class="dropdown">
+            <name-surname v-for="employee in employeeData"> {{employee.first_name}} {{employee.second_name}}></name-surname>
+            <!-- <div class="dropdown-content">
+              <img
+                class="user-bar-logo"
+                src="styles/avatar.jpg"
+                alt="avatar"
+                style="border-radius: 50%; background-color: transparent"
+              />
+              <input type="text" placeholder="Login ID" class="login-info" />
+              <input type="text" placeholder="password" class="login-info" />
+              <button>Login</button>
+              <button>Forgot password</button>
+            </div> -->
+          </div>
+        </div>
+
+
+
+
+          
     <div class="workspace">
       <manage-skills>
         <div class="manage-skills">
@@ -134,6 +176,7 @@
         </div>
       </manage-skills>
     </div>
+      </div>
 
 
     </div>
