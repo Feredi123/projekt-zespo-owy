@@ -161,6 +161,18 @@ async function getAbsences(req, res) {
   }
 }
 
+async function getAbsenceTypes(req, res) {
+  try {
+    const [absenceTypes] = await pool.query('SELECT * FROM absences_types;');
+
+    res.status(200).json(absenceTypes);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 async function getSkills(req, res) {
   try {
     const [skills] = await pool.query('SELECT skills_id skill_id, name FROM skills');
@@ -216,6 +228,7 @@ module.exports = {
     getAbsences,
     getSkills,
     getAbsencesByDate,
-    getDashboardAll
+    getDashboardAll,
+    getAbsenceTypes,
 
 }

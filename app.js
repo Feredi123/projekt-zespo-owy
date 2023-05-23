@@ -6,6 +6,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const initializePassport = require('./passport-config')
 const router = require('./routes/router')
+const path = require('path');
 
 
 initializePassport(
@@ -54,18 +55,19 @@ app.post('/login', passport.authenticate('local', {
   successRedirect: '/index.html'
 }))
 
-app.get('/login', (req, res) => {
-  res.sendFile(__dirname,'./public/login.html')
-})
-
 function checkAuthenticated(req, res, next) {
   if(req.isAuthenticated()) {
     console.log("user is logged in")
     return next()
   }
   console.log("not logged in")
-  res.redirect('/login.html')
+  res.redirect('/login')
 }
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname,'/public/login.html'))
+})
+
 
 app.use('/', checkAuthenticated, router)
 app.get('/', checkAuthenticated, (req, res) => {

@@ -8,7 +8,7 @@ async function postGrowthSkill(req, res) {
         const start_date = req.body.start_date;
         const level = req.body.level;
         const end_date = req.body.end_date;
-        await pool.query('INSERT INTO `growth` (`growth_id`, `employees_employee_id`, `skills_skill_id`, `level`, `start_date`, `end_date`) VALUES (NULL, ?, ?, ?, ?, ?);',[employee_id,skill_id,level,`"${start_date}"`,`"${end_date}"`]);
+        await pool.query('INSERT INTO `growth` (`growth_id`, `employees_employee_id`, `skills_skill_id`, `level`, `start_date`, `end_date`) VALUES (NULL, ?, ?, ?, ?, ?);',[employee_id,skill_id,level,start_date,end_date]);
     
         res.status(201);
     
@@ -27,7 +27,7 @@ async function postGrowthSkill(req, res) {
         const level = req.body.level;
         const skill_id = req.body.skills_id;
         
-        await pool.query('UPDATE growth SET skills_skill_id = ?, level = ?, start_date = ?, end_date = ? WHERE growth_id = ? AND employees_employee_id = ?;',[skill_id,level,`"${start_date}"`,`"${end_date}"`,id,employee_id]);
+        await pool.query('UPDATE growth SET skills_skill_id = ?, level = ?, start_date = ?, end_date = ? WHERE growth_id = ? AND employees_employee_id = ?;',[skill_id,level,start_date,end_date,id,employee_id]);
     
         res.status(200);
     
@@ -54,7 +54,7 @@ async function postGrowthSkill(req, res) {
   async function getGrowthSkill(req, res) {
     try {
         const employee_id = req.user.employee_id
-        const [result] =  await pool.query('SELECT * FROM growth where employees_employee_id = ?;',[employee_id]);
+        const [result] =  await pool.query('SELECT g.growth_id, g.employees_employee_id, g.skills_skill_id, g.level, g.start_date, g.end_date, s.name skill_name FROM growth as g join skills as s ON s.skills_id = g.skills_skill_id where employees_employee_id = ?;',[employee_id]);
 
         res.status(200).json(result);
     

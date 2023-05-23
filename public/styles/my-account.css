@@ -8,7 +8,7 @@ my-account {
   margin: 5px;
 }
 
-my-account user-info {
+my-account #user-info {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -19,7 +19,7 @@ my-account user-info {
   margin-left: 10px;
 }
 
-user-info text {
+#user-info text {
   align-self: center;
   font-size: 30px;
   width: 100%;
@@ -27,7 +27,7 @@ user-info text {
   margin-top: 15px;
 }
 
-user-info button {
+#user-info button {
   align-self: center;
   font-size: 30px;
   background-color: rgb(0, 120, 185);
@@ -38,15 +38,15 @@ user-info button {
   margin-top: 20px;
 }
 
-user-info button:hover {
+#user-info button:hover {
   background-color: rgb(131, 197, 232);
 }
 
-user-info button:active {
+#user-info button:active {
   background-color: rgba(131, 197, 232, 0.6);
 }
 
-user-info absence-button {
+#user-info .absence-button {
   align-self: center;
   font-size: 30px;
   background-color: red;
@@ -58,15 +58,15 @@ user-info absence-button {
   text-align: center;
 }
 
-user-info absence-button:hover {
+#user-info .absence-button:hover {
   background-color: rgb(232, 131, 131);
 }
 
-user-info absence-button:active {
+#user-info .absence-button:active {
   background-color: rgba(232, 131, 131, 0.6);
 }
 
-user-info img {
+#user-info img {
   display: flex;
   width: 100%;
   align-self: center;
@@ -83,4 +83,56 @@ list-of-skills p {
 }
 list-of-skills skill {
   font-size: 30px;
+}
+
+.table-skills {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-skills th {
+  font-size: 20px;
+  border-bottom: 2px solid black;
+}
+.table-skills td {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+.table-skills tr:not(:first-child) td {
+  border-top: none;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  text-align: center;
+}
+
+.popup-title {
+  margin-top: 0;
+}
+
+.close-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+form {
+  margin-top: 20px;
+  text-align: left;
+}
+
+label,
+input,
+select {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
 }

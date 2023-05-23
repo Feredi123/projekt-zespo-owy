@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="styles/table.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="workspace-table.js" defer></script>
-    <script src="logging.js" defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
@@ -53,7 +52,7 @@
       <div class="workspace-body">
         <div class="user-bar">
           <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
-          <!-- <div class="dropdown">
+          <div class="dropdown">
             <name-surname> Name Surname ></name-surname>
             <div class="dropdown-content">
               <img
@@ -67,7 +66,7 @@
               <button>Login</button>
               <button>Forgot password</button>
             </div>
-          </div> -->
+          </div>
         </div>
         <div class="workspace" id="workspace-table">
           <bar>
@@ -143,17 +142,14 @@
 
           <table>
             <div v-if="skillsConditions.length===0">
-                      <li>
+              <li>
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li v-for="(person,index) in filteredList">
-              <h2>{{person.first_name}} {{person.second_name}}</h2>
-              <h2 v-if="person.is_absent_today!==true">Obecny</h2>
-              <h2 v-else>nieobecny</h2>
-              <h2 v-if="person.is_absent_tomorrow!==true">Obecny</h2>
-              <h2 v-else>Nieobecny</h2>
-              <h2 v-if="person.is_absent!==true">Obecny</h2>
-              <h2 v-else>nieobecny</h2>
+              <h2 >{{person.first_name}} {{person.second_name}}
+                <a style="font-size:auto;" v-for="skill in person.skills">{{skill.skill_name}}<br></a>
+              </h2>
+              <h2 v-for="date in person.absences">{{date ? "urlop":"jest"}} {{date}}</h2>
             </li>
             </div>
              <div v-else-if="skillsConditions.length!==0&&conditions.length===0">
@@ -161,13 +157,10 @@
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li style="background-color:red;" v-for="(person,index) in employeesData.data">
-            <h2 v-if="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
-              <h2 v-if="person.is_absent_today!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
-              <h2 v-if="person.is_absent_tomorrow!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
-              <h2 v-if="person.is_absent!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+
+              <div v-if="compareObjects(person.skills, skillsConditions)" style="display:flex; flex-direction: row; flex:1;">
+              <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}</h2>
+              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "wolne":""}}</h2></div>
             </li>
             </div>
             <div v-else>
@@ -175,13 +168,9 @@
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
             <li v-for="(person,index) in filteredList">
-              <h2 v-if="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
-              <h2 v-if="person.is_absent_today!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
-              <h2 v-if="person.is_absent_tomorrow!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">Nieobecny</h2>
-              <h2 v-if="person.is_absent!==true&&compareObjects(person.skills, skillsConditions)">Obecny</h2>
-              <h2 v-else-if="compareObjects(person.skills, skillsConditions)">nieobecny</h2>
+              <div v-if="compareObjects(person.skills, skillsConditions)" style="display:flex; flex-direction: row; flex:1;">
+              <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}</h2>
+              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "wolne":""}}</h2></div>
             </li>
             </div>
 
@@ -189,13 +178,8 @@
 
           <table>
             <li v-for="(person,index) in employeesData.data">
-              <h2 v-on:click="compareObjects(person.skills, skillsConditions)">{{person.first_name}} {{person.second_name}}</h2>
-              <h2 v-if="person.is_absent_today!==true">Obecny</h2>
-              <h2 v-else>nieobecny</h2>
-              <h2 v-if="person.is_absent_tomorrow!==true">Obecny</h2>
-              <h2 v-else>Nieobecny</h2>
-              <h2 v-if="person.is_absent!==true">Obecny</h2>
-              <h2 v-else>nieobecny</h2>
+              <h2>{{person.first_name}} {{person.second_name}}</h2>
+              <h2 v-for="date in person.absences">{{date ? "wolne":""}}</h2>
             </li>
           </table>
         </div>

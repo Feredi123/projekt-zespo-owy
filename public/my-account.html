@@ -18,6 +18,34 @@
     <link rel="stylesheet" href="styles/my-account.css">
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="list-of-skills.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+
+        const formData = {
+          absence_type: event.target.elements['absence-type'].value,
+          start_date: event.target.elements['absence-start'].value,
+          end_date: event.target.elements['absence-end'].value
+        };
+        axios.post('/my-absences', formData)
+          .then(response => {
+            if (response.status == '201') {
+              alert("Absence reported succesfully");
+            } else {
+              alert("Form submission failed.");
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert("An error occurred during form submission.");
+          });
+      }
+    </script>
   </head>
 
   <body>
@@ -35,7 +63,9 @@
           <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo">
 
           <div class="dropdown">
-            <name-surname> Name Surname ></name-surname>
+            <div class="name-surname" v-for="employee in employeeData">
+              Name Surname
+            </div>
             <div class="dropdown-content">
               <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
               <input type="text" placeholder="Login ID" class="login-info">
@@ -43,29 +73,65 @@
               <button>Login</button>
               <button>Forgot password</button>
             </div>
+          </div>
         </div>
-      </div>
 
       
-      <my-account>
-          <user-info>
+      <my-account  id="list-of-skills">
+
+        <div class="popup" v-if="isPopupOpen">
+          <p class="popup-title">Report Absence</p>
+          <form action="/my-absences" method="post" onsubmit="submitForm(event)">
+            <label>From:
+              <input type="date" id="absence-start" name="start_date" required>
+            </label>
+            <label>To:
+              <input type="date" id="absence-end" name="end_date" required>
+            </label>
+            <select name="absence_type" id="absence-type" required>
+              <option value="" disabled selected>Type of absence</option>
+              <option v-for="absenceType in absencesTypes" :value="absenceType.absencetype_id">{{absenceType.name}}</option>
+            </select>
+            <button type="submit">Report</button>
+            <button class="close-button" @click="isPopupOpen = false">Close</button>
+          </form>
+          
+        </div>        
+
+          <div id="user-info"  v-for="employee in employeeData">
               <img class="logo" src="styles/logo.webp" alt="logo">
-              <text>Name Surname (233133)</text>
-              <text> name.surname@gmail.com</text>
+              <text>
+                {{ employee.first_name }} {{ employee.second_name }} ({{employee.employee_id}})
+              </text>
+              <text> {{ employee.email }} </text>
               <button>Upload photo</button>
               <button>Change password</button>
-              <absence-button>Report absence</absence-button>
-          </user-info>
+              <button class="absence-button" @click="isPopupOpen = true">Report absence</button>
+          </div>
           
-          <list-of-skills style="display:flex; flex:1; flex-direction:column; max-height: 80vh;" id="list-of-skills">
+          <list-of-skills style="display:flex; flex:1; flex-direction:column; max-height: 80vh;">
             <p>&#9733; All my skills</p>
-            <skills style="flex:1; background-color: white; border-color:gray; max-height: 80%; max-width: 95%; border-radius:5px; padding-left:20px; overflow-y: scroll; position:relative;">
-                <p style="position:sticky; top:0%; left:5%; background-color:white; padding-top:5px;">Name                         LVl<br>
-                _________________</p>
-                <skill style="display:block; background-color: white;" v-for="(skill,index) in skills" v-on:click="removeValue(skills, lvl,index)"> {{skill}} --> {{lvl[index]}}</skill>
+            <div id ="skills" style="flex:1; background-color: white; border-color:gray; max-height: 80%; max-width: 95%; border-radius:5px; padding-left:20px; overflow-y: scroll; position:relative;">
+                <table class="table-skills">
+                  <tr>
+                    <th><h1>Name</h1></th>
+                    <th><h1>Lvl</h1></th>
+                  </tr>
+                  <tr v-for="skill in employeeSkills">
+                    <td>
+                      {{skill.name}}
+                    </td>
+                    <td>
+                      {{skill.level}}
+                    </td>
+                  </tr>
+                  
+                </table>
+                <!-- <p style="position:sticky; top:0%; left:5%; background-color:white; padding-top:5px;">Name                         Lvl<br>_________________</p>
+                <skill style="display:block; background-color: white;" v-for="(skill,index) in skills" v-on:click="removeValue(skills, lvl,index)"> {{skill}} -- {{lvl[index]}}</skill>
                 <input type="text" v-model="propValue" v-on:keyup.enter="addValue(skills, propValue)">
-                <input type="text" v-model="newPropValue" v-on:keyup.enter="addValue(lvl, newPropValue)">
-            </skills>
+                <input type="text" v-model="newPropValue" v-on:keyup.enter="addValue(lvl, newPropValue)"> -->
+              </div>
           </list-of-skills>
       </my-account>
     </main>

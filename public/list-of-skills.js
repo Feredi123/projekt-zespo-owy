@@ -5,6 +5,11 @@ const app = Vue.createApp({
       lvl: [1, 2, 3],
       propValue: "",
       newPropValue: "",
+      employeeData : {},
+      employeeSkills : {},
+      absencesTypes : {},
+      isPopupOpen: false,
+
       // employeesData: {
       //   type: Object,
       //   employee_id: 0,
@@ -27,7 +32,7 @@ const app = Vue.createApp({
     removeValue(table, tableLvl, index){
       table.splice(index,1);
       tableLvl.splice(index,1);
-    }
+    },
     // addCondition() {
     //   this.conditions.push(this.newCondition);
     //   this.newCondition = "";
@@ -38,6 +43,53 @@ const app = Vue.createApp({
     // saveEmployeeData(employeeData) {
     //   this.employeesData = Object.assign({}, employeeData);
     // },
+    async getMySkills(){
+      try {
+        const response = await axios.get("/employee-skill");
+        
+        if(!Array.isArray(response.data)){
+          window.location.href = '/login.html';
+        } else {
+          this.employeeSkills = response.data;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getMyData(){
+      try {
+        const response = await axios.get("/employee");
+        
+        if(!Array.isArray(response.data)){
+          window.location.href = '/login.html';
+        } else {
+          this.employeeData = response.data;
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getAbsenceTypes(){
+      try {
+        const response = await axios.get("/absence-types");
+        
+        if(!Array.isArray(response.data)){
+          window.location.href = '/login.html';
+        } else {
+          this.absencesTypes = response.data;
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+  
+  created() {
+    this.getMySkills();
+    this.getMyData();
+    this.getAbsenceTypes();
   },
 });
 
