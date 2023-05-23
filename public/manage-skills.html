@@ -9,13 +9,20 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/side-bar.css">
     <link rel="stylesheet" href="styles/workspace.css">
     <link rel="stylesheet" href="styles/top-bar.css">
     <link rel="stylesheet" href="styles/manage-skills.css">
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="manage-skills.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -41,103 +48,89 @@
               <button>Login</button>
               <button>Forgot password</button>
             </div>
+          </div>
         </div>
-      </div>
 
       
-    <div class="workspace">
-      <manage-skills>
-        <div class="manage-skills">
-          <content>
-            <label>
-              &#9733; Register skill
-            </label>
+        <div class="workspace" id="workspace">
+          <manage-skills>
+            <div class="manage-skills">
+              <content>
+                <label>
+                  &#9733; Register skill
+                </label>
+                <form>
+                  <select name="pets" id="pet-select">
+                    <option value="" disabled selected>Select Skill</option>
+                    <option v-for="skill in skills" :value="skill.skill_id">{{skill.name}}</option>
+                  </select>
 
-            <select name="pets" id="pet-select">
-                <option value="">Register Skill</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
-                <option value="parrot">Parrot</option>
-                <option value="spider">Spider</option>
-                <option value="goldfish">Goldfish</option>
-            </select>
+                  <select name="pets" id="pet-select">
+                    <option value="0" disabled selected>Choose Lvl</option>
+                    <option value="1">Lvl 1</option>
+                    <option value="2">Lvl 2</option>
+                    <option value="3">Lvl 3</option>
+                    <option value="4">Lvl 4</option>
+                  </select>
+                  <div class="label-input">
+                    <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
+                    <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
+                  </div>
+                  <button>confirmm</button>
+                </form>
+                
+              </content>
 
-            <select name="pets" id="pet-select">
-              <option value="">Lvl</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
-          </select>
-        <div class="label-input">
-          <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
-          <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
+              <content>
+                <label>
+                  &#9733; Change Lvl
+                </label>
+
+                <form>
+                  <select v-model="selectedChangeSkill" name="changeSkill" id="changeSkill">
+                    <option value="" disabled selected>Select Skill</option>
+                    <option v-for="skill in employeeSkills" :value="skill.skill_id">{{skill.name}}</option>
+                  </select>
+
+                  <select name="changeSkillLvl" id="changeSkillLvl">
+                    <option disabled selected v-for="option in GetOptionsChangeSkillLvl" :value="option.value">{{option.message1}}</option>
+                    <option value="1">Change to Lvl 1</option>
+                    <option value="2">Change to Lvl 2</option>
+                    <option value="3">Change to Lvl 3</option>
+                    <option value="4">Change to Lvl 4</option>
+                  </select>
+
+                  <div class="label-input">
+                    <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
+                    <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
+                  </div>
+                  <button>confirmm</button>
+                </form>
+              
+              </content>
+              <content>
+                <label>
+                  &#9733; Resign of skill
+                </label>
+
+                <form>
+                  <select name="resignSkill" id="resignSkill">
+                    <option value="" disabled selected>Select Skill</option>
+                    <option v-for="skill in employeeSkills" :value="skill.skill_id">{{skill.name}}</option>
+                  </select>
+
+                  <div class="label-input">
+                    <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
+                    <checkbox-label for="vehicle1">Confirm</checkbox-label><br>
+                  </div>
+                  <button>confirmm</button>
+                </form>
+
+              </content>
+            </div>
+          </manage-skills>
         </div>
-        <button>confirm</button>
-          </content>
-
-          <content>            <label>
-            &#9733; Change Lvl
-          </label>
-
-          <select name="pets" id="pet-select">
-              <option value="">Change lvl</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
-          </select>
-
-          <select name="pets" id="pet-select">
-            <option value="">New Lvl</option>
-            <option value="dog">Dog</option>
-            <option value="cat">Cat</option>
-            <option value="hamster">Hamster</option>
-            <option value="parrot">Parrot</option>
-            <option value="spider">Spider</option>
-            <option value="goldfish">Goldfish</option>
-        </select>
-      <div class="label-input">
-        <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
-        <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
       </div>
-      <button>confirm</button>
-        </content>
-          <content>            <label>
-            &#9733; Resign of skill
-          </label>
-
-          <select name="pets" id="pet-select">
-              <option value="">Skill name</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
-          </select>
-          <select name="none" id="none" style="background-color: transparent;">
-            
-          </select>
-
-      <div class="label-input">
-        <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
-        <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
-      </div>
-      <button>confirm</button>
-        </content>
-        </div>
-      </manage-skills>
-    </div>
-
-
-    </div>
-  </main>
+    </main>
   </body>
 </html>
-

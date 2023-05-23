@@ -70,6 +70,21 @@ async function getEmployees(req, res) {
     }
   }
 
+  async function getEmployeeType(req, res) {
+    try {
+
+      employee_id = req.user.employee_id;
+
+      const [employee] = await pool.query(`SELECT admin_rights FROM employees WHERE employee_id = ${employee_id};`);
+  
+      res.status(200).json(employee);
+  
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
 
 module.exports = {
     getEmployeeById,
@@ -77,5 +92,6 @@ module.exports = {
     getLoggedEmployee,
     getEmployeesBySkill,
     getEmployeesByProcess,
+    getEmployeeType,
 
 }

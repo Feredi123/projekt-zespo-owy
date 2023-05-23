@@ -10,6 +10,7 @@ const {
   getLoggedEmployee,
   getEmployeesBySkill,
   getEmployeesByProcess,
+  getEmployeeType,
 } = require('../controllers/employees')
 
 const {
@@ -48,8 +49,9 @@ router.route('/growth-skill').get(getGrowthSkill) // zwraca growth_id,	id pracow
 router.route('/growth-skill/:id').get(getGrowthSkillById) // zwraca growth_id,	id pracownika, id umiejętności, datę początkową i końcową wszystkich wybranego growth zalogowanego pracownika
 
 router.route('/employees').get(getEmployees) // zwraca pracowników id, imię, nazwisko
+router.route('/employee-type').get(getEmployeeType) // zwraca typ zalogowanego użytkownika
 router.route('/employee/:id').get(getEmployeeById) // :id - id pracownika,  zwraca pracownika id, imię
-router.route('/employee').get(getLoggedEmployee) // zwraca pracownika id, imię, nazwisko zalogowanegho pracownika
+router.route('/employee').get(getLoggedEmployee) // zwraca pracownika id, imię, nazwisko, email zalogowanegho pracownika
 router.route('/employees/skill/:id').get(getEmployeesBySkill) // :id - id umiejętności, zwraca pracowników id, imię, nazwisko i poziom umiejętności
 router.route('/employees/process/:id').get(getEmployeesByProcess) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
 //router.route('/postman').post(createPersonPostman)
