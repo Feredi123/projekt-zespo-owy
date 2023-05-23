@@ -1,0 +1,89 @@
+.growth{
+              
+              background-color: rgb(227, 227, 227);
+              flex: 1;
+              margin: 5px;
+              border-radius: 20px;
+              margin-top: 20px;
+              display: flex;
+              flex-direction: row;
+            
+}
+
+.growth left-side{
+                  background-color: rgb(232, 231, 241);
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+}
+
+left-side button{
+  max-height: 40px;
+  width: 90%;
+  margin-top:50px;
+}
+
+.growth right-side{
+  padding-top: 5px;
+background-color: #e5e5f7;
+opacity: 0.8;
+background-image:  linear-gradient(#d2d3d5 2.1px, transparent 2.1px), linear-gradient(to right, #d2d3d5 2.1px, #e5e5f7 2.1px);
+background-size: 42px 42px;
+flex:1;
+display: flex;
+flex-direction: column;
+
+}
+
+right-side bars{
+  color:white;
+background-color: rgb(0, 112, 171);
+}
+
+right-side bottom-bar{
+                   background-color: transparent;
+                  flex: 1;
+                  flex-direction: row;
+                  display: flex;
+                  max-height: 30px;
+                  bottom:0;
+                  font-size:20px;
+                  padding-bottom: 40px;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.popup-title {
+  margin-top: 0;
+}
+
+.close-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+form {
+  margin-top: 20px;
+  text-align: left;
+}
+
+label,
+input,
+select {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+}

@@ -1,3 +1,13 @@
+
+function convertISOToDateFormat(isoDate) {
+  const dateObj = new Date(isoDate);
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 function getDate(nexthop) {
   const today = new Date();
   today.setDate(today.getDate() + nexthop);
@@ -17,8 +27,15 @@ const app = Vue.createApp({
       growth: {},
       dateToday: "",
       dateTable: "",
-      delData: "id do usunięcia",
-      bufforDate: "dodaj date w tym formacie 2023-05-19",
+      delData: "",
+      isPopupOpen: false,
+      skills: {},
+      levels: [1, 2, 3, 4],
+      formDate: "",
+      formSkill: "",
+      formLevel: "",
+      formDateStart: "",
+      isPopupOpenDel: false,
     };
   },
 
@@ -34,15 +51,18 @@ const app = Vue.createApp({
       let lower = timeDifference(this.dateToday, dateObject);
       let bigger = timeDifference(this.dateToday, this.dateTable);
       size = (lower / bigger) * 100;
-      if(size<=100){      return { width: size + "%" };}
-      else{return { width: 100 + "%" };}
+      if (size <= 100) {
+        return { width: size + "%" };
+      } else {
+        return { width: 100 + "%" };
+      }
     },
 
     async getGrowth() {
       try {
         const response = await axios.get("/growth-skill");
-        if(!Array.isArray(response.data)){
-          window.location.href = '/login.html';
+        if (!Array.isArray(response.data)) {
+          window.location.href = "/login.html";
         } else {
           this.growth = response;
         }
@@ -50,13 +70,31 @@ const app = Vue.createApp({
         console.error(error);
       }
     },
-    async putData() {
+    async getSkills() {
       try {
+        const response = await axios.get("/skills");
+        if (!Array.isArray(response.data)) {
+          window.location.href = "/login.html";
+        } else {
+          this.skills = response;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async putData() {
+      convertISOToDateFormat(this.formDate);
+      this.dateToday = convertISOToDateFormat(this.dateToday);
+      try {
+        console.log(this.formSkill);
+        console.log(this.formLevel);
+        console.log(this.formDate);
+        console.log(this.dateToday);
         const res = await axios.post("/growth-skill", {
-          skills_id: 4,
-          level: 4,
-          start_date: "2023-05-19",
-          end_date: this.bufforDate,
+          skills_id: this.formSkill,
+          level: this.formLevel,
+          start_date: this.dateToday,
+          end_date: this.formDate,
         });
       } catch (error) {
         console.error(error);
@@ -72,6 +110,7 @@ const app = Vue.createApp({
   },
   created() {
     this.getGrowth();
+    this.getSkills();
   },
 });
 
