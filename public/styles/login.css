@@ -1,0 +1,54 @@
+@keyframes start {
+  0% { opacity: 0.2; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+
+login-window { 
+    font-family: 'Roboto', sans-serif;
+  display:flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border-color: black;
+  align-items: center;
+  margin-top: 20ch;
+  animation-name: start;
+  animation-duration: 0.7s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+login-window img{
+  background-color: transparent;
+  max-width: 30%;
+  height: auto;
+}
+
+login-window form{
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+login-window input{
+  margin-bottom: 2px;
+}
+
+login-window button{
+  background-color: rgb(0, 112, 171) ;
+  border: transparent;
+  border-radius: 7px;
+  margin-bottom: 2px;
+  color:white;
+  height:30px;  
+  transition: 5ms;
+}
+
+button:hover{
+  background-color: rgba(0, 112, 171,0.5);
+}
+
+button:active{
+    background-color: rgba(0, 112, 171,0.3);
+}

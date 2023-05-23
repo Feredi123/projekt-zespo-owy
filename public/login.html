@@ -2,62 +2,41 @@
 
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PPG </title>
+    <title>login</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/side-bar.css">
-    <link rel="stylesheet" href="styles/workspace.css">
-    <link rel="stylesheet" href="styles/top-bar.css">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/login.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
-    <script src="list-of-skills.js" defer></script>
   </head>
 
   <body>
-    <main>
-      <div class="side-bar">
-        <img class="logo" src="styles/logo.webp" alt="logo">
-        <button onclick="window.location.href='index.html';">&#9733; Dashboard</button>
-        <button onclick="window.location.href='manage-skills.html';">&#9733; Manage skills</button>
-        <button onclick="window.location.href='my-account.html';">&#9733; My account</button>
-        <button onclick="window.location.href='growth.html';">&#9733; Growth</button>
-        <button-active onclick="window.location.href='register.html';">&#9733; Register</button-active>
-      </div>
-
-      <div class="workspace-body">
-        <div class="user-bar">
-          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo">
-
-          <div class="dropdown">
-            <name-surname> Name Surname ></name-surname>
-            <div class="dropdown-content">
-              <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
-
-              <form action="/login" method="POST">
-              <input type="text" id="name" name="name" required>
-              <input type="password" id="password" name="password" required>
-              <button type="submit">Login</button>
-            </form>
-              <button>Forgot password</button>
-            </div>
-        </div>
-      </div>
-
-      <div class="workspace-body">
-        <form action="/login" method="POST">
-        <input type="email" id="email" name="email" required>
-        <input type="password" id="password" name="password" required>
+    <login-window>
+      <img src="styles/logo.webp" alt="logo.webp" />
+      <form action="/login" method="POST">
+        <input
+          placeholder="Login"
+          type="email"
+          id="email"
+          name="email"
+          required
+        />
+        <input
+          placeholder="Password"
+          type="password"
+          id="password"
+          name="password"
+          required
+        />
         <button type="submit">Login</button>
-        </form>
-      </div>
-    </main>
+      </form>
+    </login-window>
   </body>
 </html>
-
