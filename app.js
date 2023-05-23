@@ -31,8 +31,6 @@ app.use(session({
 
 app.use(passport.session())
 
-
-
 app.post('/register', async  (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -45,7 +43,7 @@ app.post('/register', async  (req, res) => {
       manager_id = req.body.manager_id;
 
     pool.query(`INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id) VALUES (NULL, '${first_name}', '${last_name}', '${email}', '${phone}', '${password}', NULL, '0', '${manager_id}')`);
-    res.redirect('/login.html')
+    res.redirect('/register.html')
   } catch {
     res.redirect('/register.html')
   }
@@ -63,6 +61,10 @@ function checkAuthenticated(req, res, next) {
   console.log("not logged in")
   res.redirect('/login')
 }
+
+app.get('/recovery', (req, res) => {
+  res.redirect('/recovery.html')
+})
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname,'/public/login.html'))

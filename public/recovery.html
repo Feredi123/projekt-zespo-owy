@@ -20,7 +20,7 @@
   <body>
     <login-window>
       <img src="styles/logo.webp" alt="logo.webp" />
-      <form action="/login" method="POST">
+      <form action="/recover" method="POST">
         <input
           placeholder="Email"
           type="email"
@@ -28,18 +28,9 @@
           name="email"
           required
         />
-        <input
-          placeholder="Password"
-          type="password"
-          id="password"
-          name="password"
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      <form action="/recovery" method="GET">
-        <button type="submit">Forgot Password</button>
-      </form>
+        <button type="submit">Recover Password</button>
+        </form>
+        <button onclick="window.location.href = '/login.html';"> Back</button>
     </login-window>
   </body>
 </html>
