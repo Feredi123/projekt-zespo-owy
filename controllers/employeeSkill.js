@@ -46,7 +46,7 @@ async function postEmployeeSkill(req, res) {
   async function getEmployeeSkill(req, res) {
     try {
         const employee_id = req.user.employee_id
-        const [result] =  await pool.query('SELECT skills_skills_id skill_id, level FROM employee_skill WHERE employees_employee_id = ?',[employee_id]);
+        const [result] =  await pool.query('SELECT es.skills_skills_id skill_id, es.level , s.name FROM employee_skill as es JOIN skills as s on s.skills_id = es.skills_skills_id WHERE employees_employee_id = ?;',[employee_id]);
 
         res.status(200).json(result);
     

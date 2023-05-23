@@ -27,6 +27,19 @@
     border-color: transparent;
   }
   
+  .dropdown .name-surname:hover {
+    color: rgba(0,120,185,0.6);
+    cursor:pointer;
+  }
+
+  .dropdown .name-surname{ 
+    padding: 40px;
+    color: rgb(0,120,185);
+    font-size: 25px;
+    background-color: transparent;
+    border-color: transparent;
+  }
+  
   .dropdown name-surname:hover {
     color: rgba(0,120,185,0.6);
     cursor:pointer;

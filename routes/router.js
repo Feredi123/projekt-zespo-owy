@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {
-  getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll,
+  getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll, getAbsenceTypes,
 } = require('../controllers/dashboard')
 
 const {
@@ -31,6 +31,7 @@ router.route('/processes').get(getProcesses) // zwraca procesy id i nazwa
 router.route('/skills').get(getSkills) // zwraca umiejętności id i nazwa
 
 router.route('/absences').get(getAbsences)  // zwraca id pracownika i kiedy ich nie będzie
+router.route('/absence-types').get(getAbsenceTypes)  // zwraca rodzaje nieobecności
 router.route('/absences/:date').get(getAbsencesByDate)  //:date - YYYY-MM-DD , zwraca id pracowników i kiedy ich nie będzie od podanej daty przez 5 kolejnych dni
 router.route('/my-absences').get(getMyAbsences)  // zwraca wszystkie nieobecności zalogowanego pracownika
 router.route('/my-absences').post(postMyAbsences)  // dodaj nieobecność w request start_date: end_date: absence_type: [1,2,3]
