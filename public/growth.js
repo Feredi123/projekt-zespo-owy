@@ -84,7 +84,8 @@ const app = Vue.createApp({
     },
     async putData() {
       convertISOToDateFormat(this.formDate);
-      this.dateToday = convertISOToDateFormat(this.dateToday);
+      this.dateToday = getDate(0);
+            this.dateToday = convertISOToDateFormat(this.dateToday);
       try {
         console.log(this.formSkill);
         console.log(this.formLevel);

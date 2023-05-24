@@ -19,6 +19,8 @@
         <script src="https://unpkg.com/vue@next" defer></script>
     <script src="side-bar.js" defer></script>
     <script src="top-bar.js" defer></script>
+        <script src="manage-skills.js" defer></script>
+
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
@@ -87,92 +89,93 @@
 
 
           
-    <div class="workspace">
-      <manage-skills>
-        <div class="manage-skills">
+    <div class="workspace" >
+      <manage-skills id="manage-skills">
+        <div class="manage-skills" >
           <content>
             <label>
               &#9733; Register skill
             </label>
 
-            <select name="pets" id="pet-select">
-                <option value="">Register Skill</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
-                <option value="parrot">Parrot</option>
-                <option value="spider">Spider</option>
-                <option value="goldfish">Goldfish</option>
-            </select>
+                  <select name="registerSkills" id="registerSkills"  v-model="registerSkill"required>
+                    <option value="" disabled selected>Skill Name</option>
+                    <option
+                      v-for="skill in registerSkills"
+                      v-bind:value="skill.skill_id"
+                    >
+                      {{skill.name}}
+                    </option>
+                  </select>
 
-            <select name="pets" id="pet-select">
-              <option value="">Lvl</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
-          </select>
+                  <select name="registerLevel" id="registerLevel"  v-model="registerLevel" required>
+                    <option value="" disabled selected>Level</option>
+                    <option
+                      v-for="level in levels"
+                    >
+                      {{level}}
+                    </option>
+                  </select>
+
         <div class="label-input">
-          <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
-          <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
+          <input type="checkbox" id="registerCheckbox" name="registerCheckbox" value="false" v-model="registerCheckbox">
+          <checkbox-label for="registerCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
         </div>
-        <button>confirm</button>
+        <button v-on:click="postRegisterData()">Confirm</button>
           </content>
 
-          <content>            <label>
-            &#9733; Change Lvl
-          </label>
+                   <content>
+            <label>
+              &#9733; Change Skill
+            </label>
 
-          <select name="pets" id="pet-select">
-              <option value="">Change lvl</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
-          </select>
+                  <select name="putSkills" id="putSkills"  v-model="putSkill"required>
+                    <option value="" disabled selected>Skill Name</option>
+                    <option
+                      v-for="skill in putSkills"
+                      v-bind:value="skill.skill_id"
+                    >
+                      {{skill.name}}
+                    </option>
+                  </select>
 
-          <select name="pets" id="pet-select">
-            <option value="">New Lvl</option>
-            <option value="dog">Dog</option>
-            <option value="cat">Cat</option>
-            <option value="hamster">Hamster</option>
-            <option value="parrot">Parrot</option>
-            <option value="spider">Spider</option>
-            <option value="goldfish">Goldfish</option>
-        </select>
-      <div class="label-input">
-        <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
-        <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
-      </div>
-      <button>confirm</button>
-        </content>
-          <content>            <label>
-            &#9733; Resign of skill
-          </label>
+                  <select name="putLevel" id="putLevel"  v-model="putLevel" required>
+                    <option value="" disabled selected>Level</option>
+                    <option
+                      v-for="level in levels"
+                    >
+                      {{level}}
+                    </option>
+                  </select>
 
-          <select name="pets" id="pet-select">
-              <option value="">Skill name</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
-          </select>
-          <select name="none" id="none" style="background-color: transparent;">
-            
-          </select>
+        <div class="label-input">
+          <input type="checkbox" id="putCheckbox" name="putCheckbox" value="false" v-model="putCheckbox">
+          <checkbox-label for="putCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
+        </div>
+        <button v-on:click="putRegisterData()">Confirm</button>
+          </content>
+          
+                             <content>
+            <label>
+              &#9733; Delete Skill
+            </label>
 
-      <div class="label-input">
-        <input type="checkbox" id="checkamark1" name="checkamark1" value="false">
-        <checkbox-label for="vehicle1"> I confirm that i'm on that level off the skill</checkbox-label><br>
-      </div>
-      <button>confirm</button>
-        </content>
+                  <select name="deleteSkills" id="deleteSkills"  v-model="deleteSkill"required>
+                    <option value="" disabled selected>Skill Name</option>
+                    <option
+                      v-for="skill in putSkills"
+                      v-bind:value="skill.skill_id"
+                    >
+                      {{skill.name}} {{skill.skill_id}}
+                    </option>
+                  </select>
+
+        <div class="label-input">
+          <input type="checkbox" id="deleteCheckbox" name="deleteCheckbox" value="false" v-model="deleteCheckbox">
+          <checkbox-label for="deleteCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
+        </div>
+        <button v-on:click="deleteRegisterData()">Confirm</button>
+          </content>
+
         </div>
       </manage-skills>
     </div>
