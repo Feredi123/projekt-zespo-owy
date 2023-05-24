@@ -63,7 +63,7 @@ function checkAuthenticated(req, res, next) {
   res.redirect('/login')
 }
 
-app.delete('/logout', function(req, res, next) {
+app.delete('/logout', function(req, res, next) { //wylogowywanie
   req.logOut(function(err) {
     if (err) {return next(err); }
   console.log("user is no longer logged in"),
