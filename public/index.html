@@ -34,7 +34,7 @@
   <body>
     <main>
       <div id="side-bar">
-        <div v-if="isShown" class="side-bar">
+        <div v-if="menuSize()" class="side-bar">
 
         <img class="logo" src="styles/logo.webp" alt="logo" />
         <button-active onclick="window.location.href='index.html';"
@@ -52,8 +52,9 @@
         <button onclick="window.location.href='register.html';">
           &#9733; Add worker
         </button>
-
-        <button v-on:click="toggleMenu()">Toggle Menu</button>
+                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+          &#9733; Admin
+        </button>
         </div>
 
         <div v-else class="side-bar2">
@@ -63,7 +64,6 @@
           <img src="styles/person.png" alt="logo" onclick="window.location.href='my-account.html';" />
           <img src="styles/growth.png" alt="logo" onclick="window.location.href='growth.html';"/>
           <img src="styles/star.png" alt="logo" onclick="window.location.href='register.html';"/>
-          <img v-on:click="toggleMenu()" src="styles/star.png" alt="logo" />
         </div>
       </div>
 
@@ -150,45 +150,23 @@
                   v-model="processCondition"
                 >
                   <option value="Select Process">Select Process</option>
-                  <option v-for="skill in processes.data" v-model="newProcessCondition">
-                    {{skill.name}}
+                  <option v-for="skill in processes.data" v-model="checkProcess" v-bind:value="skill.process_id">
+                    {{skill.name}} {{skill.process_id}}
                   </option>
                 </select>
+                <button v-on:click="getProcess">> Process</button>
               </div>
             </div>
           </bar>
 
           <table>
-            <div v-if="skillsConditions.length===0">
-              <li>
-              <h2 v-for="date in dates">{{date}}</h2>
-            </li>
-            <li v-for="(person,index) in filteredList">
-              <h2 >{{person.first_name}} {{person.second_name}}
-                <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
-              </h2>
-              <h2 v-for="date in person.absences">{{date ? "urlop":""}}</h2>
-            </li>
-            </div>
-             <div v-else-if="skillsConditions.length!==0&&conditions.length===0">
-                          <li>
-              <h2 v-for="date in dates">{{date}}</h2>
-            </li>
-            <li v-for="(person,index) in employeesData.data">
 
-              <div v-if="compareObjects(person.skills, skillsConditions)" style="display:flex; flex-direction: row; flex:1;">
-              <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}
-                              <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
-                            </h2>
-              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "wolne":""}}</h2></div>
-            </li>__________
-            </div>
-            <div v-else>
+            <div>
                         <li>
               <h2 v-for="date in dates">{{date}}</h2>
             </li>
-            <li v-for="(person,index) in filteredList">
-              <div v-if="compareObjects(person.skills, skillsConditions)" style="display:flex; flex-direction: row; flex:1;">
+            <li v-for="(person,index) in employeesData.data">
+              <div v-if="(skillsConditions.length!==0&&conditions.length!==0&&(compareObjects(person.skills, skillsConditions))&&(compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions)))||(skillsConditions.length!==0&&conditions.length===0&&(compareObjects(person.skills, skillsConditions)))||(skillsConditions.length===0&&conditions.length!==0&&((compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions))))" style="display:flex; flex-direction: row; flex:1;">
               <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}
                               <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
                             </h2>
@@ -196,7 +174,7 @@
             </li>
             </div>
 
-          <h2 v-if="conditions.length!==0">_________</h2>
+          <h2 v-if="conditions.length!==0||skillsConditions!==0">_________</h2>
 
           <table>
             <li v-for="(person,index) in employeesData.data">

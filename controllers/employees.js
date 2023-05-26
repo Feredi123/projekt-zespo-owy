@@ -18,7 +18,7 @@ async function getEmployeeById(req, res) {
 async function getLoggedEmployee(req, res) {
   try {
     employee_id = req.user.employee_id
-    const [employee] = await pool.query('SELECT employee_id, first_name, second_name, email FROM employees WHERE employee_id=?',[employee_id]);
+    const [employee] = await pool.query('SELECT employee_id, first_name, second_name, email, admin_rights FROM employees WHERE employee_id=?',[employee_id]);
 
     res.status(200).json(employee);
 

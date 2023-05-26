@@ -37,31 +37,49 @@ const app = Vue.createApp({
       processCondition: "",
       newProcessCondition: {},
       processId: [],
+      checkProcess: "",
+      checkProcessTable: {},
     };
   },
-  
 
   computed: {
-    filteredList() {
-      if (this.skillsConditions.length === 0) {
-        return this.employeesData.data.filter((item) => {
-          return (
-            this.conditions.includes(item.first_name) ||
-            this.conditions.includes(item.second_name)
-          );
-        });
-      } else {
-        return this.employeesData.data.filter((item) => {
-          return (
-            this.conditions.includes(item.first_name) ||
-            this.conditions.includes(item.second_name)
-          );
-        });
-      }
-    },
+    // filteredList() {
+    //   if (this.skillsConditions.length === 0) {
+    //     return this.employeesData.data.filter((item) => {
+    //       return (
+    //         this.conditions.includes(item.first_name) ||
+    //         this.conditions.includes(item.second_name)
+    //       );
+    //     });
+    //   } else {
+    //     return this.employeesData.data.filter((item) => {
+    //       return (
+    //         this.conditions.includes(item.first_name) ||
+    //         this.conditions.includes(item.second_name)
+    //       );
+    //     });
+    //   }
+    // },
   },
 
   methods: {
+    filteredList() {
+      // if (this.skillsConditions.length === 0) {
+      return this.employeesData.data.filter((item) => {
+        return (
+          this.conditions.includes(item.first_name) ||
+          this.conditions.includes(item.second_name)
+        );
+      });
+      // } else {
+      //   return this.employeesData.data.filter((item) => {
+      //     return (
+      //       this.conditions.includes(item.first_name) ||
+      //       this.conditions.includes(item.second_name)
+      //     );
+      //   });
+      // }
+    },
     addCondition() {
       this.conditions.push(this.newCondition);
       this.newCondition = "";
@@ -76,8 +94,8 @@ const app = Vue.createApp({
     async getUser() {
       try {
         const response = await axios.get("/dashboard/all/" + getStartDate());
-        if(!Array.isArray(response.data)){
-          window.location.href = '/login.html';
+        if (!Array.isArray(response.data)) {
+          window.location.href = "/login.html";
         } else {
           this.employeesData = response;
         }
@@ -99,13 +117,6 @@ const app = Vue.createApp({
         console.error(error);
       }
     },
-    async getProcessesById() {
-      try {
-        this.processId = await axios.get("/employees/process/1");
-      } catch (error) {
-        console.error(error);
-      }
-    },
     compareObjects(obj1, obj2) {
       for (let skill_name in obj1) {
         for (let name in obj2) {
@@ -115,6 +126,29 @@ const app = Vue.createApp({
         }
       }
       return false;
+    },
+
+    compareNames(obj1, obj2) {
+            console.log(obj1);
+            console.log(obj2);
+      for (let id in obj2) {
+          if (obj1 === obj2[id]) {
+            return true;
+          }
+        }
+      return false;
+    },
+
+    async getProcess() {
+      try {
+        console.log(this.checkProcess);
+        this.checkProcessTable = await axios.get(
+          "/employees/process/" + this.checkProcess
+        );
+        console.log(this.checkProcessTable);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   created() {

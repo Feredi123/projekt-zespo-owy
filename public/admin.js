@@ -1,4 +1,4 @@
-const appSideBar = Vue.createApp({
+const appAdmin = Vue.createApp({
   data() {
     return {
       isShown: "",
@@ -14,7 +14,7 @@ const appSideBar = Vue.createApp({
           window.location.href = "/login.html";
         } else {
           this.isShown = response.data[0].admin_rights;
-          console.log(this.isShown);
+          if(this.isShown!==1){          window.location.href = "/loginfail.html";}
         }
       } catch (error) {
         console.error(error);
@@ -34,4 +34,4 @@ const appSideBar = Vue.createApp({
   },
 });
 
-appSideBar.mount("#side-bar");
+appAdmin.mount("#admin");

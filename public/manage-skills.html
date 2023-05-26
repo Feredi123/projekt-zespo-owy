@@ -32,7 +32,7 @@
   <body>
     <main>
         <div id="side-bar">
-        <div v-if="isShown" class="side-bar">
+        <div v-if="menuSize()" class="side-bar">
 
         <img class="logo" src="styles/logo.webp" alt="logo" />
         <button onclick="window.location.href='index.html';"
@@ -51,7 +51,6 @@
           &#9733; Add worker
         </button>
 
-        <button v-on:click="toggleMenu()">Toggle Menu</button>
         </div>
 
         <div v-else class="side-bar2">
@@ -61,7 +60,6 @@
           <img src="styles/person.png" alt="logo" onclick="window.location.href='my-account.html';" />
           <img src="styles/growth.png" alt="logo" onclick="window.location.href='growth.html';"/>
           <img src="styles/star.png" alt="logo" onclick="window.location.href='register.html';"/>
-          <img v-on:click="toggleMenu()" src="styles/star.png" alt="logo" />
         </div>
       </div>
 

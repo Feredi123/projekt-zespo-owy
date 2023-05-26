@@ -36,7 +36,7 @@ const app = Vue.createApp({
       formLevel: "",
       formDateStart: "",
       isPopupOpenDel: false,
-    };
+      dateToday2:""    };
   },
 
   computed: {},
@@ -84,17 +84,17 @@ const app = Vue.createApp({
     },
     async putData() {
       convertISOToDateFormat(this.formDate);
-      this.dateToday = getDate(0);
-            this.dateToday = convertISOToDateFormat(this.dateToday);
+      this.dateToday2 = getDate(0);
+            this.dateToday2 = convertISOToDateFormat(this.dateToday2);
       try {
         console.log(this.formSkill);
         console.log(this.formLevel);
         console.log(this.formDate);
-        console.log(this.dateToday);
+        console.log(this.dateToday2);
         const res = await axios.post("/growth-skill", {
           skills_id: this.formSkill,
           level: this.formLevel,
-          start_date: this.dateToday,
+          start_date: this.dateToday2,
           end_date: this.formDate,
         });
       } catch (error) {
