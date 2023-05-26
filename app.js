@@ -7,7 +7,7 @@ const session = require('express-session')
 const initializePassport = require('./passport-config')
 const router = require('./routes/router')
 const path = require('path');
-
+const methodOverride = require('method-override')
 
 initializePassport(
   passport,
@@ -30,6 +30,7 @@ app.use(session({
 }))
 
 app.use(passport.session())
+app.use(methodOverride('_method'))
 
 app.post('/register', async  (req, res) => {
   try {
@@ -61,6 +62,14 @@ function checkAuthenticated(req, res, next) {
   console.log("not logged in")
   res.redirect('/login')
 }
+
+app.delete('/logout', function(req, res, next) { //wylogowywanie
+  req.logOut(function(err) {
+    if (err) {return next(err); }
+  console.log("user is no longer logged in"),
+  res.redirect('/login');
+  });
+});
 
 app.get('/recovery', (req, res) => {
   res.redirect('/recovery.html')
