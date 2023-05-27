@@ -141,16 +141,16 @@
             </div>
 
             <div class="dropdown">
-              <button v-on:click="getProcessesById">> Process</button>
+              <button> Process</button>
             <div class="dropdown-content-workspace">
                 <select
                   name="process"
                   id="process-select"
                   style="width: 100%"
-                  v-model="processCondition"
+                  v-model="checkProcess"
                 >
                   <option value="Select Process">Select Process</option>
-                  <option v-for="skill in processes.data" v-model="checkProcess" v-bind:value="skill.process_id">
+                  <option v-for="skill in processes.data" v-bind:value="skill.process_id">
                     {{skill.name}} {{skill.process_id}}
                   </option>
                 </select>
@@ -162,15 +162,20 @@
           <table>
 
             <div>
-                        <li>
-              <h2 v-for="date in dates">{{date}}</h2>
+              <li>
+              <h2 v-for="(date,index) in dates">{{date}}
+                <img src="styles/warning.png" alt="logo" v-if="riskTable[index]<3" style="width:30%;">
+              </h2>
+
             </li>
             <li v-for="(person,index) in employeesData.data">
               <div v-if="(skillsConditions.length!==0&&conditions.length!==0&&(compareObjects(person.skills, skillsConditions))&&(compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions)))||(skillsConditions.length!==0&&conditions.length===0&&(compareObjects(person.skills, skillsConditions)))||(skillsConditions.length===0&&conditions.length!==0&&((compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions))))" style="display:flex; flex-direction: row; flex:1;">
               <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}
                               <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
                             </h2>
-              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "urlop":""}}</h2></div>
+              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "urlop":""}}</h2>
+              <h2>{{compareProcess(person.employee_id, checkProcessTable.data)}}</h2>
+            </div>
             </li>
             </div>
 
@@ -179,9 +184,12 @@
           <table>
             <li v-for="(person,index) in employeesData.data">
               <h2>{{person.first_name}} {{person.second_name}}
-                                <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
+                  <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
               </h2>
-              <h2 v-for="date in person.absences">{{date ? "urlop":""}}</h2>
+              <h2 v-for="date in person.absences">
+                {{date ? "urlop":""}}
+                <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%; align-self: auto;"/>
+              </h2>
             </li>
           </table>
         </div>

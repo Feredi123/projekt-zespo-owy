@@ -7,7 +7,7 @@ function getDate(nexthop) {
   return day + "-" + month + "-" + year;
 }
 
-function getStartDate(){
+function getStartDate() {
   const today = new Date();
   let day = today.getDate();
   let month = today.getMonth() + 1;
@@ -15,12 +15,12 @@ function getStartDate(){
   return year + "-" + month + "-" + day;
 }
 
-
 function tableDate(datesTable) {
-      for (let i = 0; i < 5; i++) {
-        datesTable.push(getDate(i));
-      }
-    }
+  for (let i = 0; i < 5; i++) {
+    datesTable.push(getDate(i));
+  }
+}
+
 
 const app = Vue.createApp({
   data() {
@@ -39,6 +39,7 @@ const app = Vue.createApp({
       processId: [],
       checkProcess: "",
       checkProcessTable: {},
+      riskTable: [50,50,50,50,50,50],
     };
   },
 
@@ -129,23 +130,70 @@ const app = Vue.createApp({
     },
 
     compareNames(obj1, obj2) {
-            console.log(obj1);
-            console.log(obj2);
       for (let id in obj2) {
-          if (obj1 === obj2[id]) {
-            return true;
-          }
+        if (obj1 === obj2[id]) {
+          return true;
         }
+      }
       return false;
+    },
+
+    compareProcess(obj1, obj2) {
+      for (let id in obj2) {
+        if (obj1 === obj2[id].employee_id) {
+          this.riskTable.push(Math.floor(obj2[id].average));
+          return "styles/" + Math.floor(obj2[id].average) + ".png";
+        }
+      }
+      return "styles/0.png";
+    },
+
+    compareRisk(obj1, obj2) {
+      for (let id in obj2) {
+        if (obj1 === obj2[id].employee_id) {
+          this.riskTable.push(Math.floor(obj2[id].average));
+          return Math.floor(obj2[id].average);
+        }
+      }
+      this.riskTable.push(0);
+      return 0;
     },
 
     async getProcess() {
       try {
-        console.log(this.checkProcess);
+        var methodRiskTable = [0, 0, 0, 0, 0];
         this.checkProcessTable = await axios.get(
           "/employees/process/" + this.checkProcess
         );
-        console.log(this.checkProcessTable);
+        for (let id in this.checkProcessTable.data) {
+          // console.log(this.checkProcessTable.data.length);
+          // console.log(this.checkProcessTable.data[id].employee_id);
+          for (let idAbsence in this.employeesData.data) {
+            if (
+              this.employeesData.data[idAbsence].employee_id ===
+              this.checkProcessTable.data[id].employee_id
+            ) {
+              for (let idEmployeeAbsence in this.employeesData.data[idAbsence]
+                .absences) {
+                // console.log(
+                //   this.employeesData.data[idAbsence].absences[idEmployeeAbsence]
+                // );
+                if (
+                  !this.employeesData.data[idAbsence].absences[
+                    idEmployeeAbsence
+                  ]
+                ) {
+                  methodRiskTable[idEmployeeAbsence] += 1;
+                }
+              }
+              //  console.log(this.employeesData.data[idAbsence]);
+            }
+          }
+          // console.log(this.employeesData.data);
+        }
+        
+        this.riskTable=methodRiskTable;
+        this.riskTable.unshift(50);
       } catch (error) {
         console.error(error);
       }
