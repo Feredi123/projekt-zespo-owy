@@ -2,19 +2,25 @@
 
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>PPG</title>
+    <title>PPG </title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://unpkg.com/vue@next" defer></script>
-        <script src="admin.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/side-bar.css">
+    <link rel="stylesheet" href="styles/workspace.css">
+    <link rel="stylesheet" href="styles/top-bar.css">
+    <link rel="stylesheet" href="styles/manage-skills.css">
+        <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="side-bar.js" defer></script>
+    <script src="top-bar.js" defer></script>
+        <script src="manage-skills.js" defer></script>
+
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
@@ -23,7 +29,147 @@
     ></script>
   </head>
 
-  <body id="admin">
-    balls
+  <body>
+    <main>
+             <div id="side-bar">
+        <div v-if="menuSize()" class="side-bar">
+
+        <img class="logo" src="styles/logo.webp" alt="logo" />
+        <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
+          >{{label}}
+        </button >
+        <button onclick="window.location.href='register.html';">
+          &#9733; Add worker
+        </button>
+                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+          &#9733; Admin
+        </button>
+        </div>
+
+        <div v-else class="side-bar2">
+          <img src="styles/logo.webp" alt="logo"/>
+          <img v-for="(label,index) in labels" v-bind:src="getLogo(index)" alt="icon" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"/>
+        </div>
+      </div>
+
+      <div class="workspace-body">
+        <div class="user-bar" id="top-bar">
+          <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
+          <div class="dropdown">
+            <name-surname v-for="employee in employeeData"> {{employee.first_name}} {{employee.second_name}}></name-surname>
+            <!-- <div class="dropdown-content">
+              <img
+                class="user-bar-logo"
+                src="styles/avatar.jpg"
+                alt="avatar"
+                style="border-radius: 50%; background-color: transparent"
+              />
+              <input type="text" placeholder="Login ID" class="login-info" />
+              <input type="text" placeholder="password" class="login-info" />
+              <button>Login</button>
+              <button>Forgot password</button>
+            </div> -->
+          </div>
+        </div>
+
+
+
+
+          
+    <div class="workspace" >
+      <manage-skills id="manage-skills">
+        <div class="manage-skills" >
+          <content>
+            <label>
+              &#9733; Register skill
+            </label>
+
+                  <select name="registerSkills" id="registerSkills"  v-model="registerSkill"required>
+                    <option value="" disabled selected>Skill Name</option>
+                    <option
+                      v-for="skill in registerSkills"
+                      v-bind:value="skill.skill_id"
+                    >
+                      {{skill.name}}
+                    </option>
+                  </select>
+
+                  <select name="registerLevel" id="registerLevel"  v-model="registerLevel" required>
+                    <option value="" disabled selected>Level</option>
+                    <option
+                      v-for="level in levels"
+                    >
+                      {{level}}
+                    </option>
+                  </select>
+
+        <div class="label-input">
+          <input type="checkbox" id="registerCheckbox" name="registerCheckbox" value="false" v-model="registerCheckbox">
+          <checkbox-label for="registerCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
+        </div>
+        <button v-on:click="postRegisterData()">Confirm</button>
+          </content>
+
+                   <content>
+            <label>
+              &#9733; Change Skill
+            </label>
+
+                  <select name="putSkills" id="putSkills"  v-model="putSkill"required>
+                    <option value="" disabled selected>Skill Name</option>
+                    <option
+                      v-for="skill in putSkills"
+                      v-bind:value="skill.skill_id"
+                    >
+                      {{skill.name}}
+                    </option>
+                  </select>
+
+                  <select name="putLevel" id="putLevel"  v-model="putLevel" required>
+                    <option value="" disabled selected>Level</option>
+                    <option
+                      v-for="level in levels"
+                    >
+                      {{level}}
+                    </option>
+                  </select>
+
+        <div class="label-input">
+          <input type="checkbox" id="putCheckbox" name="putCheckbox" value="false" v-model="putCheckbox">
+          <checkbox-label for="putCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
+        </div>
+        <button v-on:click="putRegisterData()">Confirm</button>
+          </content>
+          
+                             <content>
+            <label>
+              &#9733; Delete Skill
+            </label>
+
+                  <select name="deleteSkills" id="deleteSkills"  v-model="deleteSkill"required>
+                    <option value="" disabled selected>Skill Name</option>
+                    <option
+                      v-for="skill in putSkills"
+                      v-bind:value="skill.skill_id"
+                    >
+                      {{skill.name}} {{skill.skill_id}}
+                    </option>
+                  </select>
+
+        <div class="label-input">
+          <input type="checkbox" id="deleteCheckbox" name="deleteCheckbox" value="false" v-model="deleteCheckbox">
+          <checkbox-label for="deleteCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
+        </div>
+        <button v-on:click="deleteRegisterData()">Confirm</button>
+          </content>
+
+        </div>
+      </manage-skills>
+    </div>
+      </div>
+
+
+    </div>
+  </main>
   </body>
 </html>
