@@ -5,12 +5,7 @@ const {
 } = require('../controllers/dashboard')
 
 const {
-  getEmployeeById,
-  getEmployees,
-  getLoggedEmployee,
-  getEmployeesBySkill,
-  getEmployeesByProcess,
-  getEmployeeType,
+  getEmployeeById, getEmployees, getLoggedEmployee, getEmployeesBySkill, getEmployeesByProcess, getEmployeeType,
 } = require('../controllers/employees')
 
 const {
@@ -54,6 +49,5 @@ router.route('/employee/:id').get(getEmployeeById) // :id - id pracownika,  zwra
 router.route('/employee').get(getLoggedEmployee) // zwraca pracownika id, imię, nazwisko, email zalogowanegho pracownika
 router.route('/employees/skill/:id').get(getEmployeesBySkill) // :id - id umiejętności, zwraca pracowników id, imię, nazwisko i poziom umiejętności
 router.route('/employees/process/:id').get(getEmployeesByProcess) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
-//router.route('/postman').post(createPersonPostman)
-//router.route('/:id').put(updatePerson).delete(deletePerson)
+
 module.exports = router
