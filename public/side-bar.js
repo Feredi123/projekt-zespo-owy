@@ -2,10 +2,28 @@ const appSideBar = Vue.createApp({
   data() {
     return {
       isShown: "",
+      labels:["Dasboard", "Manage skills", "My account", "Growth"],
+      addresses:["/","/manage-skills","/my-account","/growth"],
+      logos:["dashboard","star","person","growth"],
     };
   },
 
   methods: {
+    changeURL(index){window.location.href = this.addresses[index];},
+    checkActiveURL(index){
+      let address =this.addresses[index];
+      let color = "rgb(131, 197, 232)";
+      if (window.location.pathname === address) {
+        return { background: color};
+      }
+      // console.log(address)
+      // console.log(window.location.pathname)
+      // console.log(window.location.pathname===address)
+      //       return false;
+    },
+    getLogo(index){
+      return 'styles/'+this.logos[index]+'.png'
+    },
     async getMyData() {
       try {
         const response = await axios.get("/employee");

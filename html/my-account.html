@@ -52,35 +52,24 @@
 
   <body>
     <main>
-    <div id="side-bar">
+          <div id="side-bar">
         <div v-if="menuSize()" class="side-bar">
 
         <img class="logo" src="styles/logo.webp" alt="logo" />
-        <button onclick="window.location.href='index.html';"
-          >&#9733; Dashboard</button
-        >
-        <button onclick="window.location.href='manage-skills.html';">
-          &#9733; Manage skills
-        </button>
-        <button-active onclick="window.location.href='my-account.html';">
-          &#9733; My account
-        </button-active>
-        <button onclick="window.location.href='growth.html';">
-          &#9733; Growth
-        </button>
+        <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
+          >{{label}}
+        </button >
         <button onclick="window.location.href='register.html';">
           &#9733; Add worker
         </button>
-
+                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+          &#9733; Admin
+        </button>
         </div>
 
         <div v-else class="side-bar2">
           <img src="styles/logo.webp" alt="logo"/>
-          <img src="styles/dashboard.png" alt="logo" onclick="window.location.href='index.html';"/>
-          <img src="styles/star.png" onclick="window.location.href='manage-skills.html';" alt="logo" />
-          <img src="styles/person.png" alt="logo" style="background-color:  rgb(131, 197, 232);" />
-          <img src="styles/growth.png" alt="logo" onclick="window.location.href='growth.html';"/>
-          <img src="styles/star.png" alt="logo" onclick="window.location.href='register.html';"/>
+          <img v-for="(label,index) in labels" v-bind:src="getLogo(index)" alt="icon" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"/>
         </div>
       </div>
 

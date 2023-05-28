@@ -22,31 +22,24 @@
 
   <body>
     <main>
-      <div class="side-bar">
-        <img class="logo" src="styles/logo.webp" alt="logo">
-        <button onclick="window.location.href='index.html';">&#9733; Dashboard</button>
-        <button onclick="window.location.href='manage-skills.html';">&#9733; Manage skills</button>
-        <button onclick="window.location.href='my-account.html';">&#9733; My account</button>
-        <button onclick="window.location.href='growth.html';">&#9733; Growth</button>
-        <button-active onclick="window.location.href='register.html';">&#9733; Register</button-active>
-      </div>
+          <div id="side-bar">
+        <div v-if="menuSize()" class="side-bar">
 
-      <div class="workspace-body">
-        <div class="user-bar">
-          <img class="user-bar-logo" src="styles/logo.webp" alt="user-logo">
+        <img class="logo" src="styles/logo.webp" alt="logo" />
+        <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
+          >{{label}}
+        </button >
+        <button onclick="window.location.href='register.html';">
+          &#9733; Add worker
+        </button>
+                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+          &#9733; Admin
+        </button>
+        </div>
 
-          <div class="dropdown">
-            <name-surname> Name Surname ></name-surname>
-            <div class="dropdown-content">
-              <img class="user-bar-logo" src="styles/logo.webp" alt="logo" style="border-radius: 50%; background-color:transparent;">
-
-              <form action="/login" method="POST">
-              <input type="text" id="name" name="name" required>
-              <input type="password" id="password" name="password" required>
-              <button type="submit">Login</button>
-            </form>
-              <button>Forgot password</button>
-            </div>
+        <div v-else class="side-bar2">
+          <img src="styles/logo.webp" alt="logo"/>
+          <img v-for="(label,index) in labels" v-bind:src="getLogo(index)" alt="icon" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"/>
         </div>
       </div>
 
