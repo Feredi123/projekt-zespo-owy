@@ -166,30 +166,27 @@ const app = Vue.createApp({
           "/employees/process/" + this.checkProcess
         );
         for (let id in this.checkProcessTable.data) {
-          // console.log(this.checkProcessTable.data.length);
-          // console.log(this.checkProcessTable.data[id].employee_id);
-          for (let idAbsence in this.employeesData.data) {
-            if (
-              this.employeesData.data[idAbsence].employee_id ===
-              this.checkProcessTable.data[id].employee_id
-            ) {
-              for (let idEmployeeAbsence in this.employeesData.data[idAbsence]
-                .absences) {
-                // console.log(
-                //   this.employeesData.data[idAbsence].absences[idEmployeeAbsence]
-                // );
-                if (
-                  !this.employeesData.data[idAbsence].absences[
-                    idEmployeeAbsence
-                  ]
-                ) {
-                  methodRiskTable[idEmployeeAbsence] += 1;
+          if (this.checkProcessTable.data[id].average>=3) {            for (let idAbsence in this.employeesData.data) {
+              if (
+                this.employeesData.data[idAbsence].employee_id ===
+                this.checkProcessTable.data[id].employee_id
+              ) {
+                for (let idEmployeeAbsence in this.employeesData.data[idAbsence]
+                  .absences) {
+                  if (
+                    !this.employeesData.data[idAbsence].absences[
+                      idEmployeeAbsence
+                    ]
+                  ) {
+                    methodRiskTable[idEmployeeAbsence] += 1;
+                  }
                 }
+                //  console.log(this.employeesData.data[idAbsence]);
               }
-              //  console.log(this.employeesData.data[idAbsence]);
             }
-          }
           // console.log(this.employeesData.data);
+          }
+
         }
         
         this.riskTable=methodRiskTable;
