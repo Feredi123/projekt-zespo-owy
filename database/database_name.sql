@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Maj 2023, 18:26
+-- Czas generowania: 30 Maj 2023, 12:15
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -162,7 +162,7 @@ INSERT INTO `employees` (`employee_id`, `first_name`, `second_name`, `email`, `p
 (64, 'Alex', 'Lee', 'alex.lee@example.com', NULL, NULL, NULL, 0, 19, 0),
 (65, 'Isabella', 'Nguyen', 'isabella.nguyen@example.com', NULL, NULL, NULL, 0, 19, 0),
 (66, 'Jan', 'Kowalski', 'jan@kowalski.com', 789456123, '789564123103223,', 'c:/photos/photo1', 0, 1, 0),
-(76, 'jan', 'kow', 'a@b.c', 789456123, '$2b$10$m0XRPuMziU8NtY/beZJQSuuAt1xBv.it0YcANWaPB22SJ8eGmyS1q', NULL, 0, 5, NULL);
+(76, 'jan', 'kow', 'a@b.c', 789456123, '$2b$10$m0XRPuMziU8NtY/beZJQSuuAt1xBv.it0YcANWaPB22SJ8eGmyS1q', NULL, 1, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -360,14 +360,23 @@ ALTER TABLE `absences`
 ALTER TABLE `employees`
   MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
-ALTER TABLE `skills`
-  MODIFY `skills_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
 --
 -- AUTO_INCREMENT dla tabeli `growth`
 --
 ALTER TABLE `growth`
   MODIFY `growth_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `processes`
+--
+ALTER TABLE `processes`
+  MODIFY `process_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT dla tabeli `skills`
+--
+ALTER TABLE `skills`
+  MODIFY `skills_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ograniczenia dla zrzutów tabel
