@@ -360,6 +360,9 @@ ALTER TABLE `absences`
 ALTER TABLE `employees`
   MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
+ALTER TABLE `skills`
+  MODIFY `skills_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT dla tabeli `growth`
 --

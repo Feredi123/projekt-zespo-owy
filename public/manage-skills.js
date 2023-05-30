@@ -47,6 +47,21 @@ const appManageSkills = Vue.createApp({
 
       return [{ value: 0, message1: "New lvl" }];
     },
+
+    subtractedSkills() {
+      const registerSkillsIds = Object.values(this.registerSkills).map(skill => skill.skill_id);
+      const putSkillsIds = Object.values(this.putSkills).map(skill => skill.skill_id);
+      const subtractedIds = registerSkillsIds.filter(id => !putSkillsIds.includes(id));
+      const subtractedSkills = {};
+    
+      Object.entries(this.registerSkills).forEach(([key, skill]) => {
+        if (subtractedIds.includes(skill.skill_id)) {
+          subtractedSkills[key] = skill;
+        }
+      });
+    
+      return subtractedSkills;
+    },
   },
 
   methods: {
@@ -138,25 +153,13 @@ const appManageSkills = Vue.createApp({
         console.log("nie poszło");
       }
     },
-    // async getAbsenceTypes() {
-    //   try {
-    //     const response = await axios.get("/employee-skill");
 
-    //     if (!Array.isArray(response.data)) {
-    //       window.location.href = "/login.html";
-    //     } else {
-    //       this.putSkills = response.data;
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
   },
 
   created() {
     this.getMySkills();
     this.getMyData();
-    // this.getAbsenceTypes();
+    
   },
 });
 

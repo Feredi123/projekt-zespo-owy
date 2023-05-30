@@ -87,7 +87,7 @@
                   <select name="registerSkills" id="registerSkills"  v-model="registerSkill"required>
                     <option value="" disabled selected>Skill Name</option>
                     <option
-                      v-for="skill in registerSkills"
+                      v-for="skill in subtractedSkills"
                       v-bind:value="skill.skill_id"
                     >
                       {{skill.name}}

@@ -24,6 +24,7 @@ const {
 router.route('/dashboard').get(getDashboard)
 router.route('/dashboard/all/:date').get(getDashboardAll) //:date - YYYY-MM-DD, zwraca id pracownika imię nazwiko umiejętności i nieobecości od podanej daty
 router.route('/processes').get(getProcesses) // zwraca procesy id i nazwa
+
 router.route('/skills').get(getSkills) // zwraca umiejętności id i nazwa
 
 router.route('/absences').get(getAbsences)  // zwraca id pracownika i kiedy ich nie będzie

@@ -7,6 +7,7 @@ const { initializePassport } = require('./passport')
 const router = require('./routes/router')
 const routerPages = require('./routes/routerPages')
 const routerPassport = require('./routes/routerPassport')
+const routerAdminPanel = require('./routes/routerAdminPanel')
 const methodOverride = require('method-override')
 const { checkAuthenticated } = require('./middlewares')
 
@@ -34,6 +35,7 @@ app.use(methodOverride('_method'))
 
 app.use('/', routerPassport) //router zawierający zapytania odnośnie logowania i rejestracji
 app.use('/', routerPages) //router zawierający strony html z odpowiedziai
+app.use('/', routerAdminPanel) //router zawierający zapytana z panelu administratora
 app.use('/', checkAuthenticated, router) //router zawierający pozostałe zapytania API
 
 app.all('*', (req, res) => {
