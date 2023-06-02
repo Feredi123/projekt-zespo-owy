@@ -27,6 +27,39 @@
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
       crossorigin="anonymous"
     ></script>
+    <script>
+      function testSend() {
+
+
+        const formData = {
+          first_name : 'Jan',
+          last_name : 'Kow',
+          email : 'jan@kow.com',
+          phone : '789456132',
+          admin_right : 0,
+          manager_id : 5,
+          change_password : 1,
+          skills : [
+            {skills_id : 1,level:1},
+            {skills_id : 2,level:2},
+            {skills_id : 3,level:3},
+          ]
+        };
+        axios.put('/user/20', formData)
+          .then(response => {
+            if (response.status == '200') {
+              alert("Absence reported succesfully");
+              console.log(response.data)
+            } else {
+              alert("Form submission failed.");
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert("An error occurred during form submission.");
+          });
+      }
+    </script>
   </head>
 
   <body>
@@ -77,94 +110,9 @@
 
           
     <div class="workspace" >
-      <manage-skills id="manage-skills">
-        <div class="manage-skills" >
-          <content>
-            <label>
-              &#9733; Register skill
-            </label>
-
-                  <select name="registerSkills" id="registerSkills"  v-model="registerSkill"required>
-                    <option value="" disabled selected>Skill Name</option>
-                    <option
-                      v-for="skill in registerSkills"
-                      v-bind:value="skill.skill_id"
-                    >
-                      {{skill.name}}
-                    </option>
-                  </select>
-
-                  <select name="registerLevel" id="registerLevel"  v-model="registerLevel" required>
-                    <option value="" disabled selected>Level</option>
-                    <option
-                      v-for="level in levels"
-                    >
-                      {{level}}
-                    </option>
-                  </select>
-
-        <div class="label-input">
-          <input type="checkbox" id="registerCheckbox" name="registerCheckbox" value="false" v-model="registerCheckbox">
-          <checkbox-label for="registerCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
-        </div>
-        <button v-on:click="postRegisterData()">Confirm</button>
-          </content>
-
-                   <content>
-            <label>
-              &#9733; Change Skill
-            </label>
-
-                  <select name="putSkills" id="putSkills"  v-model="putSkill"required>
-                    <option value="" disabled selected>Skill Name</option>
-                    <option
-                      v-for="skill in putSkills"
-                      v-bind:value="skill.skill_id"
-                    >
-                      {{skill.name}}
-                    </option>
-                  </select>
-
-                  <select name="putLevel" id="putLevel"  v-model="putLevel" required>
-                    <option value="" disabled selected>Level</option>
-                    <option
-                      v-for="level in levels"
-                    >
-                      {{level}}
-                    </option>
-                  </select>
-
-        <div class="label-input">
-          <input type="checkbox" id="putCheckbox" name="putCheckbox" value="false" v-model="putCheckbox">
-          <checkbox-label for="putCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
-        </div>
-        <button v-on:click="putRegisterData()">Confirm</button>
-          </content>
-          
-                             <content>
-            <label>
-              &#9733; Delete Skill
-            </label>
-
-                  <select name="deleteSkills" id="deleteSkills"  v-model="deleteSkill"required>
-                    <option value="" disabled selected>Skill Name</option>
-                    <option
-                      v-for="skill in putSkills"
-                      v-bind:value="skill.skill_id"
-                    >
-                      {{skill.name}} {{skill.skill_id}}
-                    </option>
-                  </select>
-
-        <div class="label-input">
-          <input type="checkbox" id="deleteCheckbox" name="deleteCheckbox" value="false" v-model="deleteCheckbox">
-          <checkbox-label for="deleteCheckbox"> I confirm that i'm on that level off the skill</checkbox-label><br>
-        </div>
-        <button v-on:click="deleteRegisterData()">Confirm</button>
-          </content>
-
-        </div>
-      </manage-skills>
+      
+      <button onclick="testSend()">test</button>
+        
     </div>
       </div>
 

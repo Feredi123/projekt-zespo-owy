@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {
-  getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll, getAbsenceTypes,
+  getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll, getAbsenceTypes, getProcessesById,
 } = require('../controllers/dashboard')
 
 const {
@@ -24,6 +24,7 @@ const {
 router.route('/dashboard').get(getDashboard)
 router.route('/dashboard/all/:date').get(getDashboardAll) //:date - YYYY-MM-DD, zwraca id pracownika imię nazwiko umiejętności i nieobecości od podanej daty
 router.route('/processes').get(getProcesses) // zwraca procesy id i nazwa
+router.route('/process/:id').get(getProcessesById) // :id -id procesu zwraca nazwę procesu i umiejętności w tym procesie
 
 router.route('/skills').get(getSkills) // zwraca umiejętności id i nazwa
 
