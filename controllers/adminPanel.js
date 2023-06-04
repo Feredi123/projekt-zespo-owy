@@ -1,6 +1,18 @@
 const { json } = require('express');
 const pool = require('../config/database')
 const bcrypt = require('bcrypt'); // hashowanie haseł
+var nodemailer = require('nodemailer'); 
+
+
+let transporter = nodemailer.createTransport({
+  host: "poczta.o2.pl",
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  auth: {
+    user: 'admintest753421@o2.pl', // generated ethereal user
+    pass: 'ciscoadmin1!', // generated ethereal password
+  },
+});
 
 
 async function postSkill(req, res) {
@@ -9,7 +21,7 @@ async function postSkill(req, res) {
         const name = req.body.skill_name;
         await pool.query('INSERT INTO skills (name) VALUES (?);',[name]);
   
-        res.status(201);
+        res.status(201).json();
   
     } catch (err) {
         console.error(err);
@@ -24,7 +36,7 @@ async function putSkill(req, res) {
         
         await pool.query('UPDATE skills SET name = ? WHERE skills_id = ?;',[name,id]);
     
-        res.status(200);
+        res.status(200).json();
     
       } catch (err) {
         console.error(err);
@@ -52,7 +64,7 @@ async function deleteSkill(req, res) {
         const { id } = req.params;
         await pool.query('DELETE FROM skills WHERE skills_id = ?;',[id]);
     
-        res.status(204);
+        res.status(204).json();
     
       } catch (err) {
         console.error(err);
@@ -128,7 +140,23 @@ async function postUser  (req, res) {
       password = hashedPassword;
       manager_id = req.body.manager_id;
 
-    pool.query(`INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id) VALUES (NULL, '${first_name}', '${last_name}', '${email}', '${phone}', '${password}', NULL, '0', '${manager_id}')`);
+    pool.query('INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id) VALUES (NULL, ?, ?, ?, ?, ?, NULL, 0, ?)',[first_name,last_name,email,phone,password,manager_id]);
+    
+    var mailOptions = {
+      from: 'admintest753421@o2.pl',
+      to: email,
+      subject: 'ACCOUNT CREATED',
+      text: req.body.password,
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    }); 
+    
     res.redirect('/register')
   } catch {
     res.redirect('/register')

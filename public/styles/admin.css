@@ -1,0 +1,42 @@
+.button-container {
+    display: flex;
+  }
+  
+  .button-container button {
+    margin-right: 10px; /* Adjust the spacing between buttons */
+  }
+
+
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 9999;
+    text-align: center;
+  }
+  
+  .popup-title {
+    margin-top: 0;
+  }
+  
+  .close-button {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  form {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  label,
+  input,
+  select {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+  }

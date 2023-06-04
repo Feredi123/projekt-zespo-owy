@@ -15,11 +15,12 @@
     <link rel="stylesheet" href="styles/side-bar.css">
     <link rel="stylesheet" href="styles/workspace.css">
     <link rel="stylesheet" href="styles/top-bar.css">
-    <link rel="stylesheet" href="styles/manage-skills.css">
-        <script src="https://unpkg.com/vue@next" defer></script>
+    <link rel="stylesheet" href="styles/admin.css">
+
+    <script src="https://unpkg.com/vue@next" defer></script>
     <script src="side-bar.js" defer></script>
     <script src="top-bar.js" defer></script>
-        <script src="manage-skills.js" defer></script>
+    <script src="admin.js" defer></script>
 
 
     <script
@@ -27,44 +28,11 @@
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
       crossorigin="anonymous"
     ></script>
-    <script>
-      function testSend() {
-
-
-        const formData = {
-          first_name : 'Jan',
-          last_name : 'Kow',
-          email : 'jan@kow.com',
-          phone : '789456132',
-          admin_right : 0,
-          manager_id : 5,
-          change_password : 1,
-          skills : [
-            {skills_id : 1,level:1},
-            {skills_id : 2,level:2},
-            {skills_id : 3,level:3},
-          ]
-        };
-        axios.put('/user/20', formData)
-          .then(response => {
-            if (response.status == '200') {
-              alert("Absence reported succesfully");
-              console.log(response.data)
-            } else {
-              alert("Form submission failed.");
-            }
-          })
-          .catch(error => {
-            console.error(error);
-            alert("An error occurred during form submission.");
-          });
-      }
-    </script>
   </head>
 
   <body>
     <main>
-             <div id="side-bar">
+        <div id="side-bar">
         <div v-if="menuSize()" class="side-bar">
 
         <img class="logo" src="styles/logo.webp" alt="logo" />
@@ -85,7 +53,7 @@
         </div>
       </div>
 
-      <div class="workspace-body">
+      <div class="workspace-body"  id="admin">
         <div class="user-bar" id="top-bar">
           <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
           <div class="dropdown">
@@ -109,13 +77,57 @@
 
 
           
-    <div class="workspace" >
-      
-      <button onclick="testSend()">test</button>
+      <div class="workspace">
+
+        <div id="skillsButtons" class="button-container">
+          <button @click="isPopupAddSkillOpen = true">Add Skill</button>
+          <button @click="isPopupDeleteSkillOpen = true">Delete Skill</button>
+          <button @click="isPopupEditSkillOpen = true">Edit Skill</button>
+        </div>
         
-    </div>
       </div>
 
+      <div class="popup" v-if="isPopupAddSkillOpen">
+        <p class="popup-title">Add Skill</p>
+        <form onsubmit="submitAddSkill(event)" id="addSkillForm">
+          <label>Skill name:
+            <input type="text" id="addSkillName" name="skill_name" required>
+          </label>
+          <button type="submit">Create</button>
+          <button class="close-button" @click="isPopupAddSkillOpen = false">Close</button>
+        </form> 
+      </div>
+      
+      <div class="popup" v-if="isPopupDeleteSkillOpen">
+        <p class="popup-title">Delete Skill</p>
+        <form onsubmit="submitDeleteSkill(event)" id="deleteSkillForm">
+          <label>Skill name:
+            <select name="deleteSkillSelect" id="deleteSkillSelect" required>
+              <option value="" disabled selected>Select skill</option>
+              <option v-for="skills in skillList" :value="skills.skill_id"> {{skills.name}} </option>
+            </select>
+          </label>
+          <button type="submit">Delete</button>
+          <button class="close-button" @click="isPopupDeleteSkillOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupEditSkillOpen">
+        <p class="popup-title">Edit Skill</p>
+        <form onsubmit="submitEditSkill(event)" id="editSkillForm">
+          <label>Select skill:
+            <select name="editSkillSelect" id="editSkillSelect" @change="editSkillOnChange($event)" required>
+              <option value="" disabled selected>Select skill</option>
+              <option v-for="skills in skillList" :value="skills.skill_id"> {{skills.name}} </option>
+            </select>
+          </label>
+          <label>Skill name:
+            <input type="text" id="editSkillName" name="skill_name" required>
+          </label>
+          <button type="submit">Submit</button>
+          <button class="close-button" @click="isPopupEditSkillOpen = false">Close</button>
+        </form> 
+      </div>
 
     </div>
   </main>
