@@ -84,6 +84,12 @@
           <button @click="isPopupDeleteSkillOpen = true">Delete Skill</button>
           <button @click="isPopupEditSkillOpen = true">Edit Skill</button>
         </div>
+
+        <div id="processButtons" class="button-container">
+          <button @click="isPopupAddProcessOpen = true">Add Process</button>
+          <button @click="isPopupDeleteProcessOpen = true">Delete Process</button>
+          <button @click="isPopupEditProcessOpen = true">Edit Process</button>
+        </div>
         
       </div>
 
@@ -126,6 +132,48 @@
           </label>
           <button type="submit">Submit</button>
           <button class="close-button" @click="isPopupEditSkillOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupAddProcessOpen">
+        <p class="popup-title">Add Process</p>
+        <form onsubmit="submitAddProcess(event)" id="addProcessForm">
+          <label>Process name:
+            <input type="text" id="addProcessName" name="process_name" required>
+          </label>
+          <button type="submit">Create</button>
+          <button class="close-button" @click="isPopupAddProcessOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupDeleteProcessOpen">
+        <p class="popup-title">Delete Process</p>
+        <form onsubmit="submitDeleteProcess(event)" id="deleteProcessForm">
+          <label>Process name:
+            <select name="deleteProcessSelect" id="deleteProcessSelect" required>
+              <option value="" disabled selected>Select Process</option>
+              <option v-for="processs in processList" :value="processs.process_id"> {{processs.name}} </option>
+            </select>
+          </label>
+          <button type="submit">Delete</button>
+          <button class="close-button" @click="isPopupDeleteProcessOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupEditProcessOpen">
+        <p class="popup-title">Edit Process</p>
+        <form onsubmit="submitEditProcess(event)" id="editProcessForm">
+          <label>Select Process:
+            <select name="editProcessSelect" id="editProcessSelect" @change="editProcessOnChange($event)" required>
+              <option value="" disabled selected>Select Process</option>
+              <option v-for="processs in processList" :value="processs.process_id"> {{processs.name}} </option>
+            </select>
+          </label>
+          <label>Process name:
+            <input type="text" id="editProcessName" name="Process_name" required>
+          </label>
+          <button type="submit">Submit</button>
+          <button class="close-button" @click="isPopupEditProcessOpen = false">Close</button>
         </form> 
       </div>
 

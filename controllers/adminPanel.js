@@ -80,7 +80,7 @@ async function postProcess(req, res) {
       const nazwa = req.body.process_name;
       await pool.query('INSERT INTO processes (`name`) VALUES (?);',[nazwa]);
       
-      res.status(201);
+      res.status(201).json();
   
     } catch (err) {
       console.error(err);
@@ -109,13 +109,13 @@ async function putProcess(req, res) {
     try {
         const { id } = req.params;
         const nazwa = req.body.process_name;
-        const skills = req.body.skills;
+        const processes = req.body.processes;
 
         pool.query('UPDATE processes SET name = ? WHERE process_id = ? ',[nazwa,id]);
 
         pool.query(`DELETE FROM process_skill WHERE processes_process_id = ${id}`)
           .then(() => {
-            skills.forEach(element => {
+            processes.forEach(element => {
               pool.query('INSERT INTO process_skill (`skills_skills_id`, `processes_process_id`) VALUES (?,?) ;',[element,id]);
             });
           })
