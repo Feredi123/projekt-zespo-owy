@@ -113,7 +113,9 @@ async function putProcess(req, res) {
         pool.query(`DELETE FROM process_skill WHERE processes_process_id = ${id}`)
           .then(() => {
             skills.forEach(element => {
-              pool.query('INSERT INTO process_skill (`skills_skills_id`, `processes_process_id`) VALUES (?,?) ;',[element,id]);
+              if(element != 0){
+                pool.query('INSERT INTO process_skill (`skills_skills_id`, `processes_process_id`) VALUES (?,?) ;',[element,id]);
+              }
             });
           })
           .then(() => {
