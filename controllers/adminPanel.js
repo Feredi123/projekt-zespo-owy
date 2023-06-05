@@ -72,9 +72,6 @@ async function deleteSkill(req, res) {
       }
 }
 
-
-
-
 async function postProcess(req, res) {
   try {
       const nazwa = req.body.process_name;
@@ -109,18 +106,18 @@ async function putProcess(req, res) {
     try {
         const { id } = req.params;
         const nazwa = req.body.process_name;
-        const processes = req.body.processes;
+        const skills = req.body.skills;
 
         pool.query('UPDATE processes SET name = ? WHERE process_id = ? ',[nazwa,id]);
 
         pool.query(`DELETE FROM process_skill WHERE processes_process_id = ${id}`)
           .then(() => {
-            processes.forEach(element => {
+            skills.forEach(element => {
               pool.query('INSERT INTO process_skill (`skills_skills_id`, `processes_process_id`) VALUES (?,?) ;',[element,id]);
             });
           })
           .then(() => {
-            res.status(200);
+            res.status(200).json();
           })
 
       } catch (err) {

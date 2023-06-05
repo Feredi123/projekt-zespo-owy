@@ -10,6 +10,8 @@ const appAdmin = Vue.createApp({
       isPopupEditProcessOpen: false,
       skillList: {},
       processList: {},
+      skillsInSelectedProcessList: {},
+      numberSkillsInSelectedProcess: 0,
     };
   },
 
@@ -30,6 +32,15 @@ const appAdmin = Vue.createApp({
         console.error(error);
       }
     },
+    async getskillsInSelectedProcess(id) {
+      try {
+        const response = await axios.get(`/process/${id}`);
+        this.skillsInSelectedProcessList = response.data[1];
+        this.numberSkillsInSelectedProcess = this.skillsInSelectedProcessList.length;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     menuSize() {
       var menuWidth = window.innerWidth;
       if (menuWidth > 600) {
@@ -44,10 +55,19 @@ const appAdmin = Vue.createApp({
       document.getElementById("editSkillName").value = skillName;
     },
     editProcessOnChange(event){
+
       const id = event.target.value;
       const processName = this.processList.find(item => item.process_id == id).name;
+      this.getskillsInSelectedProcess(id)
+        .then(() =>{
+          document.getElementById("editSkillQuantity").value = this.numberSkillsInSelectedProcess;
+        })
+      
       document.getElementById("editProcessName").value = processName;
     },
+    editProcessQuantityOnChange(event){
+      this.numberSkillsInSelectedProcess = Number(document.getElementById("editSkillQuantity").value);
+    }
   },
   created() {
     this.getSkills();
@@ -197,14 +217,20 @@ function submitEditProcess(event){
   event.preventDefault();
 
   const newname = event.target.elements['editProcessName'].value;
+  let skillArray = [];
+
+  for(let i =1;i <= vm.numberSkillsInSelectedProcess; i++){
+    skillArray.push(document.getElementById(`editProcessSkill${i}`).value);
+  }
 
   const formData = {
     process_name: newname,
+    skills: skillArray,
   };
   const id = event.target.elements['editProcessSelect'].value;
   const processName = vm.processList.find(item => item.process_id == id).name;
 
-  if(confirm("Rename skill " + processName + " to " + newname + "?") == false) {
+  if(confirm("Modify process" + processName + "?") == false) {
     return;
   }
 
@@ -213,6 +239,7 @@ function submitEditProcess(event){
       if (response.status == '200') {
         alert("Operation compleated successfully");
         document.getElementById("editProcessForm").reset();
+        vm.isPopupEditProcessOpen = false;
         vm.getProcesses();
 
       } else {

@@ -172,6 +172,17 @@
           <label>Process name:
             <input type="text" id="editProcessName" name="Process_name" required>
           </label>
+          <label>Number of skills:
+            <input type="number"  id="editSkillQuantity" name="editSkillQuantity" min="0" max="9" step="1" @change="editProcessQuantityOnChange($event)">
+          </label>
+          <label>Skills:
+            <select v-for="index in numberSkillsInSelectedProcess" :id="'editProcessSkill' + index">
+              <option :value="index <= skillsInSelectedProcessList.length ? skillsInSelectedProcessList[index - 1].skill_id : '0' " selected disabled>
+                {{ index <= skillsInSelectedProcessList.length ? skillsInSelectedProcessList[index - 1].skill_name : '-' }}
+              </option>
+              <option v-for="skill in skillList" :value="skill.skill_id">{{ skill.name }}</option>
+            </select>
+          </label>                   
           <button type="submit">Submit</button>
           <button class="close-button" @click="isPopupEditProcessOpen = false">Close</button>
         </form> 
