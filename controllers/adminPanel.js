@@ -137,9 +137,12 @@ async function postUser  (req, res) {
       email = req.body.email;
       phone = req.body.phone;
       password = hashedPassword;
-      manager_id = req.body.manager_id;
+      admin_rights =  req.body.admin_rights;
+      change_password =  req.body.password_change;
 
-    pool.query('INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id) VALUES (NULL, ?, ?, ?, ?, ?, NULL, 0, ?)',[first_name,last_name,email,phone,password,manager_id]);
+    await pool.query('INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, change_password) VALUES (NULL, ?, ?, ?, ?, ?, NULL, ?, ?);',[first_name,last_name,email,phone,password,admin_rights,change_password]);
+    
+    res.status(201).json();
     
     var mailOptions = {
       from: 'admintest753421@o2.pl',
@@ -148,17 +151,18 @@ async function postUser  (req, res) {
       text: req.body.password,
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
+    /*transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log(error);
       } else {
         console.log('Email sent: ' + info.response);
       }
-    }); 
+    });*/
     
-    res.redirect('/register')
-  } catch {
-    res.redirect('/register')
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
 
@@ -168,10 +172,12 @@ async function getUser(req, res) {
 
       const [employee] = await pool.query('SELECT employee_id , first_name, second_name, email, phone, photo, admin_rights, manager_id, change_password FROM employees WHERE employee_id = ?;',[id]);
       const [skills] = await pool.query('SELECT s.skills_id, s.name skill_name, es.level  From skills as s Join employee_skill as es on es.skills_skills_id = s.skills_id WHERE es.employees_employee_id = ?;',[id]);
+      const [absences] = await pool.query('SELECT a.start_date, a.absence_id, a.end_date, at.name type FROM absences as a Join absences_types as at ON at.absencetype_id = a.absences_types_absencetype_id where a.employees_employee_id = ? ORDER BY absence_id DESC LIMIT 5;',[id]);
 
       const response = {
         employee: employee,
-        skills: skills
+        skills: skills,
+        absences: absences,
       };
   
       res.status(200).json(response);
@@ -194,7 +200,7 @@ async function deleteUser(req, res) {
           return pool.query('DELETE FROM employees WHERE employee_id = ?;', [id])
         })
         .then(() => {
-          res.sendStatus(204);
+          res.status(204).json();
         })
       
     } catch (err) {
@@ -217,10 +223,8 @@ async function putUser(req, res) {
 
       const skills = req.body.skills;
 
-      pool.query('UPDATE employees SET first_name = ?, second_name = ?, email = ?, phone = ?, admin_rights = ?, manager_id = ?, change_password = ? WHERE employee_id = ?;',[first_name, last_name, email, phone, admin_right, manager_id, change_password, id]);
-      res.status(200);
-
-      pool.query(`DELETE FROM employee_skill WHERE employees_employee_id = ${id};`)
+      if(skills){
+        pool.query(`DELETE FROM employee_skill WHERE employees_employee_id = ${id};`)
         .then(() => {
           skills.forEach(element => {
             pool.query('INSERT INTO employee_skill (skills_skills_id, employees_employee_id, level) VALUES (?,?,?) ',[element.skills_id,id,element.level]);
@@ -229,6 +233,11 @@ async function putUser(req, res) {
         .then(() => {
           res.status(200);
         })
+      }
+      else{
+        await pool.query('UPDATE employees SET first_name = ?, second_name = ?, email = ?, phone = ?, admin_rights = ?, change_password = ? WHERE employee_id = ?;',[first_name, last_name, email, phone, admin_right, change_password, id]);
+        res.status(200).json();
+      }
 
     } catch (err) {
       console.error(err);

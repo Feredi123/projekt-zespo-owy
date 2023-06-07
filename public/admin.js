@@ -1,3 +1,4 @@
+
 const appAdmin = Vue.createApp({
   data() {
     return {
@@ -8,10 +9,19 @@ const appAdmin = Vue.createApp({
       isPopupAddProcessOpen: false,
       isPopupDeleteProcessOpen: false,
       isPopupEditProcessOpen: false,
+      isPopupAddUserOpen: false,
+      isPopupDeleteUserOpen: false,
+      isPopupEditUserOpen: false,
+      isPopupViewUserOpen: false,
       skillList: {},
       processList: {},
       skillsInSelectedProcessList: {},
       numberSkillsInSelectedProcess: 0,
+      usersList: {},
+      selectedUserData: {},
+      selectedViewMode: 0,
+      numberSkillsInSelectedUser: 0,
+      skillsInSelectedUserList: {},
     };
   },
 
@@ -41,6 +51,14 @@ const appAdmin = Vue.createApp({
         console.error(error);
       }
     },
+    async getEmployees() {
+      try {
+        const response = await axios.get('/employees');
+        this.usersList = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     menuSize() {
       var menuWidth = window.innerWidth;
       if (menuWidth > 600) {
@@ -65,13 +83,51 @@ const appAdmin = Vue.createApp({
       
       document.getElementById("editProcessName").value = processName;
     },
+    editViewUserOnChange(event){
+      const id = event.target.value;
+      this.getSelectedUserData(id)
+      .then(() =>{
+        try{ 
+          document.getElementById("editSkillUserQuantity").value = this.numberSkillsInSelectedUser;
+        } catch( error ){
+
+        }
+
+      })
+
+    },
+    async getSelectedUserData(id){
+      const response = await axios.get(`/user/${id}`);
+      this.selectedUserData = response.data;
+      console.log(this.selectedUserData)
+    },
     editProcessQuantityOnChange(event){
       this.numberSkillsInSelectedProcess = Number(document.getElementById("editSkillQuantity").value);
-    }
+    },
+    editUserQuantityOnChange(event){
+      this.numberSkillsInSelectedUser = Number(document.getElementById("editSkillUserQuantity").value);
+    },
+    getDisplayTFValue(input) {
+      return input ? true : false;
+    },
+    togglePasswordVisibility(inputId) {
+      var passwordInput = document.getElementById(inputId);
+      
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat('default', {dateStyle: 'short'}).format(date);
+    },
   },
   created() {
     this.getSkills();
     this.getProcesses();
+    this.getEmployees();
   },
 });
 
@@ -250,4 +306,137 @@ function submitEditProcess(event){
       console.error(error);
       alert("An error occurred during form submission.");
     });
+}
+
+function submitAddUser(event) {
+  event.preventDefault();
+
+  var adminRights = 0;
+  if(event.target.elements['addUserAdminRights'].checked){
+    adminRights = 1;
+  }
+
+  var passwordChange = 0;
+  if(event.target.elements['addUserChangePassword'].checked){
+    passwordChange = 1;
+  }
+
+  const formData = {
+    first_name: event.target.elements['addUserFirstName'].value,
+    last_name: event.target.elements['addUserLastName'].value,
+    email: event.target.elements['addUserEmail'].value,
+    phone: event.target.elements['addUserPhone'].value,
+    password: event.target.elements['addUserPassword'].value,
+    admin_rights: adminRights,
+    password_change: passwordChange,
+
+  };
+  axios.post('/register', formData)
+    .then(response => {
+      if (response.status == '201') {
+        alert("User " + formData.first_name + " " +formData.last_name+" created successfully");
+        document.getElementById("addUserForm").reset();
+        vm.getEmployees();
+      } else {
+        alert("Form submission failed.");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("An error occurred during form submission.");
+    });
+}
+
+function submitDeleteUser(event) {
+  event.preventDefault();
+
+  const id = event.target.elements['deleteUserSelect'].value;
+  const item = vm.usersList.find(item => item.employee_id == id);
+  const userFirstName = item.first_name;
+  const userLastName = item.second_name;
+  if(confirm("Delete user " + userFirstName +" "+ userLastName+"?") == false) {
+     return;
+  }
+
+    axios.delete(`/user/${id}`)
+    .then(response => {
+      if (response.status == '204') {
+        alert("User " + userFirstName +" "+ userLastName+" successfully deleted");
+        vm.getEmployees()
+        
+      } else {
+        alert("Form submission failed.");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("An error occurred during form submission.");
+    });
+  
+}
+
+function submitEditUser(event) {
+  event.preventDefault();
+
+  const id = event.target.elements['editUserSelect'].value;
+
+  if(vm.selectedViewMode == 1){ //edit user data
+
+    var adminRights = 0;
+    if(event.target.elements['editUserChangePassword'].checked){
+      adminRights = 1;
+    }
+
+    var passwordChange = 0;
+    if(event.target.elements['editUserChangePassword'].checked){
+      passwordChange = 1;
+    }
+
+    const formData = {
+      first_name: event.target.elements['editUserFirstName'].value,
+      last_name: event.target.elements['editUserLastName'].value,
+      email: event.target.elements['editUserEmail'].value,
+      phone: event.target.elements['editUserPhone'].value,
+      admin_rights: adminRights,
+      password_change: passwordChange,
+    };
+
+    console.log(formData,id)
+
+    axios.put(`/user/${id}`, formData)
+      .then(response => {
+        if (response.status == '200') {
+          alert("User " + formData.first_name + " " + formData.last_name+" modified successfully");
+          vm.getEmployees();
+        } else {
+          alert("Form submission failed.");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert("An error occurred during form submission.");
+      });
+
+  }
+  if(vm.selectedViewMode == 2){ //edit user Absences
+
+    axios.put(`/user/${id}`, formData)
+      .then(response => {
+        if (response.status == '200') {
+          alert("User " + formData.first_name + " " + formData.last_name+" modified successfully");
+          vm.getEmployees();
+        } else {
+          alert("Form submission failed.");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert("An error occurred during form submission.");
+      });
+  }
+  if(vm.selectedViewMode == 3){ //edit user Skills
+    alert(3);
+    return;
+  }
+
 }
