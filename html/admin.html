@@ -21,6 +21,22 @@
     <script src="side-bar.js" defer></script>
     <script src="top-bar.js" defer></script>
     <script src="admin.js" defer></script>
+    <script>
+      var countDownDate = new Date().getTime() + 900002;
+      var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+        }, 1000);
+    </script>
 
 
     <script
@@ -39,9 +55,6 @@
         <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
           >{{label}}
         </button >
-        <button onclick="window.location.href='register.html';">
-          &#9733; Add worker
-        </button>
                 <button v-if="isShown===1" onclick="window.location.href='admin';">
           &#9733; Admin
         </button>
@@ -58,22 +71,6 @@
           <div>
             Czas sesji:
             <p id="demo">
-            <script>
-              var countDownDate = new Date().getTime() + 900002;
-              var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countDownDate - now;
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
-                if (distance < 0) {
-                  clearInterval(x);
-                  document.getElementById("demo").innerHTML = "EXPIRED";
-                }
-                }, 1000);
-            </script>
             </p> 
             <button onclick="window.location.reload();">Odśwież</button>
             </div>
@@ -323,16 +320,29 @@
             </div>
             <div v-if="selectedViewMode == 3">
               <label>Number of skills:
-                <input type="number"  id="editSkillUserQuantity" name="editSkillUserQuantity" min="0" max="9" step="1" @change="editUserQuantityOnChange($event)">
+                <input type="number" :value="numberSkillsInSelectedUser"  id="editSkillUserQuantity" name="editSkillUserQuantity" min="0" max="9" step="1" @change="editUserQuantityOnChange($event)">
               </label>
-              <label>Skills:
-                <select v-for="index in numberSkillsInSelectedUser" :id="'editUserSkill' + index">
-                  <option :value="index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_id : '0' " selected disabled>
-                    {{ index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_name : '-' }}
-                  </option>
-                  <option v-for="skill in skillList" :value="skill.skill_id">{{ skill.name }}</option>
-                </select>
-              </label>      
+                <table>
+                  <tr><th>Skill Name</th><th>level</th></tr>
+                  <tr v-for="index in numberSkillsInSelectedUser">
+                    <td>
+                      <select :id="'editUserSkill' + index">
+                        <option :value="index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_id : '0' " selected disabled>
+                          {{ index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_name : '-' }}
+                        </option>
+                        <option v-for="skill in skillList" :value="skill.skill_id">{{ skill.name }}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select :id="'editUserSkillLevel' + index">
+                        <option :value="index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].level : '0' " selected disabled>
+                          {{ index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].level : '0' }}
+                        </option>
+                        <option v-for="index2 in 5" :value="index2-1">{{ index2-1 }}</option>
+                      </select>
+                    </td>
+                  </tr>
+                </table>        
             </div>
           </label>
           <button type="submit">Submit</button>

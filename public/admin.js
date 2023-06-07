@@ -86,20 +86,13 @@ const appAdmin = Vue.createApp({
     editViewUserOnChange(event){
       const id = event.target.value;
       this.getSelectedUserData(id)
-      .then(() =>{
-        try{ 
-          document.getElementById("editSkillUserQuantity").value = this.numberSkillsInSelectedUser;
-        } catch( error ){
-
-        }
-
-      })
-
     },
     async getSelectedUserData(id){
       const response = await axios.get(`/user/${id}`);
       this.selectedUserData = response.data;
-      console.log(this.selectedUserData)
+      this.skillsInSelectedUserList = this.selectedUserData.skills;
+      this.numberSkillsInSelectedUser = this.skillsInSelectedUserList.length;
+      console.log(this.numberSkillsInSelectedUser)
     },
     editProcessQuantityOnChange(event){
       this.numberSkillsInSelectedProcess = Number(document.getElementById("editSkillQuantity").value);
@@ -418,8 +411,30 @@ function submitEditUser(event) {
       });
 
   }
+  
   if(vm.selectedViewMode == 2){ //edit user Absences
 
+    alert(2);
+    return;
+  }
+  if(vm.selectedViewMode == 3){ //edit user Skills
+
+    var skills = [];
+
+    for(var i = 1 ; i <= vm.numberSkillsInSelectedUser ; i++){
+      var element = {
+        skills_id: document.getElementById(`editUserSkill${i}`).value,
+        level: document.getElementById(`editUserSkillLevel${i}`).value,
+      }
+      if(element.level>0 && element.level<5 && element.skills_id > 0){
+        skills.push(element);
+      }
+    }
+
+    const formData = {
+      skills: skills,
+    };
+    
     axios.put(`/user/${id}`, formData)
       .then(response => {
         if (response.status == '200') {
@@ -433,10 +448,7 @@ function submitEditUser(event) {
         console.error(error);
         alert("An error occurred during form submission.");
       });
-  }
-  if(vm.selectedViewMode == 3){ //edit user Skills
-    alert(3);
-    return;
+
   }
 
 }

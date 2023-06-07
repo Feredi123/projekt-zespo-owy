@@ -224,6 +224,8 @@ async function putUser(req, res) {
       const skills = req.body.skills;
 
       if(skills){
+        console.log(skills)
+        
         pool.query(`DELETE FROM employee_skill WHERE employees_employee_id = ${id};`)
         .then(() => {
           skills.forEach(element => {
@@ -231,7 +233,7 @@ async function putUser(req, res) {
           });
         })
         .then(() => {
-          res.status(200);
+          res.status(200).json();
         })
       }
       else{
