@@ -55,6 +55,28 @@
 
       <div class="workspace-body"  id="admin">
         <div class="user-bar" id="top-bar">
+          <div>
+            Czas sesji:
+            <p id="demo">
+            <script>
+              var countDownDate = new Date().getTime() + 900002;
+              var x = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+                if (distance < 0) {
+                  clearInterval(x);
+                  document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+                }, 1000);
+            </script>
+            </p> 
+            <button onclick="window.location.reload();">Odśwież</button>
+            </div>
           <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
           <div class="dropdown">
             <name-surname v-for="employee in employeeData"> {{employee.first_name}} {{employee.second_name}}></name-surname>
