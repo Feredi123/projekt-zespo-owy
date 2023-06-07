@@ -3,7 +3,7 @@ const appSideBar = Vue.createApp({
     return {
       isShown: "",
       labels:["Dasboard", "Manage skills", "My account", "Growth"],
-      addresses:["","manage-skills","my-account","growth"],
+      addresses:["/","manage-skills","my-account","growth"],
       logos:["dashboard","star","person","growth"],
     };
   },

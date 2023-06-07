@@ -53,11 +53,13 @@
         </div>
       </div>
 
-      <div class="workspace-body"  id="admin">
+      <div class="workspace-body">
         <div class="user-bar" id="top-bar">
           <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
           <div class="dropdown">
-            <name-surname v-for="employee in employeeData"> {{employee.first_name}} {{employee.second_name}}></name-surname>
+            <name-surname v-for="employee in employeeData">
+              {{employee.first_name}} {{employee.second_name}}></name-surname
+            >
            <div class="dropdown-content">
               <img
                 class="user-bar-logo"
@@ -74,10 +76,7 @@
         </div>
 
 
-
-
-          
-      <div class="workspace">
+      <div class="workspace" id="admin">
 
         <div id="skillsButtons" class="button-container">
           <button @click="isPopupAddSkillOpen = true">Add Skill</button>
@@ -98,7 +97,6 @@
           <button @click="isPopupEditProcessOpen = true">Edit Process</button>
         </div>
         
-      </div>
 
       <div class="popup" v-if="isPopupAddSkillOpen">
         <p class="popup-title">Add Skill</p>
