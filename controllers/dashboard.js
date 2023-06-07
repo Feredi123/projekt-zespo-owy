@@ -128,6 +128,21 @@ async function getProcesses(req, res) {
   }
 }
 
+
+async function getProcessesById(req, res) {
+  try {
+    const {id} = req.params;
+    const [process_name] = await pool.query('SELECT name FROM processes where process_id = ?',[id]);
+    const [skills] = await pool.query('SELECT s.name skill_name,s.skills_id skill_id FROM processes as p JOIN process_skill as ps on ps.processes_process_id = p.process_id RIGHT JOIN skills as s on s.skills_id = ps.skills_skills_id WHERE p.process_id = ?;',[id]);
+
+    res.status(200).json([process_name,skills]);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 async function getAbsences(req, res) {
   try {
 
@@ -230,5 +245,6 @@ module.exports = {
     getAbsencesByDate,
     getDashboardAll,
     getAbsenceTypes,
+    getProcessesById,
 
 }

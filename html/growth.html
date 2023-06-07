@@ -42,7 +42,7 @@
         <button onclick="window.location.href='register.html';">
           &#9733; Add worker
         </button>
-                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+                <button v-if="isShown===1" onclick="window.location.href='admin';">
           &#9733; Admin
         </button>
         </div>
@@ -60,18 +60,18 @@
             <name-surname v-for="employee in employeeData">
               {{employee.first_name}} {{employee.second_name}}></name-surname
             >
-            <!-- <div class="dropdown-content">
+           <div class="dropdown-content">
               <img
                 class="user-bar-logo"
                 src="styles/avatar.jpg"
                 alt="avatar"
                 style="border-radius: 50%; background-color: transparent"
               />
-              <input type="text" placeholder="Login ID" class="login-info" />
-              <input type="text" placeholder="password" class="login-info" />
-              <button>Login</button>
+               <form action="/logout?_method=DELETE" method="POST">
+                  <button type="submit"> LOGOUT </button>
+               </form>
               <button>Forgot password</button>
-            </div> -->
+            </div>
           </div>
         </div>
 

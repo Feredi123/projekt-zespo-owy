@@ -9,7 +9,7 @@ const customFields={
     passwordField:'password',
 }
 
-function initialize(passport, getUserByEmail, getUserById) {
+function initializePassport(passport, getUserByEmail, getUserById) {
 
     const authenticateUser = async (email, password, done) => {
 
@@ -55,4 +55,6 @@ function initialize(passport, getUserByEmail, getUserById) {
     })
 }
 
-module.exports = initialize
+module.exports = {
+    initializePassport,
+}

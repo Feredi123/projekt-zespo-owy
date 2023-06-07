@@ -1,16 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const {
-  getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll, getAbsenceTypes,
+  getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll, getAbsenceTypes, getProcessesById,
 } = require('../controllers/dashboard')
 
 const {
-  getEmployeeById,
-  getEmployees,
-  getLoggedEmployee,
-  getEmployeesBySkill,
-  getEmployeesByProcess,
-  getEmployeeType,
+  getEmployeeById, getEmployees, getLoggedEmployee, getEmployeesBySkill, getEmployeesByProcess, getEmployeeType,
 } = require('../controllers/employees')
 
 const {
@@ -29,6 +24,8 @@ const {
 router.route('/dashboard').get(getDashboard)
 router.route('/dashboard/all/:date').get(getDashboardAll) //:date - YYYY-MM-DD, zwraca id pracownika imię nazwiko umiejętności i nieobecości od podanej daty
 router.route('/processes').get(getProcesses) // zwraca procesy id i nazwa
+router.route('/process/:id').get(getProcessesById) // :id -id procesu zwraca nazwę procesu i umiejętności w tym procesie
+
 router.route('/skills').get(getSkills) // zwraca umiejętności id i nazwa
 
 router.route('/absences').get(getAbsences)  // zwraca id pracownika i kiedy ich nie będzie
@@ -54,6 +51,5 @@ router.route('/employee/:id').get(getEmployeeById) // :id - id pracownika,  zwra
 router.route('/employee').get(getLoggedEmployee) // zwraca pracownika id, imię, nazwisko, email zalogowanegho pracownika
 router.route('/employees/skill/:id').get(getEmployeesBySkill) // :id - id umiejętności, zwraca pracowników id, imię, nazwisko i poziom umiejętności
 router.route('/employees/process/:id').get(getEmployeesByProcess) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
-//router.route('/postman').post(createPersonPostman)
-//router.route('/:id').put(updatePerson).delete(deletePerson)
+
 module.exports = router

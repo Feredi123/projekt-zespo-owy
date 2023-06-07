@@ -32,7 +32,7 @@
         <button onclick="window.location.href='register.html';">
           &#9733; Add worker
         </button>
-                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+                <button v-if="isShown===1" onclick="window.location.href='admin';">
           &#9733; Admin
         </button>
         </div>
@@ -69,10 +69,6 @@
           <input type="number" id="manager_id" name="manager_id" required>
         </div>
         <button type="submit"> register </button>
-        </form>
-
-        <form action="/logout?_method=DELETE" method="POST">
-          <button type="submit"> LOGOUT </button>
         </form>
     </main>
   </body>

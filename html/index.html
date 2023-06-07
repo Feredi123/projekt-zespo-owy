@@ -40,10 +40,10 @@
         <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
           >{{label}}
         </button >
-        <button onclick="window.location.href='register.html';">
+        <button onclick="window.location.href='register';">
           &#9733; Add worker
         </button>
-                <button v-if="isShown===1" onclick="window.location.href='admin.html';">
+                <button v-if="isShown===1" onclick="window.location.href='admin';">
           &#9733; Admin
         </button>
         </div>
@@ -59,18 +59,18 @@
           <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
           <div class="dropdown">
             <name-surname v-for="employee in employeeData"> {{employee.first_name}} {{employee.second_name}}></name-surname>
-            <!-- <div class="dropdown-content">
+            <div class="dropdown-content">
               <img
                 class="user-bar-logo"
                 src="styles/avatar.jpg"
                 alt="avatar"
                 style="border-radius: 50%; background-color: transparent"
               />
-              <input type="text" placeholder="Login ID" class="login-info" />
-              <input type="text" placeholder="password" class="login-info" />
-              <button>Login</button>
+               <form action="/logout?_method=DELETE" method="POST">
+                  <button type="submit"> LOGOUT </button>
+               </form>
               <button>Forgot password</button>
-            </div> -->
+            </div>
           </div>
         </div>
         <div class="workspace" id="workspace-table">
@@ -151,7 +151,7 @@
             <div>
               <li>
               <h2 v-for="(date,index) in dates">{{date}}
-                <img src="styles/warning.png" alt="logo" v-if="riskTable[index]<3" style="width:30%;">
+                <img src="styles/warning.png" alt="logo" v-if="riskTable[index]<2" style="width:30%;">
               </h2>
 
             </li>
@@ -160,8 +160,8 @@
               <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}
                               <a style="font-size:7px;" v-for="skill in person.skills">{{skill.skill_name}},</a>
                             </h2>
-              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "Out of work":""}}</h2>
-              <h2>{{compareProcess(person.employee_id, checkProcessTable.data)}}</h2>
+              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "Out of work":""}}                 <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%; align-self: auto;"/></h2>
+
             </div>
             </li>
             </div>

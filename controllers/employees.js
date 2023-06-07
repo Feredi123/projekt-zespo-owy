@@ -60,7 +60,7 @@ async function getEmployees(req, res) {
 
       const {id} = req.params
 
-      const [employees] = await pool.query(`SELECT e.employee_id, e.first_name, e.second_name, SUM(es.level)/(SELECT COUNT(ps.skills_skills_id)FROM process_skill as ps WHERE ps.processes_process_id = ${2}) average FROM employees as e LEFT JOIN employee_skill as es ON e.employee_id = es.employees_employee_id INNER JOIN process_skill as ps ON ps.skills_skills_id = es.skills_skills_id WHERE ps.processes_process_id = ${2} GROUP by e.employee_id; `);
+      const [employees] = await pool.query(`SELECT e.employee_id, e.first_name, e.second_name, SUM(es.level)/(SELECT COUNT(ps.skills_skills_id)FROM process_skill as ps WHERE ps.processes_process_id = ${id}) average FROM employees as e LEFT JOIN employee_skill as es ON e.employee_id = es.employees_employee_id INNER JOIN process_skill as ps ON ps.skills_skills_id = es.skills_skills_id WHERE ps.processes_process_id = ${id} GROUP by e.employee_id; `);
   
       res.status(200).json(employees);
   

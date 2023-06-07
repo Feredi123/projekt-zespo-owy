@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>PPG </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/side-bar.css">
+    <link rel="stylesheet" href="styles/workspace.css">
+    <link rel="stylesheet" href="styles/top-bar.css">
+    <link rel="stylesheet" href="styles/admin.css">
+
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="side-bar.js" defer></script>
+    <script src="top-bar.js" defer></script>
+    <script src="admin.js" defer></script>
+
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <main>
+        <div id="side-bar">
+        <div v-if="menuSize()" class="side-bar">
+
+        <img class="logo" src="styles/logo.webp" alt="logo" />
+        <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
+          >{{label}}
+        </button >
+        <button onclick="window.location.href='register.html';">
+          &#9733; Add worker
+        </button>
+                <button v-if="isShown===1" onclick="window.location.href='admin';">
+          &#9733; Admin
+        </button>
+        </div>
+
+        <div v-else class="side-bar2">
+          <img src="styles/logo.webp" alt="logo"/>
+          <img v-for="(label,index) in labels" v-bind:src="getLogo(index)" alt="icon" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"/>
+        </div>
+      </div>
+
+      <div class="workspace-body"  id="admin">
+        <div class="user-bar" id="top-bar">
+          <img class="user-bar-logo" src="styles/avatar.jpg" alt="avatar" />
+          <div class="dropdown">
+            <name-surname v-for="employee in employeeData"> {{employee.first_name}} {{employee.second_name}}></name-surname>
+           <div class="dropdown-content">
+              <img
+                class="user-bar-logo"
+                src="styles/avatar.jpg"
+                alt="avatar"
+                style="border-radius: 50%; background-color: transparent"
+              />
+               <form action="/logout?_method=DELETE" method="POST">
+                  <button type="submit"> LOGOUT </button>
+               </form>
+              <button>Forgot password</button>
+            </div>
+          </div>
+        </div>
+
+
+
+
+          
+      <div class="workspace">
+
+        <div id="skillsButtons" class="button-container">
+          <button @click="isPopupAddSkillOpen = true">Add Skill</button>
+          <button @click="isPopupDeleteSkillOpen = true">Delete Skill</button>
+          <button @click="isPopupEditSkillOpen = true">Edit Skill</button>
+        </div>
+
+        <div id="usersButtons" class="button-container">
+          <button @click="isPopupAddUserOpen = true">Add User</button>
+          <button @click="isPopupDeleteUserOpen = true">Delete User</button>
+          <button @click="isPopupEditUserOpen = true">Edit User</button>
+          <button @click="isPopupViewUserOpen = true">View User</button>
+        </div>
+
+        <div id="processButtons" class="button-container">
+          <button @click="isPopupAddProcessOpen = true">Add Process</button>
+          <button @click="isPopupDeleteProcessOpen = true">Delete Process</button>
+          <button @click="isPopupEditProcessOpen = true">Edit Process</button>
+        </div>
+        
+      </div>
+
+      <div class="popup" v-if="isPopupAddSkillOpen">
+        <p class="popup-title">Add Skill</p>
+        <form onsubmit="submitAddSkill(event)" id="addSkillForm">
+          <label>Skill name:
+            <input type="text" id="addSkillName" name="skill_name" required>
+          </label>
+          <button type="submit">Create</button>
+          <button class="close-button" @click="isPopupAddSkillOpen = false">Close</button>
+        </form> 
+      </div>
+      
+      <div class="popup" v-if="isPopupDeleteSkillOpen">
+        <p class="popup-title">Delete Skill</p>
+        <form onsubmit="submitDeleteSkill(event)" id="deleteSkillForm">
+          <label>Skill name:
+            <select name="deleteSkillSelect" id="deleteSkillSelect" required>
+              <option value="" disabled selected>Select skill</option>
+              <option v-for="skills in skillList" :value="skills.skill_id"> {{skills.name}} </option>
+            </select>
+          </label>
+          <button type="submit">Delete</button>
+          <button class="close-button" @click="isPopupDeleteSkillOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupEditSkillOpen">
+        <p class="popup-title">Edit Skill</p>
+        <form onsubmit="submitEditSkill(event)" id="editSkillForm">
+          <label>Select skill:
+            <select name="editSkillSelect" id="editSkillSelect" @change="editSkillOnChange($event)" required>
+              <option value="" disabled selected>Select skill</option>
+              <option v-for="skills in skillList" :value="skills.skill_id"> {{skills.name}} </option>
+            </select>
+          </label>
+          <label>Skill name:
+            <input type="text" id="editSkillName" name="skill_name" required>
+          </label>
+          <button type="submit">Submit</button>
+          <button class="close-button" @click="isPopupEditSkillOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupAddProcessOpen">
+        <p class="popup-title">Add Process</p>
+        <form onsubmit="submitAddProcess(event)" id="addProcessForm">
+          <label>Process name:
+            <input type="text" id="addProcessName" name="process_name" required>
+          </label>
+          <button type="submit">Create</button>
+          <button class="close-button" @click="isPopupAddProcessOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupDeleteProcessOpen">
+        <p class="popup-title">Delete Process</p>
+        <form onsubmit="submitDeleteProcess(event)" id="deleteProcessForm">
+          <label>Process name:
+            <select name="deleteProcessSelect" id="deleteProcessSelect" required>
+              <option value="" disabled selected>Select Process</option>
+              <option v-for="processs in processList" :value="processs.process_id"> {{processs.name}} </option>
+            </select>
+          </label>
+          <button type="submit">Delete</button>
+          <button class="close-button" @click="isPopupDeleteProcessOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupEditProcessOpen">
+        <p class="popup-title">Edit Process</p>
+        <form onsubmit="submitEditProcess(event)" id="editProcessForm">
+          <label>Select Process:
+            <select name="editProcessSelect" id="editProcessSelect" @change="editProcessOnChange($event)" required>
+              <option value="" disabled selected>Select Process</option>
+              <option v-for="processs in processList" :value="processs.process_id"> {{processs.name}} </option>
+            </select>
+          </label>
+          <label>Process name:
+            <input type="text" id="editProcessName" name="Process_name" required>
+          </label>
+          <label>Number of skills:
+            <input type="number"  id="editSkillQuantity" name="editSkillQuantity" min="0" max="9" step="1" @change="editProcessQuantityOnChange($event)">
+          </label>
+          <label>Skills:
+            <select v-for="index in numberSkillsInSelectedProcess" :id="'editProcessSkill' + index">
+              <option :value="index <= skillsInSelectedProcessList.length ? skillsInSelectedProcessList[index - 1].skill_id : '0' " selected disabled>
+                {{ index <= skillsInSelectedProcessList.length ? skillsInSelectedProcessList[index - 1].skill_name : '-' }}
+              </option>
+              <option v-for="skill in skillList" :value="skill.skill_id">{{ skill.name }}</option>
+            </select>
+          </label>                   
+          <button type="submit">Submit</button>
+          <button class="close-button" @click="isPopupEditProcessOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupAddUserOpen">
+        <p class="popup-title">Add User</p>
+        <form onsubmit="submitAddUser(event)" id="addUserForm">
+          <label>First name:
+            <input type="text" id="addUserFirstName" name="addUserFirstName" required>
+          </label>
+          <label>Last name:
+            <input type="text" id="addUserLastName" name="addUserLastName" required>
+          </label>
+          <label>Email:
+            <input type="email" id="addUserEmail" name="addUserEmail" required>
+          </label>
+          <label>Phone:
+            <input type="tel" id="addUserPhone" name="addUserPhone" pattern="[0-9]{9}">
+          </label>
+          <label>Password:
+            <button type="button" @click="togglePasswordVisibility('addUserPassword')">Show/Hide Password</button>
+            <input type="password" id="addUserPassword" name="addUserPassword" required>
+          </label>
+          <label>Admin Rights:
+            <input type="checkbox" id="addUserAdminRights" name="addUserAdminRights">
+          </label>
+          <label>Needs to change password:
+            <input type="checkbox" id="addUserChangePassword" name="addUserChangePassword" checked>
+          </label>
+          <button type="submit">Create</button>
+          <button class="close-button" @click="isPopupAddUserOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupDeleteUserOpen">
+        <p class="popup-title">Delete User</p>
+        <form onsubmit="submitDeleteUser(event)" id="deleteUserForm">
+          <label>Select user:
+            <select name="deleteUserSelect" id="deleteUserSelect" required>
+              <option value="" disabled selected>Select User</option>
+              <option v-for="user in usersList" :value="user.employee_id"> {{user.first_name}} {{user.second_name}} </option>
+            </select>
+          </label>
+          <button type="submit">Delete</button>
+          <button class="close-button" @click="isPopupDeleteUserOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupViewUserOpen">
+        <p class="popup-title">View User</p>
+        <form onsubmit="" id="viewUserForm">
+          <label>Select user:
+            <select name="viewUserSelect" id="viewUserSelect" @change="editViewUserOnChange($event)" required>
+              <option value="" disabled selected>Select User</option>
+              <option v-for="user in usersList" :value="user.employee_id"> {{user.first_name}} {{user.second_name}} </option>
+            </select>
+          </label>
+          <div v-for="user in selectedUserData.employee">
+            <table>
+              <tr><td>First name:</td><td>{{user.first_name}}</td></tr>
+              <tr><td>Second name:</td><td>{{user.second_name}}</td></tr>
+              <tr><td>e-mail:</td><td>{{user.email}}</td></tr>
+              <tr><td>phone:</td><td>{{user.phone}}</td></tr>
+              <tr><td>change password:</td><td>{{getDisplayTFValue(user.change_password)}}</td></tr>
+              <tr><td>have admin rights:</td><td>{{getDisplayTFValue(user.admin_rights)}}</td></tr>
+            </table>
+          </div>
+          <p>Skills:</p>
+          <table>
+            <tr v-for="skill in selectedUserData.skills"><td>{{skill.skill_name}}</td><td>{{skill.level}}</td></tr>
+          </table>
+
+          <p>5 last Absences:</p>
+          <table>
+            <tr v-for="absence in selectedUserData.absences"><td>{{formatDate(absence.start_date)}} {{formatDate(absence.end_date)}}</td><td>{{absence.type}}</td></tr>
+          </table>
+          
+          <button class="close-button" @click="isPopupViewUserOpen = false">Close</button>
+        </form> 
+      </div>
+
+      <div class="popup" v-if="isPopupEditUserOpen">
+        <p class="popup-title">Edit User</p>
+        <form onsubmit="submitEditUser(event)" id="editUserForm">
+          <label>Select user:
+            <select name="editUserSelect" id="editUserSelect" @change="editViewUserOnChange($event)" required>
+              <option value="" disabled selected>Select User</option>
+              <option v-for="user in usersList" :value="user.employee_id"> {{user.first_name}} {{user.second_name}} </option>
+            </select>
+          </label>
+          <label>Select option:
+            <select name="editUserModeSelect" id="editUserModeSelect" v-model="selectedViewMode">
+              <option value="" disabled selected>Select option</option>
+              <option value="1">User data</option>
+              <option value="2">Absences</option>
+              <option value="3">Skills</option>
+            </select>
+            <div v-if="selectedViewMode == 1">
+              <div v-for="user in selectedUserData.employee">
+                <label>First name:<input type="text" id="editUserFirstName" name="editUserFirstName" :value="user.first_name" required></label>
+                <label>Last name:<input type="text" id="editUserLastName" name="editUserLastName" :value="user.second_name" required></label>
+                <label>Email:<input type="email" id="editUserEmail" name="editUserEmail" :value="user.email" required></label>
+                <label>Phone:<input type="tel" id="editUserPhone" name="editUserPhone" pattern="[0-9]{9}" :value="user.email"></label>
+                <label>change password:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.change_password" :checked="getDisplayTFValue(user.change_password)"></label>
+                <label>have admin rights:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.admin_rights" :checked="getDisplayTFValue(user.admin_rights)"></label>
+              </div>
+            </div>
+            <div v-if="selectedViewMode == 2">
+               dwa
+            </div>
+            <div v-if="selectedViewMode == 3">
+              <label>Number of skills:
+                <input type="number"  id="editSkillUserQuantity" name="editSkillUserQuantity" min="0" max="9" step="1" @change="editUserQuantityOnChange($event)">
+              </label>
+              <label>Skills:
+                <select v-for="index in numberSkillsInSelectedUser" :id="'editUserSkill' + index">
+                  <option :value="index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_id : '0' " selected disabled>
+                    {{ index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_name : '-' }}
+                  </option>
+                  <option v-for="skill in skillList" :value="skill.skill_id">{{ skill.name }}</option>
+                </select>
+              </label>      
+            </div>
+          </label>
+          <button type="submit">Submit</button>
+          <button class="close-button" @click="isPopupEditUserOpen = false">Close</button>
+        </form> 
+      </div>
+
+    </div>
+  </main>
+  </body>
+</html>
