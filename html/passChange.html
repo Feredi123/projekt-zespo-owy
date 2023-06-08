@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/login.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+  </head>
+
+  <body>
+    <main>
+        <password-change>
+            <img src="styles/logo.webp" alt="logo.webp" />
+            <form action="/pass-Change" method="POST">
+              <input
+                placeholder="password"
+                type="password"
+                id="password"
+                name="password"
+                required
+              />
+              <input
+                placeholder="Password"
+                type="password2"
+                id="password2"
+                name="password2"
+                required
+              />
+              <button type="submit">Change Password</button>
+            </form>
+    </main>
+  </body>
+</html>

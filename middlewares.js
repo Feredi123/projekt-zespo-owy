@@ -19,7 +19,18 @@ function checkIfAdmin(req, res, next){
       res.status(401).send('Unauthorized')
 }
 
+function checkFirstLogin(req, res, next){
+  if(req.isAuthenticated() && req.user.change_password == 0){
+    console.log("kolejne logowanie")
+    return next()
+  }
+  console.log("wymagana zmiana hasła")
+  req.user.change_password = 0
+  res.redirect('/passChange')
+}
+
 module.exports = {
     checkAuthenticated,
     checkIfAdmin,
+    checkFirstLogin
 }
