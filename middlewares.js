@@ -20,7 +20,7 @@ function checkIfAdmin(req, res, next){
 }
 function checkIfManager(req, res, next){
 
-  if(req.isAuthenticated() && req.user.admin_rights < 0) {
+  if(req.isAuthenticated() && req.user.admin_rights > 0) {
       console.log("Manager is logged IN")
       return next()
     }

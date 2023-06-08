@@ -14,7 +14,7 @@ const {
 } = require('../controllers/employeeSkill')
 
 const {
-    postGrowthSkill, putGrowthSkill, deleteGrowthSkill, getGrowthSkill, getGrowthSkillById,
+    postGrowthSkill, putGrowthSkill, deleteGrowthSkill, getGrowthSkill, getGrowthSkillById, getGrowthRaport,
 } = require('../controllers/growth')
 
 const {
@@ -52,5 +52,8 @@ router.route('/employee/:id').get(getEmployeeById) // :id - id pracownika,  zwra
 router.route('/employee').get(getLoggedEmployee) // zwraca pracownika id, imię, nazwisko, email zalogowanegho pracownika
 router.route('/employees/skill/:id').get(getEmployeesBySkill) // :id - id umiejętności, zwraca pracowników id, imię, nazwisko i poziom umiejętności
 router.route('/employees/process/:id').get(getEmployeesByProcess) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
+
+
+router.route('/growth-raport').get(checkIfManager,getGrowthRaport) // :id - id procesu, zwraca pracowników id, imię, nazwisko i średni poziom wymaganych umiejętności
 
 module.exports = router

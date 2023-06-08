@@ -78,6 +78,18 @@ async function postGrowthSkill(req, res) {
       }
   }
 
+  async function getGrowthRaport(req, res) {
+    try {
+      const [result] = await pool.query('SELECT e.first_name, e.second_name, s.name, g.start_date, g.end_date FROM growth as g JOIN employees as e on e.employee_id = g.employees_employee_id RIGHT JOIN skills as s on s.skills_id = g.skills_skill_id;');
+
+        res.status(200).json(result);
+    
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+  }
+
 
 module.exports = {
     postGrowthSkill,
@@ -85,4 +97,5 @@ module.exports = {
     deleteGrowthSkill,
     getGrowthSkill,
     getGrowthSkillById,
+    getGrowthRaport,
 }
