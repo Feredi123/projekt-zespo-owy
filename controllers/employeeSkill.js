@@ -7,7 +7,7 @@ async function postEmployeeSkill(req, res) {
         const { id, level } = req.params;
         await pool.query('INSERT INTO employee_skill (skills_skills_id, employees_employee_id, level) VALUES (?,?,?);',[id,employee_id,level]);
     
-        res.status(201);
+        res.status(201).json();
     
       } catch (err) {
         console.error(err);
@@ -21,7 +21,7 @@ async function postEmployeeSkill(req, res) {
         const { id, level } = req.params;
         await pool.query('UPDATE employee_skill SET level = ? WHERE employees_employee_id = ? AND skills_skills_id = ?;',[level,employee_id,id]);
     
-        res.status(200);
+        res.status(200).json();
     
       } catch (err) {
         console.error(err);
@@ -35,7 +35,7 @@ async function postEmployeeSkill(req, res) {
         const { id } = req.params;
         await pool.query('DELETE FROM employee_skill WHERE employees_employee_id = ? AND skills_skills_id = ?;',[employee_id,id]);
     
-        res.status(204);
+        res.status(204).json();
     
       } catch (err) {
         console.error(err);
