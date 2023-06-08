@@ -312,7 +312,7 @@
                 <label>Email:<input type="email" id="editUserEmail" name="editUserEmail" :value="user.email" required></label>
                 <label>Phone:<input type="tel" id="editUserPhone" name="editUserPhone" pattern="[0-9]{9}" :value="user.phone"></label>
                 <label>change password:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.change_password" :checked="getDisplayTFValue(user.change_password)"></label>
-                <label>have admin rights:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.admin_rights" :checked="getDisplayTFValue(user.admin_rights)"></label>
+                <label>have admin rights:<input type="checkbox" id="editUserHaveAdmin" name="editUserHaveAdmin" :value="user.admin_rights" :checked="getDisplayTFValue(user.admin_rights)"></label>
               </div>
             </div>
             <div v-if="selectedViewMode == 2">

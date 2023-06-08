@@ -211,6 +211,7 @@ async function putUser(req, res) {
 
       const skills = req.body.skills;
 
+
       if(skills){
         console.log(skills)
         

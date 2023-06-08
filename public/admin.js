@@ -404,7 +404,8 @@ function submitEditUser(event) {
   if(vm.selectedViewMode == 1){ //edit user data
 
     var adminRights = 0;
-    if(event.target.elements['editUserChangePassword'].checked){
+    console.log(event.target.elements['editUserHaveAdmin'].checked)
+    if(event.target.elements['editUserHaveAdmin'].checked){
       adminRights = 1;
     }
 
@@ -418,8 +419,8 @@ function submitEditUser(event) {
       last_name: event.target.elements['editUserLastName'].value,
       email: event.target.elements['editUserEmail'].value,
       phone: event.target.elements['editUserPhone'].value,
-      admin_rights: adminRights,
-      password_change: passwordChange,
+      admin_right: adminRights,
+      change_password: passwordChange,
     };
 
     console.log(formData,id)
