@@ -103,6 +103,17 @@ const appAdmin = Vue.createApp({
     getDisplayTFValue(input) {
       return input ? true : false;
     },
+    getDisplayAdminRightsValue(input) {
+      switch (input) { 
+        case 1:
+          return "Manager"
+        case 2:
+          return "Admin"
+        default:
+          return "None"
+      }
+      
+    },
     togglePasswordVisibility(inputId) {
       var passwordInput = document.getElementById(inputId);
       
@@ -332,10 +343,8 @@ function submitEditProcess(event){
 function submitAddUser(event) {
   event.preventDefault();
 
-  var adminRights = 0;
-  if(event.target.elements['addUserAdminRights'].checked){
-    adminRights = 1;
-  }
+  var adminRights = document.getElementsByName('addUserHaveAdmin');
+  var selectedOption = Array.from(adminRights).find(option => option.checked);
 
   var passwordChange = 0;
   if(event.target.elements['addUserChangePassword'].checked){
@@ -348,7 +357,7 @@ function submitAddUser(event) {
     email: event.target.elements['addUserEmail'].value,
     phone: event.target.elements['addUserPhone'].value,
     password: event.target.elements['addUserPassword'].value,
-    admin_rights: adminRights,
+    admin_rights: selectedOption.value,
     password_change: passwordChange,
 
   };
@@ -403,11 +412,8 @@ function submitEditUser(event) {
 
   if(vm.selectedViewMode == 1){ //edit user data
 
-    var adminRights = 0;
-    console.log(event.target.elements['editUserHaveAdmin'].checked)
-    if(event.target.elements['editUserHaveAdmin'].checked){
-      adminRights = 1;
-    }
+    var adminRights = document.getElementsByName('editUserHaveAdmin');
+    var selectedOption = Array.from(adminRights).find(option => option.checked);
 
     var passwordChange = 0;
     if(event.target.elements['editUserChangePassword'].checked){
@@ -419,7 +425,7 @@ function submitEditUser(event) {
       last_name: event.target.elements['editUserLastName'].value,
       email: event.target.elements['editUserEmail'].value,
       phone: event.target.elements['editUserPhone'].value,
-      admin_right: adminRights,
+      admin_right: selectedOption.value,
       change_password: passwordChange,
     };
 
