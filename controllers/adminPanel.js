@@ -1,19 +1,7 @@
 const { json } = require('express');
 const pool = require('../config/database')
 const bcrypt = require('bcrypt'); // hashowanie haseł
-var nodemailer = require('nodemailer'); 
-
-
-let transporter = nodemailer.createTransport({
-  host: "poczta.o2.pl",
-  port: 465,
-  secure: true, // true for 465, false for other ports
-  auth: {
-    user: 'admintest753421@o2.pl', // generated ethereal user
-    pass: 'ciscoadmin1!', // generated ethereal password
-  },
-});
-
+const transporter = require('../config/email')
 
 async function postSkill(req, res) {
     try {
@@ -151,13 +139,13 @@ async function postUser  (req, res) {
       text: req.body.password,
     };
 
-    /*transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log(error);
       } else {
         console.log('Email sent: ' + info.response);
       }
-    });*/
+    });
     
     
   } catch (error) {
