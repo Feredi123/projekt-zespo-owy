@@ -1,55 +1,84 @@
-.growth{
-              
-              background-color: rgb(227, 227, 227);
-              flex: 1;
-              margin: 5px;
-              border-radius: 20px;
-              margin-top: 20px;
-              display: flex;
-              flex-direction: row;
-            
+.growth {
+  background-color: rgb(232, 231, 241);
+  flex: 1;
+  margin: 0px;
+  border-radius: 20px;
+  padding-top: 0;
+  display: flex;
+  flex-direction: row;
 }
 
-.growth left-side{
-                  background-color: rgb(232, 231, 241);
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+.workspace .growth left-side {
+  flex: 1;
+  display: flex;
+  max-width: 300px;
+  flex-direction: column;
+  align-items: center;
 }
 
-left-side button{
+.workspace .growth left-side button {
   max-height: 40px;
   width: 90%;
-  margin-top:50px;
+  margin: 0;
+  margin-top: 5%;
+  padding: 0;
 }
 
-.growth right-side{
+.growth right-side {
+  display: flex;
+  flex-direction: column;
   padding-top: 5px;
-background-color: #e5e5f7;
+  flex: 1;
+  max-height: 50%;
+  align-self: auto;
+  /* background-color: #e5e5f7;
 opacity: 0.8;
 background-image:  linear-gradient(#d2d3d5 2.1px, transparent 2.1px), linear-gradient(to right, #d2d3d5 2.1px, #e5e5f7 2.1px);
 background-size: 42px 42px;
 flex:1;
 display: flex;
-flex-direction: column;
+flex-direction: column; */
 
+  background-color: transparent;
+  opacity: 1;
+  background-size: 25%;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(0, 112, 171, 1),
+    rgba(0, 112, 171, 1) 4px,
+    transparent 4px,
+    transparent
+  );
 }
 
-right-side bars{
-  color:white;
-background-color: rgb(0, 112, 171);
+.bars {
+  align-self: flex-start;
+  color: white;
+  background-color: rgb(0, 112, 171);
+  margin-top: 0px;
+  height: 30px;
+  flex-wrap: wrap-reverse;
 }
 
-right-side bottom-bar{
-                   background-color: transparent;
-                  flex: 1;
-                  flex-direction: row;
-                  display: flex;
-                  max-height: 30px;
-                  bottom:0;
-                  font-size:20px;
-                  padding-bottom: 40px;
+.bottom-bar {
+  background-color: transparent;
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+  max-height: 30px;
+  font-size: 20px;
+  margin-bottom: top;
+  flex-wrap: wrap;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.bottom-bar div {
+  align-self: flex-end;
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+  align-items: center;
 }
 
 .popup {
