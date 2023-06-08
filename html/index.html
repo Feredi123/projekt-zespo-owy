@@ -37,13 +37,12 @@
         <div v-if="menuSize()" class="side-bar">
 
         <img class="logo" src="styles/logo.webp" alt="logo" />
+                <button v-if="isShown>1" onclick="window.location.href='/';">
+          &#9733;Dashboard </button>
         <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
           >{{label}}
         </button >
-        <button onclick="window.location.href='register';">
-          &#9733; Add worker
-        </button>
-                <button v-if="isShown===1" onclick="window.location.href='admin';">
+        <button v-if="isShown>0" onclick="window.location.href='admin';">
           &#9733; Admin
         </button>
         </div>
@@ -150,6 +149,8 @@
             </div>
 
             <div class="dropdown">
+              
+              
               <button> Process</button>
               <div class="dropdown-content-workspace">
                 <select
@@ -166,7 +167,22 @@
                 <button v-on:click="getProcess">> Process</button>
               </div>
             </div>
+
+            <div class="dropdown">      
+              <button v-on:click="isPopupOpen = true">Change Date</button>
+                      <div class="popup" v-if="isPopupOpen">
+          <p class="popup-title">Change Date</p>
+            <label>From:
+              <input type="date" id="dates" v-model="newDate" name="start_date" required>
+            </label>
+            <button v-on:click="getNewUser"  @click="isPopupOpen = false">Report</button>
+            <button class="close-button" @click="isPopupOpen = false">Close</button>
+          </div>
+          </div>
+
+          
           </bar>
+          
 
           <table>
 
