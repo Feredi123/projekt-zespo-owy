@@ -8,7 +8,7 @@ const path = require('path');
 
 routerPassport.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
-    successRedirect: '/'
+    successRedirect: '/my-account'
 }))
 
 routerPassport.delete('/logout', function(req, res, next) { //wylogowywanie

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { checkAuthenticated, checkIfManager } = require('../middlewares')
 const {
   getDashboard, getProcesses, getAbsences, getSkills, getAbsencesByDate, getDashboardAll, getAbsenceTypes, getProcessesById,
 } = require('../controllers/dashboard')

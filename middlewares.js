@@ -11,12 +11,21 @@ function checkAuthenticated(req, res, next) {
 
 function checkIfAdmin(req, res, next){
 
-    if(req.isAuthenticated() && req.user.admin_rights == 1) {
+    if(req.isAuthenticated() && req.user.admin_rights == 2) {
         console.log("Admin is logged IN")
         return next()
       }
       console.log("not Admin")
       res.status(401).send('Unauthorized')
+}
+function checkIfManager(req, res, next){
+
+  if(req.isAuthenticated() && req.user.admin_rights < 0) {
+      console.log("Manager is logged IN")
+      return next()
+    }
+    console.log("not Manager")
+    res.status(401).send('Unauthorized')
 }
 
 function checkFirstLogin(req, res, next){
@@ -32,5 +41,6 @@ function checkFirstLogin(req, res, next){
 module.exports = {
     checkAuthenticated,
     checkIfAdmin,
-    checkFirstLogin
+    checkFirstLogin,
+    checkIfManager
 }
