@@ -350,7 +350,7 @@
                   <tr v-for="index in numberSkillsInSelectedUser">
                     <td>
                       <select :id="'editUserSkill' + index">
-                        <option :value="index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_id : '0' " selected disabled>
+                        <option :value="index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skills_id : '0' " selected disabled>
                           {{ index <= skillsInSelectedUserList.length ? skillsInSelectedUserList[index - 1].skill_name : '-' }}
                         </option>
                         <option v-for="skill in skillList" :value="skill.skill_id">{{ skill.name }}</option>
