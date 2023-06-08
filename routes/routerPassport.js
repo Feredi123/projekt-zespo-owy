@@ -28,8 +28,7 @@ routerPassport.post('/pass-Change', checkAuthenticated, async (req,res) =>{
     id = req.user.employee_id
     hashedPassword = await bcrypt.hash(req.body.password, 10)
 
-    pool.query('UPDATE employees SET password = ? WHERE employee_id = ?',[hashedPassword,id]);
-
+    pool.query('UPDATE employees SET password = ?, change_password = ? WHERE employee_id = ?',[hashedPassword, 0, id]);
     res.status(201).json();
 
 })
