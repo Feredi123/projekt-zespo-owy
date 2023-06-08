@@ -34,6 +34,10 @@ function getAdminPage(req,res){
     res.sendFile(path.join(__dirname,'../html/admin.html'))
 }
 
+function getPassChange(req,res){
+    res.sendFile(path.join(__dirname,'../html/passChange.html'))
+}
+
 
 module.exports = {
     getLogin,
@@ -44,4 +48,5 @@ module.exports = {
     getmyAccount,
     getRecovery,
     getAdminPage,
+    getPassChange
 }
