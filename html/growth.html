@@ -136,7 +136,7 @@
                     Close
                   </button>
               </div>
-              <button v-on:click="isPopupOpenDel= true">delete data</button>
+              <button v-on:click="isPopupOpenDel= true">Delete Growth</button>
                <div class="popup" v-if="isPopupOpenDel">
                 <p class="popup-title">del</p>
                                   <select name="growth" id="growth" v-model="delData">
@@ -154,27 +154,21 @@
               </div>
             </left-side>
             <right-side>
+                            <div class="bottom-bar">
+                <div v-for="q in qInTable">{{q}}</div>
+              </div>
               <div
                 v-for="(object, index) in growth.data"
-                style="flex: 1; display: flex"
               >
                 <div
-                  style="
-                    color: white;
-                    background-color: rgb(0, 112, 171);
-                    padding-bottom: 5px;
-                    margin-top: 1px;
-                  "
+
+                  class="bars"
                   v-bind:style="barSize(index)"
-                >
-                  {{object.growth_id}} ===> {{object.skill_name}}
+                >{{object.skill_name}}
                   {{object.level}}
                 </div>
               </div>
 
-              <bottom-bar>
-                <li style="flex: 1" v-for="q in qInTable">{{q}} |</li>
-              </bottom-bar>
             </right-side>
           </div>
         </div>
