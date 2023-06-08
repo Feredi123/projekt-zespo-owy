@@ -2,6 +2,11 @@
 
 <html>
   <head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -15,13 +20,43 @@
     />
     <link rel="stylesheet" href="styles/login.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
+
+    <script>
+        function passaChange(event){
+        event.preventDefault();
+
+        const password = event.target.elements['password'].value
+        const password2 = event.target.elements['password2'].value
+            if ( password != password2) {
+                alert("passwords do not match")
+                console.log("12")
+                return
+            }
+          const formData = {
+          password: password
+        };
+        axios.post('/pass-Change', formData)
+          .then(response => {
+            if (response.status == '201') {
+              alert("Password changed succesfully");
+            } else {
+              alert("Form submission failed.");
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert("An error occurred during form submission.");
+          });
+      }
+    </script>
+
   </head>
 
   <body>
     <main>
         <password-change>
             <img src="styles/logo.webp" alt="logo.webp" />
-            <form action="/pass-Change" method="POST">
+            <form onsubmit="passaChange(event);">
               <input
                 placeholder="password"
                 type="password"
@@ -31,13 +66,14 @@
               />
               <input
                 placeholder="Password"
-                type="password2"
+                type="password"
                 id="password2"
                 name="password2"
                 required
               />
               <button type="submit">Change Password</button>
             </form>
+    
     </main>
   </body>
 </html>

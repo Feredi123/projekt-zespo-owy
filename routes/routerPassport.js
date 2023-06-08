@@ -23,4 +23,15 @@ routerPassport.get('/register', checkAuthenticated,(req,res) => {
     res.sendFile(path.join(__dirname,'../html/register.html'))
 })
 
+routerPassport.post('/pass-Change', checkAuthenticated, async (req,res) =>{
+
+    id = req.user.employee_id
+    hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+    pool.query('UPDATE employees SET password = ? WHERE employee_id = ?',[hashedPassword,id]);
+
+    res.status(201).json();
+
+})
+
 module.exports = routerPassport;
