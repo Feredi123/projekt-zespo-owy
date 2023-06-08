@@ -2,7 +2,7 @@ const express = require('express')
 const routerAdminPanel = express.Router()
 const { checkAuthenticated, checkIfAdmin } = require('../middlewares')
 
-const { postSkill, putSkill, getSkillDependency, deleteSkill, deleteProcess, postProcess, putProcess, postUser, getUser, deleteUser, putUser,} = require('../controllers/adminPanel')
+const { postSkill, putSkill, getSkillDependency, deleteSkill, deleteProcess, postProcess, putProcess, postUser, getUser, deleteUser, putUser, deleteAbsence,} = require('../controllers/adminPanel')
 
 routerAdminPanel.route('/skills').post(checkIfAdmin, postSkill) // dodaje skill w request skill_name
 routerAdminPanel.route('/skills/:id').put(checkIfAdmin, putSkill) // :id - id atkualizowanego skilla  Aktualizuje skill w request skill_name
@@ -18,7 +18,7 @@ routerAdminPanel.route('/register').post(checkIfAdmin, postUser) //tworzy użytk
 routerAdminPanel.route('/user/:id').get(checkIfAdmin, getUser) // zwraca wszystkie dane użytkownika o id :id
 routerAdminPanel.route('/user/:id').delete(checkIfAdmin, deleteUser) // usuwa użytkownika o id :id
 routerAdminPanel.route('/user/:id').put(checkIfAdmin, putUser) // akutalizuje dane użytkownika o id :id w request np. first_name : 'Jan',
-                                                                                                                                    /*last_name : 'Kow',
+/*last_name : 'Kow',
                                                                                                                                     email : 'jan@kow.com',
                                                                                                                                     phone : '789456132',
                                                                                                                                     admin_right : 0,
@@ -30,5 +30,7 @@ routerAdminPanel.route('/user/:id').put(checkIfAdmin, putUser) // akutalizuje da
                                                                                                                                     {skills_id : 3,level:3},
                                                                                                                                     ]
                                                                                                                                     może być dowolna liczba skilów*/
+routerAdminPanel.route('/user/:id/absence/:absence').delete(checkIfAdmin, deleteAbsence) // usuwa nieobecność o id :id użytkownika o id :id 
+                                                                                                                                    
 
 module.exports = routerAdminPanel;

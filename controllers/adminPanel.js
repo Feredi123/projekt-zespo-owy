@@ -247,6 +247,21 @@ async function putUser(req, res) {
     }
 }
 
+async function deleteAbsence(req, res) {
+  try {
+      const { id, absence } = req.params;
+
+      pool.query('DELETE FROM absences WHERE employees_employee_id = ? AND absence_id = ?',[id,absence])
+        .then(() => {
+          res.sendStatus(204);
+        })
+      
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 
 module.exports = {
     postSkill,
@@ -263,6 +278,8 @@ module.exports = {
     getUser,
     deleteUser,
     putUser,
+
+    deleteAbsence,
 
 
 }

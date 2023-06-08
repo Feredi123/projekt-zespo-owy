@@ -92,7 +92,7 @@ const appAdmin = Vue.createApp({
       this.selectedUserData = response.data;
       this.skillsInSelectedUserList = this.selectedUserData.skills;
       this.numberSkillsInSelectedUser = this.skillsInSelectedUserList.length;
-      console.log(this.numberSkillsInSelectedUser)
+      console.log(this.selectedUserData)
     },
     editProcessQuantityOnChange(event){
       this.numberSkillsInSelectedProcess = Number(document.getElementById("editSkillQuantity").value);
@@ -115,6 +115,34 @@ const appAdmin = Vue.createApp({
     formatDate(dateString) {
       const date = new Date(dateString);
       return new Intl.DateTimeFormat('default', {dateStyle: 'short'}).format(date);
+    },
+    DeleteAbsence(id) {
+
+      console.log(this.selectedUserData.absences[id])
+
+      if(confirm("Delete Absence " + this.formatDate(this.selectedUserData.absences[id].start_date) + " - " + this.formatDate(this.selectedUserData.absences[id].end_date) + "?") == false) {
+        return;
+      }
+
+      const user_id = document.getElementById('editUserSelect').value;
+
+      const absence_id = this.selectedUserData.absences[id].absence_id
+    
+        axios.delete(`/user/${user_id}/absence/${absence_id}}`)
+        .then(response => {
+          if (response.status == '204') {
+            alert("Absence " + this.formatDate(this.selectedUserData.absences[id].start_date) + " - " + this.formatDate(this.selectedUserData.absences[id].end_date) + " deleated");
+            this.getSelectedUserData(user_id);
+            
+          } else {
+            alert("Form submission failed.");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          alert("An error occurred during form submission.");
+        });
+      
     },
   },
   created() {
@@ -412,14 +440,11 @@ function submitEditUser(event) {
 
   }
   
-  if(vm.selectedViewMode == 2){ //edit user Absences
-
-    alert(2);
-    return;
-  }
   if(vm.selectedViewMode == 3){ //edit user Skills
 
     var skills = [];
+    const userName = vm.usersList.find(item => item.employee_id == id).first_name;
+    const secondName = vm.usersList.find(item => item.employee_id == id).second_name;
 
     for(var i = 1 ; i <= vm.numberSkillsInSelectedUser ; i++){
       var element = {
@@ -438,7 +463,7 @@ function submitEditUser(event) {
     axios.put(`/user/${id}`, formData)
       .then(response => {
         if (response.status == '200') {
-          alert("User " + formData.first_name + " " + formData.last_name+" modified successfully");
+          alert("User " + userName + " " + secondName +" modified successfully");
           vm.getEmployees();
         } else {
           alert("Form submission failed.");

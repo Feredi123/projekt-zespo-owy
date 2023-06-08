@@ -310,13 +310,18 @@
                 <label>First name:<input type="text" id="editUserFirstName" name="editUserFirstName" :value="user.first_name" required></label>
                 <label>Last name:<input type="text" id="editUserLastName" name="editUserLastName" :value="user.second_name" required></label>
                 <label>Email:<input type="email" id="editUserEmail" name="editUserEmail" :value="user.email" required></label>
-                <label>Phone:<input type="tel" id="editUserPhone" name="editUserPhone" pattern="[0-9]{9}" :value="user.email"></label>
+                <label>Phone:<input type="tel" id="editUserPhone" name="editUserPhone" pattern="[0-9]{9}" :value="user.phone"></label>
                 <label>change password:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.change_password" :checked="getDisplayTFValue(user.change_password)"></label>
                 <label>have admin rights:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.admin_rights" :checked="getDisplayTFValue(user.admin_rights)"></label>
               </div>
             </div>
             <div v-if="selectedViewMode == 2">
-               dwa
+               <table>
+                <tr v-for="(absence, index) in selectedUserData.absences">
+                  <td>{{formatDate(absence.start_date)}} - {{formatDate(absence.end_date)}}</td>
+                  <td><input type="button" value="delete" @click="DeleteAbsence(index)"></td>
+                </tr>
+               </table>
             </div>
             <div v-if="selectedViewMode == 3">
               <label>Number of skills:
