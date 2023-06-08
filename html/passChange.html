@@ -20,6 +20,7 @@
     />
     <link rel="stylesheet" href="styles/login.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
+        <link rel="stylesheet" href="styles/login.css" />
 
     <script>
         function passaChange(event){
@@ -53,19 +54,18 @@
   </head>
 
   <body>
-    <main>
-        <password-change>
+        <login-window>
             <img src="styles/logo.webp" alt="logo.webp" />
             <form onsubmit="passaChange(event);">
               <input
-                placeholder="password"
+                placeholder="New password"
                 type="password"
                 id="password"
                 name="password"
                 required
               />
               <input
-                placeholder="Password"
+                placeholder="Re-type new password"
                 type="password"
                 id="password2"
                 name="password2"
@@ -74,6 +74,6 @@
               <button type="submit">Change Password</button>
             </form>
     
-    </main>
+        </login-window>
   </body>
 </html>

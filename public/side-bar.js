@@ -2,9 +2,9 @@ const appSideBar = Vue.createApp({
   data() {
     return {
       isShown: "",
-      labels:["Dasboard", "Manage skills", "My account", "Growth"],
-      addresses:["/","manage-skills","my-account","growth"],
-      logos:["dashboard","star","person","growth"],
+      labels:["Manage skills", "My account", "Growth"],
+      addresses:["manage-skills","my-account","growth"],
+      logos:["star","person","growth"],
     };
   },
 

@@ -36,13 +36,12 @@
         <div v-if="menuSize()" class="side-bar">
 
         <img class="logo" src="styles/logo.webp" alt="logo" />
+                <button v-if="isShown>1" onclick="window.location.href='/';">
+          &#9733;Dashboard </button>
         <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
           >{{label}}
         </button >
-        <button onclick="window.location.href='register.html';">
-          &#9733; Add worker
-        </button>
-                <button v-if="isShown===1" onclick="window.location.href='admin';">
+        <button v-if="isShown>0" onclick="window.location.href='admin';">
           &#9733; Admin
         </button>
         </div>

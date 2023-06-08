@@ -7,8 +7,26 @@ function getDate(nexthop) {
   return day + "-" + month + "-" + year;
 }
 
+function getDate(nexthop , date) {
+  const today = new Date(date);
+  today.setDate(today.getDate() + nexthop);
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  return day + "-" + month + "-" + year;
+}
+
 function getStartDate() {
   const today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  return year + "-" + month + "-" + day;
+}
+
+
+function getStartDate(SampleDate) {
+  const today = new Date(SampleDate);
   let day = today.getDate();
   let month = today.getMonth() + 1;
   let year = today.getFullYear();
@@ -21,6 +39,13 @@ function tableDate(datesTable) {
   }
 }
 
+function tableDate(dateTables, date){
+  for(let i = 0; i < 5; i++){
+    dateTables.push(getDate(i, date));
+  }
+
+}
+
 
 const app = Vue.createApp({
   data() {
@@ -31,6 +56,7 @@ const app = Vue.createApp({
       newSkillsCondition: {},
       employeesData: {},
       dates: [""],
+      newDate: "",
       skills: [],
       employeesSkills: [],
       processes: [],
@@ -39,7 +65,8 @@ const app = Vue.createApp({
       processId: [],
       checkProcess: "",
       checkProcessTable: {},
-      riskTable: [50,50,50,50,50,50],
+      riskTable: [50, 50, 50, 50, 50, 50],
+      isPopupOpen: false,
     };
   },
 
@@ -104,6 +131,23 @@ const app = Vue.createApp({
         console.error(error);
       }
     },
+
+    async getNewUser() {
+      this.dates=[""];
+      console.log(getStartDate(this.newDate));
+          tableDate(this.dates, this.newDate);
+      try {
+        const response = await axios.get("/dashboard/all/" + getStartDate(this.newDate));
+        if (!Array.isArray(response.data)) {
+          window.location.href = "/login.html";
+        } else {
+          this.employeesData = response;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     async getSkill() {
       try {
         this.skills = await axios.get("/skills");
@@ -166,7 +210,8 @@ const app = Vue.createApp({
           "/employees/process/" + this.checkProcess
         );
         for (let id in this.checkProcessTable.data) {
-          if (this.checkProcessTable.data[id].average>=3) {            for (let idAbsence in this.employeesData.data) {
+          if (this.checkProcessTable.data[id].average >= 3) {
+            for (let idAbsence in this.employeesData.data) {
               if (
                 this.employeesData.data[idAbsence].employee_id ===
                 this.checkProcessTable.data[id].employee_id
@@ -184,12 +229,11 @@ const app = Vue.createApp({
                 //  console.log(this.employeesData.data[idAbsence]);
               }
             }
-          // console.log(this.employeesData.data);
+            // console.log(this.employeesData.data);
           }
-
         }
-        
-        this.riskTable=methodRiskTable;
+
+        this.riskTable = methodRiskTable;
         this.riskTable.unshift(50);
       } catch (error) {
         console.error(error);
@@ -197,7 +241,7 @@ const app = Vue.createApp({
     },
   },
   created() {
-    tableDate(this.dates);
+    // tableDate(this.dates);
     this.getUser();
     this.getSkill();
     this.getProcesses();
