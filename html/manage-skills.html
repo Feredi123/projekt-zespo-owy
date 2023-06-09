@@ -35,8 +35,9 @@
         <div v-if="menuSize()" class="side-bar">
         <img class="logo" src="styles/logo.webp" alt="logo" />
                 
-        <button v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
-          >{{label}}
+        <button style="max-height: 30px;" v-for="(label,index) in labels" v-on:click="changeURL(index)" v-bind:style="checkActiveURL(index)"
+          ><img style="height: 20px" :src="getLogo(index)" alt="icon">
+          {{label}}
         </button >
         </div>
         <div v-else class="side-bar2">
