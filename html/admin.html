@@ -229,17 +229,26 @@
             <button type="button" @click="togglePasswordVisibility('addUserPassword')">Show/Hide Password</button>
             <input type="password" id="addUserPassword" name="addUserPassword">
           </label>
-          <label>Admin rights:
-            <label>None
-              <input type="radio" id="addUserHaveAdmin1" name="addUserHaveAdmin" value="0" checked>
-            </label>
-            <label>Manager
-              <input type="radio" id="addUserHaveAdmin2" name="addUserHaveAdmin" value="1">
-            </label>
-            <label>Admin
-              <input type="radio" id="addUserHaveAdmin3" name="addUserHaveAdmin" value="2">
-            </label>
-          </label>
+          <table>
+            <tr>
+              <td>Admin rights:</td>
+              <td>
+                <label>None
+                  <input type="radio" id="addUserHaveAdmin1" name="addUserHaveAdmin" value="0" checked>
+                </label>
+              </td>
+              <td>
+                <label>Manager
+                  <input type="radio" id="addUserHaveAdmin2" name="addUserHaveAdmin" value="1">
+                </label>
+              </td>
+              <td>
+                <label>Admin
+                  <input type="radio" id="addUserHaveAdmin3" name="addUserHaveAdmin" value="2">
+                </label>
+              </td>
+            </tr>
+          </table>
           <label>Needs to change password:
             <input type="checkbox" id="addUserChangePassword" name="addUserChangePassword" checked>
           </label>
@@ -318,17 +327,30 @@
                 <label>Email:<input type="email" id="editUserEmail" name="editUserEmail" :value="user.email" required></label>
                 <label>Phone:<input type="tel" id="editUserPhone" name="editUserPhone" pattern="[0-9]{9}" :value="user.phone"></label>
                 <label>change password:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.change_password" :checked="getDisplayTFValue(user.change_password)"></label>
-                <label>Admin rights:
-                  <label>None
-                    <input type="radio" id="editUserHaveAdmin1" name="editUserHaveAdmin" value="0" v-model="user.admin_rights">
-                  </label>
-                  <label>Manager
-                    <input type="radio" id="editUserHaveAdmin2" name="editUserHaveAdmin" value="1" v-model="user.admin_rights">
-                  </label>
-                  <label>Admin
-                    <input type="radio" id="editUserHaveAdmin3" name="editUserHaveAdmin" value="2" v-model="user.admin_rights">
-                  </label>
-                </label>
+                <div>
+                  <table>
+                    <tr>
+                      <td>
+                        Admin rights:
+                      </td>
+                      <td>
+                        <label>None
+                          <input type="radio" id="editUserHaveAdmin1" name="editUserHaveAdmin" value="0" v-model="user.admin_rights">
+                        </label>
+                      </td>
+                      <td>
+                        <label>Manager
+                          <input type="radio" id="editUserHaveAdmin2" name="editUserHaveAdmin" value="1" v-model="user.admin_rights">
+                        </label>
+                      </td>
+                      <td>
+                        <label>Admin
+                          <input type="radio" id="editUserHaveAdmin3" name="editUserHaveAdmin" value="2" v-model="user.admin_rights">
+                        </label>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
             <div v-if="selectedViewMode == 2">
