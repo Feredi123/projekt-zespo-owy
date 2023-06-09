@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt'); // hashowanie haseł
 const pool = require('../config/database')
 const path = require('path');
 const transporter = require('../config/email')
+const crypto = require("crypto");
 
 routerPassport.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
@@ -36,7 +37,6 @@ routerPassport.post('/pass-Change', checkAuthenticated, async (req,res) =>{
 
 routerPassport.post('/recover', async (req,res) => {
 
-    var crypto = require("crypto");
     var passwordGen = crypto.randomBytes(20).toString('hex');
     const hashedPassword = await bcrypt.hash(passwordGen, 10)
     

@@ -2,6 +2,7 @@ const { json } = require('express');
 const pool = require('../config/database')
 const bcrypt = require('bcrypt'); // hashowanie haseł
 const transporter = require('../config/email')
+const crypto = require("crypto");
 
 async function postSkill(req, res) {
     try {
@@ -118,7 +119,12 @@ async function putProcess(req, res) {
 
 async function postUser  (req, res) {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    if (req.body.password) {
+      passwordGen = req.body.password;
+    } else {
+      passwordGen = crypto.randomBytes(20).toString('hex');
+    }
+    const hashedPassword = await bcrypt.hash(passwordGen, 10)
     
       first_name = req.body.first_name;
       last_name = req.body.last_name;
@@ -136,7 +142,7 @@ async function postUser  (req, res) {
       from: 'admintest753421@o2.pl',
       to: email,
       subject: 'ACCOUNT CREATED',
-      text: req.body.password,
+      text: passwordGen,
     };
 
     transporter.sendMail(mailOptions, function(error, info){
