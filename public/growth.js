@@ -23,7 +23,7 @@ function timeDifference(startDate, endDate) {
 const app = Vue.createApp({
   data() {
     return {
-      qInTable: ["Q2 2023", "Q3 2023", "Q4 2023", "Q1 2024"],
+      qInTable: ["Q3 2023", "Q4 2023", "Q1 2024", "Q2 2024"],
       growth: {},
       dateToday: "",
       dateTable: "",

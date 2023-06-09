@@ -186,48 +186,41 @@
 
             <div>
               <li>
-              <h2 v-for="(date,index) in dates">{{date}}
+              <h2 v-for="(date,index) in dates" style="flex:1; font-size:12px;">{{date}}
                 <img src="styles/warning.png" alt="logo" v-if="riskTable[index]<2" style="width:10%;">
               </h2>
 
               </li>
-              <li v-for="(person,index) in employeesData.data">
+              <li v-for="(person,index) in employeesData.data" style="position: relative; background-color: lightgray;;"
+      >
               <div v-if="(skillsConditions.length!==0&&conditions.length!==0&&(compareObjects(person.skills, skillsConditions))&&(compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions)))||(skillsConditions.length!==0&&conditions.length===0&&(compareObjects(person.skills, skillsConditions)))||(skillsConditions.length===0&&conditions.length!==0&&((compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions))))" style="display:flex; flex-direction: row; flex:1;">
-              <h2 style="flex:1;">{{person.first_name}} {{person.second_name}}
+              <h2 class="dropdown" style="position: unset; overflow: hidden;">{{person.first_name}} {{person.second_name}}
               
-              <div class="dropdown">
-              *
-              <div class="dropdown-content-workspace">
+              <div style="position:absolute;" class="dropdown-content-workspace">
                               <a style="font-size:15px;
                                         display:flex;
                                         flex-direction: row;
-                                        background-color: white;
-                                        border-width: 2px;
-                                        border-radius: 1px;
-                                        border-color: blue;" v-for="skill in person.skills">{{skill.skill_name}}</a>
-              </div>
+                                                                                color:white;
+                                        background-color: rgb(63, 162, 214);" v-for="skill in person.skills">{{skill.skill_name}}</a>
             </div>
               <h2 style="flex:1;" v-for="date in person.absences">{{date ? "Out of work":""}}                 <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%; align-self: auto;"/></h2>
             </div>
             </li>
             </div>
 
-          <h2 v-if="conditions.length!==0||skillsConditions!==0">_________</h2>
 
           <table>
-            <li v-for="(person,index) in employeesData.data">
-              <h2>{{person.first_name}} {{person.second_name}}
-              <div class="dropdown">
-              *
-              <div class="dropdown-content-workspace">
+            <li v-for="(person,index) in employeesData.data" style="position: relative">
+              <h2 class="dropdown" style="position: unset; overflow: hidden;">
+                {{person.first_name}} {{person.second_name}}
+
+              <div style="position:absolute" class="dropdown-content-workspace">
                               <a style="font-size:15px;
                                         display:flex;
                                         flex-direction: row;
-                                        background-color: white;
-                                        border-width: 2px;
+                                        color:white;
                                         border-radius: 1px;
-                                        border-color: blue;" v-for="skill in person.skills">{{skill.skill_name}}</a>
-              </div>
+                                        background-color: rgb(63, 162, 214);" v-for="skill in person.skills">{{skill.skill_name}}</a>
             </div>
               </h2>
               <h2 v-for="date in person.absences">

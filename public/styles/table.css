@@ -1,8 +1,6 @@
-.table {
+table {
   display: flex;
   flex-direction: column;
-  overflow:scroll;
-  white-space:nowrap;
   flex:1;
 }
 
@@ -18,10 +16,10 @@ h2 {
   border-right-width: 1px;
   border-bottom-color: rgba(0, 0, 0, 0.12);
   border-right-color: rgba(0, 0, 0, 0.12);
-  padding: 0 16px;
   margin:0;
-  height: 82px;
+  height: 18px;
   flex:1;
+  font-size: 15px;
 }
   
 
