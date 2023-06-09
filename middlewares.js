@@ -25,7 +25,7 @@ function checkIfManager(req, res, next){
       return next()
     }
     console.log("not Manager")
-    res.status(401).send('Unauthorized')
+    res.redirect('/my-account')
 }
 
 function checkFirstLogin(req, res, next){

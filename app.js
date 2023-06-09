@@ -9,7 +9,7 @@ const routerPages = require('./routes/routerPages')
 const routerPassport = require('./routes/routerPassport')
 const routerAdminPanel = require('./routes/routerAdminPanel')
 const methodOverride = require('method-override')
-const { checkAuthenticated } = require('./middlewares')
+const { checkAuthenticated, checkFirstLogin } = require('./middlewares')
 
 initializePassport(
   passport,
