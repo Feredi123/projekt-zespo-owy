@@ -173,7 +173,7 @@
                       <div class="popup" v-if="isPopupOpen">
           <p class="popup-title">Change Date</p>
             <label>From:
-              <input type="date" id="dates" v-model="newDate" name="start_date" required>
+              <input type="date" id="dates" v-model="newDate" name="start_date" @change="getNewUser" required>
             </label>
             <button v-on:click="getNewUser"  @click="isPopupOpen = false">Report</button>
             <button class="close-button" @click="isPopupOpen = false">Close</button>

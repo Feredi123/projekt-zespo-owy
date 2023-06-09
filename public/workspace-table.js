@@ -240,6 +240,10 @@ const app = Vue.createApp({
       }
     },
   },
+  mounted() {
+    this.newDate = new Date().toISOString().slice(0, 10);
+    this.getNewUser();
+  },
   created() {
     // tableDate(this.dates);
     this.getUser();

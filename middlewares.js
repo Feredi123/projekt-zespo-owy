@@ -34,7 +34,6 @@ function checkFirstLogin(req, res, next){
     return next()
   }
   console.log("wymagana zmiana hasła")
-  req.user.change_password = 0
   res.redirect('/passChange')
 }
 
