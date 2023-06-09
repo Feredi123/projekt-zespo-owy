@@ -1,7 +1,7 @@
 const appSideBar = Vue.createApp({
   data() {
     return {
-      isShown: "",
+      isShown: 0,
       labels:["Manage skills", "My account", "Growth"],
       addresses:["manage-skills","my-account","growth"],
       logos:["star","person","growth"],
@@ -26,14 +26,11 @@ const appSideBar = Vue.createApp({
     },
     async getMyData() {
       try {
-        const response = await axios.get("/employee");
 
-        if (!Array.isArray(response.data)) {
-          window.location.href = "/login.html";
-        } else {
-          this.isShown = response.data[0].admin_rights;
-          console.log(this.isShown);
-        }
+        const response = await axios.get("/employee");
+        this.isShown = response.data[0].admin_rights;
+        this.menuItems();
+
       } catch (error) {
         console.error(error);
       }
@@ -46,6 +43,34 @@ const appSideBar = Vue.createApp({
         return false;
       }
     },
+    menuItems(){
+      console.log(this.isShown)
+      switch (this.isShown){
+        case 0:
+          this.labels = ["Manage skills", "My account", "Growth"];
+          this.addresses = ["manage-skills","my-account","growth"];
+          this.logos = ["star","person","growth"];
+          break;
+        case 1:
+          this.labels = ["Dashboard","Manage skills", "My account", "Growth"];
+          this.addresses = ["/","manage-skills","my-account","growth"];
+          this.logos = ["star","person","growth"];
+          break;
+        case 2:
+          this.labels = ["Dashboard","Manage skills", "My account", "Growth","Admin",];
+          this.addresses = ["/","manage-skills","my-account","growth","admin"];
+          this.logos = ["star","person","growth"];
+          break;
+        default:
+          this.labels = ["Manage skills", "My account", "Growth"];
+          this.addresses = ["manage-skills","my-account","growth"];
+          this.logos = ["star","person","growth"];
+          break;
+      }
+    },
+  },
+  computed: {
+    
   },
   created() {
     this.getMyData();
