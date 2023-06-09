@@ -1,8 +1,9 @@
 .growth {
   background-color: rgb(232, 231, 241);
   flex: 1;
+  padding: 0px;
   margin: 0px;
-  padding-top: 0;
+
   display: flex;
   flex-direction: row;
 }
