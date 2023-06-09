@@ -5,6 +5,7 @@ const { checkAuthenticated } = require('../middlewares')
 const bcrypt = require('bcrypt'); // hashowanie haseł
 const pool = require('../config/database')
 const path = require('path');
+const transporter = require('../config/email')
 
 routerPassport.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
@@ -31,6 +32,32 @@ routerPassport.post('/pass-Change', checkAuthenticated, async (req,res) =>{
     pool.query('UPDATE employees SET password = ?, change_password = ? WHERE employee_id = ?',[hashedPassword, 0, id]);
     res.status(201).json();
 
+})
+
+routerPassport.post('/recover', async (req,res) => {
+
+    passwordGen = Math.random().toString(36).slice(2, 10)
+    const hashedPassword = await bcrypt.hash(passwordGen, 10)
+    
+      email = req.body.email;
+      password = hashedPassword;
+    await pool.query('UPDATE employees SET password = ? WHERE email = ?', [password, email]);
+    await pool.query('UPDATE employees SET change_password = 1 WHERE email = ?', [email]);
+    var mailOptions = {
+        from: 'admintest753421@o2.pl',
+        to: email,
+        subject: 'Password reset',
+        text: passwordGen,
+      };
+  
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      res.redirect('/login')
 })
 
 module.exports = routerPassport;
