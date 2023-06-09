@@ -34,7 +34,8 @@ width: 210px;
   }
   
   .side-bar button{ 
-    padding: 30px 30px;
+    min-height: 90px;
+    padding: 0 25px;
     color: white; 
     font-size: 20px;
     background-color: transparent;
