@@ -54,12 +54,12 @@ const appSideBar = Vue.createApp({
         case 1:
           this.labels = ["Dashboard","Manage skills", "My account", "Growth"];
           this.addresses = ["/","manage-skills","my-account","growth"];
-          this.logos = ["star","person","growth"];
+          this.logos = ["dashboard","star","person","growth"];
           break;
         case 2:
           this.labels = ["Dashboard","Manage skills", "My account", "Growth","Admin",];
           this.addresses = ["/","manage-skills","my-account","growth","admin"];
-          this.logos = ["star","person","growth"];
+          this.logos = ["dashboard","star","person","growth","admin"];
           break;
         default:
           this.labels = ["Manage skills", "My account", "Growth"];
