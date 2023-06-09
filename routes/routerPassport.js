@@ -36,7 +36,8 @@ routerPassport.post('/pass-Change', checkAuthenticated, async (req,res) =>{
 
 routerPassport.post('/recover', async (req,res) => {
 
-    passwordGen = Math.random().toString(36).slice(2, 10)
+    var crypto = require("crypto");
+    var passwordGen = crypto.randomBytes(20).toString('hex');
     const hashedPassword = await bcrypt.hash(passwordGen, 10)
     
       email = req.body.email;
