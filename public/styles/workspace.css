@@ -147,3 +147,27 @@ select {
   margin-bottom: 10px;
   width: 100%;
 }
+
+#demo{
+  display:flex;
+  flex-direction: column;
+  padding:0;
+  margin:0;
+}
+
+
+.refresh {
+
+    cursor:pointer;
+    transition: background-color 15ms;
+    height:20px;
+    margin-left:5px;
+}
+
+.session{
+    display:flex;
+  flex-direction: row;
+  padding:0;
+  margin:0;
+  align-items: flex-end;
+}
