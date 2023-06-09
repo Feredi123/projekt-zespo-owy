@@ -141,13 +141,9 @@
                     </option>
                   </select>
 
-                  <select name="putLevel" id="putLevel"  v-model="putLevel" required>
-                    <option value="" disabled selected>Level</option>
-                    <option
-                      v-for="level in levels"
-                    >
-                      {{level}}
-                    </option>
+                  <select name="putLevel" id="putLevel" v-model="putLevel" required>
+                    <option value="" disabled selected>{{selectedSkillLevel}}</option>
+                    <option v-for="level in levels">{{level}}</option>
                   </select>
 
         <div class="label-input">
@@ -168,7 +164,7 @@
                       v-for="skill in putSkills"
                       v-bind:value="skill.skill_id"
                     >
-                      {{skill.name}} {{skill.skill_id}}
+                      {{skill.name}}
                     </option>
                   </select>
 

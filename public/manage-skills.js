@@ -12,25 +12,6 @@ const appManageSkills = Vue.createApp({
       putCheckbox: "",
       deleteSkill: "",
       deleteCheckbox: "",
-      // propValue: "",
-      // newPropValue: "",
-      // employeeData: {},
-      // employeeSkills: {},
-      // absencesTypes: {},
-      // isPopupOpen: false,
-
-      // employeesData: {
-      //   type: Object,
-      //   employee_id: 0,
-      //   first_name: "balls",
-      //   second_name: "",
-      //   email: null,
-      //   phone: null,
-      //   password: null,
-      //   photo: null,
-      //   admin_rights: null,
-      //   manager_id: null,
-      // },
     };
   },
   computed: {
@@ -62,35 +43,25 @@ const appManageSkills = Vue.createApp({
     
       return subtractedSkills;
     },
+
+    selectedSkillLevel() {
+      let selectedSkill;
+      for (let i = 0; i < this.putSkills.length; i++) {
+        if (this.putSkills[i].skill_id === this.putSkill) {
+          selectedSkill = this.putSkills[i];
+          break;
+        }
+      }
+      return selectedSkill ? selectedSkill.level : '';
+    },
   },
 
   methods: {
-    // addValue(table, value) {
-    //   table.push(value);
-    // },
-    // removeValue(table, tableLvl, index) {
-    //   table.splice(index, 1);
-    //   tableLvl.splice(index, 1);
-    // },
-    // addCondition() {
-    //   this.conditions.push(this.newCondition);
-    //   this.newCondition = "";
-    // },
-    // removeCondition(index) {
-    //   this.conditions.splice(index, 1);
-    // },
-    // saveEmployeeData(employeeData) {
-    //   this.employeesData = Object.assign({}, employeeData);
-    // },
     async getMySkills() {
       try {
         const response = await axios.get("/skills");
+        this.registerSkills = response.data;
 
-        if (!Array.isArray(response.data)) {
-          window.location.href = "/login.html";
-        } else {
-          this.registerSkills = response.data;
-        }
       } catch (error) {
         console.error(error);
       }
@@ -101,9 +72,20 @@ const appManageSkills = Vue.createApp({
       if (this.registerCheckbox) {
         console.log("poszło");
         try {
-          const res = await axios.post(
-            "/employee-skill/" + this.registerSkill + "/" + this.registerLevel
-          );
+          axios.post("/employee-skill/" + this.registerSkill + "/" + this.registerLevel)
+            .then(response => {
+              if (response.status == '201') {
+                alert("Skill registered");
+                this.getMyData();
+                this.registerSkill = '';
+                this.registerLevel = '';
+                this.resetCheckboxes();
+                
+              } else {
+                alert("Form submission failed.");
+              }
+            })
+
         } catch (error) {
           console.error(error);
         }
@@ -114,13 +96,11 @@ const appManageSkills = Vue.createApp({
 
     async getMyData() {
       try {
-        const response = await axios.get("/employee-skill");
 
-        if (!Array.isArray(response.data)) {
-          window.location.href = "/login.html";
-        } else {
-          this.putSkills = response.data;
-        }
+        const response = await axios.get("/employee-skill");
+        this.putSkills = response.data;
+        console.log(this.putSkills)
+
       } catch (error) {
         console.error(error);
       }
@@ -130,9 +110,23 @@ const appManageSkills = Vue.createApp({
       if (this.putCheckbox) {
         console.log("poszło");
         try {
-          const res = await axios.put(
-            "/employee-skill/" + this.putSkill + "/" + this.putLevel
-          );
+          axios.put("/employee-skill/" + this.putSkill + "/" + this.putLevel)
+          .then(response => {
+            if (response.status == '200') {
+              alert("Skill modified successfully");
+              this.getMyData();
+              this.resetCheckboxes();
+              this.putSkill = '';
+              this.putLevel = '';
+            } else {
+              alert("Form submission failed.");
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert("An error occurred during form submission.");
+          });
+
         } catch (error) {
           console.error(error);
         }
@@ -145,13 +139,34 @@ const appManageSkills = Vue.createApp({
       if (this.deleteCheckbox) {
         console.log("poszło");
         try {
-          const res = await axios.delete("/employee-skill/" + this.deleteSkill);
+          axios.delete("/employee-skill/" + this.deleteSkill)
+            .then(response => {
+              if (response.status == '204') {
+                alert("Skill successfully deleted");
+                this.getMyData();
+                this.resetCheckboxes();
+                this.deleteSkill= '';
+                
+              } else {
+                alert("Form submission failed.");
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              alert("An error occurred during form submission.");
+            });
         } catch (error) {
           console.error(error);
         }
       } else {
         console.log("nie poszło");
       }
+    },
+
+    resetCheckboxes() {
+      this.putCheckbox = false;
+      this.deleteCheckbox = false;
+      this.registerCheckbox = false;
     },
 
   },
@@ -164,79 +179,3 @@ const appManageSkills = Vue.createApp({
 });
 
 appManageSkills.mount("#manage-skills");
-const app = Vue.createApp({
-    data() {
-      return {
-        skills : {},
-        employeeSkills : {},
-
-        selectedChangeSkill: '',
-        isPopupOpen: false,
-      };
-    },
-
-    computed: {
-        GetOptionsChangeSkillLvl() {
-            
-            const id = this.selectedChangeSkill;
-
-            for(var i = 0; i < this.employeeSkills.length;i++){
-                if(this.employeeSkills[i].skill_id == id){
-                    var lvlel = this.employeeSkills[i].level;
-                    var msg = "Current Lvl " + lvlel;
-                    return [{value: lvlel, message1: msg,}];
-                }
-            }
-            
-            return [{value: 0, message1: "New lvl",}];
-            
-        }
-    },
-  
-    methods: {
-      addValue(table, value){
-        table.push(value);
-      },
-      removeValue(table, tableLvl, index){
-        table.splice(index,1);
-        tableLvl.splice(index,1);
-      },
-      async getMySkills(){
-        try {
-          const response = await axios.get("/employee-skill");
-          
-          if(!Array.isArray(response.data)){
-            window.location.href = '/login.html';
-          } else {
-            this.employeeSkills = response.data;
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      },
-      async getSkills(){
-        try {
-          const response = await axios.get("/skills");
-          
-          if(!Array.isArray(response.data)){
-            window.location.href = '/login.html';
-          } else {
-            this.skills = response.data;
-          }
-  
-        } catch (error) {
-          console.error(error);
-        }
-      },
-    },
-    
-    created() {
-      this.getMySkills();
-      this.getSkills();
-
-    },
-  });
-  
-  app.mount("#workspace");
-
-  
