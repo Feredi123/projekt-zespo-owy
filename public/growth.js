@@ -36,7 +36,9 @@ const app = Vue.createApp({
       formLevel: "",
       formDateStart: "",
       isPopupOpenDel: false,
-      dateToday2:""    };
+      dateToday2:"",
+      userType: 0,
+    };
   },
 
   computed: {},
@@ -108,10 +110,31 @@ const app = Vue.createApp({
         console.error(error);
       }
     },
+    async getRaport() {
+      try {
+        const response = await axios.get("/growth-raport", { responseType: "blob" });
+        const file = new Blob([response.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getUserType() {
+      try {
+
+        const response = await axios.get("/employee");
+        this.userType = response.data[0].admin_rights;
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
   created() {
     this.getGrowth();
     this.getSkills();
+    this.getUserType();
   },
 });
 
