@@ -68,3 +68,11 @@ manage-skills{
   margin-left:auto;
   margin-right:auto;
 }
+
+.manage-skills content button{
+  margin-left:auto;
+  margin-right:auto; 
+  margin-top:25px;
+  width: 140px;
+  height:40px;
+}

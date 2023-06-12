@@ -226,7 +226,7 @@
             <input type="tel" id="addUserPhone" name="addUserPhone" pattern="[0-9]{9}">
           </label>
           <label>Password:
-            <button type="button" @click="togglePasswordVisibility('addUserPassword')">Show/Hide Password</button>
+            <button type="button" id="showpassword" @click="togglePasswordVisibility('addUserPassword')">Show/Hide Password</button>
             <input type="password" id="addUserPassword" name="addUserPassword">
           </label>
           <table>
@@ -249,9 +249,16 @@
               </td>
             </tr>
           </table>
-          <label>Needs to change password:
-            <input type="checkbox" id="addUserChangePassword" name="addUserChangePassword" checked>
-          </label>
+          <table>
+            <tr>
+              <td>
+                <label>Needs to change password:</label>
+              </td>
+              <td>
+                <input type="checkbox" id="addUserChangePassword" name="addUserChangePassword" checked>
+              </td>
+            </tr>
+          </table>
           <button type="submit">Create</button>
           <button class="close-button" @click="isPopupAddUserOpen = false">Close</button>
         </form> 
