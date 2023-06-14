@@ -47,6 +47,7 @@ function tableDate(dateTables, date){
 }
 
 
+
 const app = Vue.createApp({
   data() {
     return {
