@@ -7,7 +7,7 @@ function getDate(nexthop) {
   return day + "-" + month + "-" + year;
 }
 
-function getDate(nexthop , date) {
+function getDate(nexthop, date) {
   const today = new Date(date);
   today.setDate(today.getDate() + nexthop);
   let day = today.getDate();
@@ -24,7 +24,6 @@ function getStartDate() {
   return year + "-" + month + "-" + day;
 }
 
-
 function getStartDate(SampleDate) {
   const today = new Date(SampleDate);
   let day = today.getDate();
@@ -39,14 +38,11 @@ function tableDate(datesTable) {
   }
 }
 
-function tableDate(dateTables, date){
-  for(let i = 0; i < 5; i++){
+function tableDate(dateTables, date) {
+  for (let i = 0; i < 5; i++) {
     dateTables.push(getDate(i, date));
   }
-
 }
-
-
 
 const app = Vue.createApp({
   data() {
@@ -134,11 +130,14 @@ const app = Vue.createApp({
     },
 
     async getNewUser() {
-      this.dates=[""];
+      this.dates = [""];
+      this.getProcess();
       console.log(getStartDate(this.newDate));
-          tableDate(this.dates, this.newDate);
+      tableDate(this.dates, this.newDate);
       try {
-        const response = await axios.get("/dashboard/all/" + getStartDate(this.newDate));
+        const response = await axios.get(
+          "/dashboard/all/" + getStartDate(this.newDate)
+        );
         if (!Array.isArray(response.data)) {
           window.location.href = "/login.html";
         } else {
@@ -205,42 +204,46 @@ const app = Vue.createApp({
     },
 
     async getProcess() {
-      try {
-        var methodRiskTable = [0, 0, 0, 0, 0];
-        this.checkProcessTable = await axios.get(
-          "/employees/process/" + this.checkProcess
-        );
-        for (let id in this.checkProcessTable.data) {
-          if (this.checkProcessTable.data[id].average >= 3) {
-            for (let idAbsence in this.employeesData.data) {
-              if (
-                this.employeesData.data[idAbsence].employee_id ===
-                this.checkProcessTable.data[id].employee_id
-              ) {
-                for (let idEmployeeAbsence in this.employeesData.data[idAbsence]
-                  .absences) {
-                  if (
-                    !this.employeesData.data[idAbsence].absences[
-                      idEmployeeAbsence
-                    ]
-                  ) {
-                    methodRiskTable[idEmployeeAbsence] += 1;
+      if (this.checkProcess !== 0) {
+        try {
+          var methodRiskTable = [0, 0, 0, 0, 0];
+          this.checkProcessTable = await axios.get(
+            "/employees/process/" + this.checkProcess
+          );
+          for (let id in this.checkProcessTable.data) {
+            if (this.checkProcessTable.data[id].average >= 3) {
+              for (let idAbsence in this.employeesData.data) {
+                if (
+                  this.employeesData.data[idAbsence].employee_id ===
+                  this.checkProcessTable.data[id].employee_id
+                ) {
+                  for (let idEmployeeAbsence in this.employeesData.data[
+                    idAbsence
+                  ].absences) {
+                    if (
+                      !this.employeesData.data[idAbsence].absences[
+                        idEmployeeAbsence
+                      ]
+                    ) {
+                      methodRiskTable[idEmployeeAbsence] += 1;
+                    }
                   }
+                  //  console.log(this.employeesData.data[idAbsence]);
                 }
-                //  console.log(this.employeesData.data[idAbsence]);
               }
+              // console.log(this.employeesData.data);
             }
-            // console.log(this.employeesData.data);
           }
-        }
 
-        this.riskTable = methodRiskTable;
-        this.riskTable.unshift(50);
-      } catch (error) {
-        console.error(error);
+          this.riskTable = methodRiskTable;
+          this.riskTable.unshift(50);
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
   },
+
   mounted() {
     this.newDate = new Date().toISOString().slice(0, 10);
     this.getNewUser();
