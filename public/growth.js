@@ -62,12 +62,8 @@ const app = Vue.createApp({
 
     async getGrowth() {
       try {
-        const response = await axios.get("/growth-skill");
-        if (!Array.isArray(response.data)) {
-          window.location.href = "/login.html";
-        } else {
-          this.growth = response;
-        }
+        this.growth = await axios.get("/growth-skill");
+        console.log(this.growth);
       } catch (error) {
         console.error(error);
       }
@@ -89,10 +85,6 @@ const app = Vue.createApp({
       this.dateToday2 = getDate(0);
             this.dateToday2 = convertISOToDateFormat(this.dateToday2);
       try {
-        console.log(this.formSkill);
-        console.log(this.formLevel);
-        console.log(this.formDate);
-        console.log(this.dateToday2);
         const res = await axios.post("/growth-skill", {
           skills_id: this.formSkill,
           level: this.formLevel,

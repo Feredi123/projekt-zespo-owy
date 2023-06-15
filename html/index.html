@@ -181,12 +181,12 @@
 
             <div>
               <li>
-              <h2 v-for="(date,index) in dates" style="flex:1; font-size:12px;">{{date}}
+              <h2 v-for="(date,index) in dates" style="flex:1; font-size:auto; overflow: hidden; display:flex; justify-content: center;">{{date}}
                 <img src="styles/warning.png" alt="logo" v-if="riskTable[index]<2" style="height:80%;">
               </h2>
 
               </li>
-              <li v-for="(person,index) in employeesData.data" style="position: relative; background-color: lightgray;;"
+              <li v-for="(person,index) in employeesData.data" style="position: relative; background-color: lightgray;"
       >
               <div v-if="(skillsConditions.length!==0&&conditions.length!==0&&(compareObjects(person.skills, skillsConditions))&&(compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions)))||(skillsConditions.length!==0&&conditions.length===0&&(compareObjects(person.skills, skillsConditions)))||(skillsConditions.length===0&&conditions.length!==0&&((compareNames(person.first_name, conditions)||compareNames(person.second_name, conditions))))" style="display:flex; flex-direction: row; flex:1;">
               <h2 class="dropdown" style="position: unset; overflow: hidden;">{{person.first_name}} {{person.second_name}}
@@ -198,7 +198,7 @@
                                                                                 color:white;
                                         background-color: rgb(63, 162, 214);" v-for="skill in person.skills">{{skill.skill_name}}</a>
             </div>
-              <h2 style="flex:1;" v-for="date in person.absences">{{date ? "Out of work":""}}                 <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%; align-self: auto;"/></h2>
+              <h2 style="flex:1; overflow: hidden; display:flex; justify-content: center;" v-for="date in person.absences">{{date ? "Out of work":""}}                 <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%; align-self: auto;"/></h2>
             </div>
             </li>
             </div>
@@ -218,9 +218,9 @@
                                         background-color: rgb(63, 162, 214);" v-for="skill in person.skills">{{skill.skill_name}}</a>
             </div>
               </h2>
-              <h2 v-for="date in person.absences">
+              <h2 style="overflow: hidden; display:flex; justify-content: center;" v-for="date in person.absences">
                 {{date ? "Out of work":""}}
-                <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%; align-self: auto;"/>
+                <img v-if="!date" v-bind:src="compareProcess(person.employee_id, checkProcessTable.data)" alt="logo" style="height:50%;"/>
               </h2>
             </li>
           </table>

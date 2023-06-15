@@ -16,10 +16,11 @@ h2 {
   border-right-width: 1px;
   border-bottom-color: rgba(0, 0, 0, 0.12);
   border-right-color: rgba(0, 0, 0, 0.12);
-  margin:0;
-  height: 18px;
+  margin: 0px;
+  padding:5px;  
+  height: 20px;
   flex:1;
-  font-size: 15px;
+  font-size: 18px;
 }
   
 
