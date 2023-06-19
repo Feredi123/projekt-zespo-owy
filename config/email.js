@@ -11,7 +11,9 @@ const transporter = nodemailer.createTransport({
 });
    
   
-transporter.verify().then(console.log).catch(console.error);
+transporter.verify()
+  .then(() => console.log('Connected to email'))
+  .catch(console.error);
 
 
 module.exports = transporter;
