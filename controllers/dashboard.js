@@ -43,7 +43,16 @@ async function getDashboardAll(req, res) {
   try {
 
     const { date } = req.params
+    const { employee_id, admin_rights} = req.user;
+    console.log(employee_id, admin_rights)
 
+    if(admin_rights == 1) {
+      var employeeQuerry = `SELECT e.employee_id, e.first_name, e.second_name FROM employees as e WHERE e.manager_id = ${employee_id};`;//dla managera
+    }
+
+    if(admin_rights == 2) {
+      var employeeQuerry = 'SELECT e.employee_id, e.first_name, e.second_name FROM employees as e';//dla admina
+    }
 
     const queries = [
       `SELECT employees_employee_id employee_id FROM absences WHERE DATE('${date}') BETWEEN start_date AND end_date`,
@@ -67,7 +76,7 @@ async function getDashboardAll(req, res) {
       }
     }
 
-    const [employeeResults] = await pool.query('SELECT e.employee_id, e.first_name, e.second_name FROM employees as e');
+    const [employeeResults] = await pool.query(employeeQuerry);
     const [skillResults] = await pool.query('SELECT es.skills_skills_id skills_id, es.employees_employee_id employee_id, es.level, s.name skill_name FROM `employee_skill` as es INNER JOIN skills as s ON s.skills_id = es.skills_skills_id');
 
     const employees = {};

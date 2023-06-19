@@ -1,4 +1,3 @@
-
 const appAdmin = Vue.createApp({
   data() {
     return {
@@ -18,6 +17,7 @@ const appAdmin = Vue.createApp({
       skillsInSelectedProcessList: {},
       numberSkillsInSelectedProcess: 0,
       usersList: {},
+      managersList: {},
       selectedUserData: {},
       selectedViewMode: 0,
       numberSkillsInSelectedUser: 0,
@@ -59,6 +59,14 @@ const appAdmin = Vue.createApp({
         console.error(error);
       }
     },
+    async getManagers() {
+      try {
+        const response = await axios.get('/managers');
+        this.managersList = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     menuSize() {
       var menuWidth = window.innerWidth;
       if (menuWidth > 600) {
@@ -86,6 +94,10 @@ const appAdmin = Vue.createApp({
     editViewUserOnChange(event){
       const id = event.target.value;
       this.getSelectedUserData(id)
+      const editUserManagerElement = document.getElementById('editUserManager');
+      if (editUserManagerElement) {
+        editUserManagerElement.selectedIndex = "0";
+      }
     },
     async getSelectedUserData(id){
       const response = await axios.get(`/user/${id}`);
@@ -113,6 +125,15 @@ const appAdmin = Vue.createApp({
           return "None"
       }
       
+    },
+    getDisplayManagerName(input) {
+      const result = this.managersList.find(obj => obj.employee_id === input);
+
+      if (result) {
+        return result.first_name + " " + result.second_name;
+      } else {
+        return '-';
+      }
     },
     togglePasswordVisibility(inputId) {
       var passwordInput = document.getElementById(inputId);
@@ -160,6 +181,7 @@ const appAdmin = Vue.createApp({
     this.getSkills();
     this.getProcesses();
     this.getEmployees();
+    this.getManagers();
   },
 });
 
@@ -357,6 +379,7 @@ function submitAddUser(event) {
     email: event.target.elements['addUserEmail'].value,
     phone: event.target.elements['addUserPhone'].value,
     password: event.target.elements['addUserPassword'].value,
+    manager_id: event.target.elements['addUserManager'].value,
     admin_rights: selectedOption.value,
     password_change: passwordChange,
 
@@ -367,6 +390,7 @@ function submitAddUser(event) {
         alert("User " + formData.first_name + " " +formData.last_name+" created successfully");
         document.getElementById("addUserForm").reset();
         vm.getEmployees();
+        vm.getManagers();
       } else {
         alert("Form submission failed.");
       }
@@ -392,7 +416,8 @@ function submitDeleteUser(event) {
     .then(response => {
       if (response.status == '204') {
         alert("User " + userFirstName +" "+ userLastName+" successfully deleted");
-        vm.getEmployees()
+        vm.getEmployees();
+        vm.getManagers();
         
       } else {
         alert("Form submission failed.");
@@ -425,6 +450,7 @@ function submitEditUser(event) {
       last_name: event.target.elements['editUserLastName'].value,
       email: event.target.elements['editUserEmail'].value,
       phone: event.target.elements['editUserPhone'].value,
+      manager_id: event.target.elements['editUserManager'].value,
       admin_right: selectedOption.value,
       change_password: passwordChange,
     };
@@ -436,6 +462,7 @@ function submitEditUser(event) {
         if (response.status == '200') {
           alert("User " + formData.first_name + " " + formData.last_name+" modified successfully");
           vm.getEmployees();
+          vm.getManagers();
         } else {
           alert("Form submission failed.");
         }
@@ -472,6 +499,7 @@ function submitEditUser(event) {
         if (response.status == '200') {
           alert("User " + userName + " " + secondName +" modified successfully");
           vm.getEmployees();
+          vm.getManagers();
         } else {
           alert("Form submission failed.");
         }

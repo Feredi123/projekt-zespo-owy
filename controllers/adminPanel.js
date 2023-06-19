@@ -133,8 +133,9 @@ async function postUser  (req, res) {
       password = hashedPassword;
       admin_rights =  req.body.admin_rights;
       change_password =  req.body.password_change;
+      manager_id = req.body.manager_id;
 
-    await pool.query('INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, change_password) VALUES (NULL, ?, ?, ?, ?, ?, NULL, ?, ?);',[first_name,last_name,email,phone,password,admin_rights,change_password]);
+    await pool.query('INSERT INTO employees (employee_id, first_name, second_name, email, phone, password, photo, admin_rights, manager_id, change_password) VALUES (NULL, ?, ?, ?, ?, ?, NULL, ?, ?, ?);',[first_name,last_name,email,phone,password,admin_rights,manager_id,change_password]);
     
     res.status(201).json();
     
@@ -175,6 +176,19 @@ async function getUser(req, res) {
       };
   
       res.status(200).json(response);
+  
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+async function getManagers(req, res) {
+  try {
+
+      const [managers] = await pool.query('SELECT employee_id , first_name, second_name FROM employees WHERE admin_rights = 1;');
+      
+      res.status(200).json(managers);
   
     } catch (err) {
       console.error(err);
@@ -232,7 +246,7 @@ async function putUser(req, res) {
         })
       }
       else{
-        await pool.query('UPDATE employees SET first_name = ?, second_name = ?, email = ?, phone = ?, admin_rights = ?, change_password = ? WHERE employee_id = ?;',[first_name, last_name, email, phone, admin_right, change_password, id]);
+        await pool.query('UPDATE employees SET first_name = ?, second_name = ?, email = ?, phone = ?, admin_rights = ?, manager_id = ?, change_password = ? WHERE employee_id = ?;',[first_name, last_name, email, phone, admin_right, manager_id, change_password, id]);
         res.status(200).json();
       }
 
@@ -275,6 +289,7 @@ module.exports = {
     putUser,
 
     deleteAbsence,
+    getManagers,
 
 
 }

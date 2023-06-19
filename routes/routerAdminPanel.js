@@ -2,7 +2,7 @@ const express = require('express')
 const routerAdminPanel = express.Router()
 const { checkAuthenticated, checkIfAdmin } = require('../middlewares')
 
-const { postSkill, putSkill, getSkillDependency, deleteSkill, deleteProcess, postProcess, putProcess, postUser, getUser, deleteUser, putUser, deleteAbsence,} = require('../controllers/adminPanel')
+const { postSkill, putSkill, getSkillDependency, deleteSkill, deleteProcess, postProcess, putProcess, postUser, getUser, deleteUser, putUser, deleteAbsence, getManagers,} = require('../controllers/adminPanel')
 
 routerAdminPanel.route('/skills').post(checkIfAdmin, postSkill) // dodaje skill w request skill_name
 routerAdminPanel.route('/skills/:id').put(checkIfAdmin, putSkill) // :id - id atkualizowanego skilla  Aktualizuje skill w request skill_name
@@ -16,6 +16,7 @@ routerAdminPanel.route('/process/:id').put(checkIfAdmin, putProcess) // dodaje p
 
 routerAdminPanel.route('/register').post(checkIfAdmin, postUser) //tworzy użytkownika w register.html jest formularz
 routerAdminPanel.route('/user/:id').get(checkIfAdmin, getUser) // zwraca wszystkie dane użytkownika o id :id
+routerAdminPanel.route('/managers').get(checkIfAdmin, getManagers) // zwraca managerów id imie nazwisko
 routerAdminPanel.route('/user/:id').delete(checkIfAdmin, deleteUser) // usuwa użytkownika o id :id
 routerAdminPanel.route('/user/:id').put(checkIfAdmin, putUser) // akutalizuje dane użytkownika o id :id w request np. first_name : 'Jan',
 /*last_name : 'Kow',

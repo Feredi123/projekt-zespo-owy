@@ -223,6 +223,12 @@
             <button type="button" id="showpassword" @click="togglePasswordVisibility('addUserPassword')">Show/Hide Password</button>
             <input type="password" id="addUserPassword" name="addUserPassword">
           </label>
+          <label>Manager:
+            <select name="addUserManager" id="addUserManager">
+              <option value="" disabled selected>Select Manager</option>
+              <option v-for="manager in managersList" :value="manager.employee_id"> {{manager.first_name}} {{manager.second_name}} </option>
+            </select>
+          </label>
           <table>
             <tr>
               <td>Admin rights:</td>
@@ -287,6 +293,7 @@
               <tr><td>Second name:</td><td>{{user.second_name}}</td></tr>
               <tr><td>e-mail:</td><td>{{user.email}}</td></tr>
               <tr><td>phone:</td><td>{{user.phone}}</td></tr>
+              <tr><td>manager:</td><td>{{getDisplayManagerName(user.manager_id)}}</td></tr>
               <tr><td>change password:</td><td>{{getDisplayTFValue(user.change_password)}}</td></tr>
               <tr><td>admin rights:</td><td>{{getDisplayAdminRightsValue(user.admin_rights)}}</td></tr>
             </table>
@@ -327,6 +334,12 @@
                 <label>Last name:<input type="text" id="editUserLastName" name="editUserLastName" :value="user.second_name" required></label>
                 <label>Email:<input type="email" id="editUserEmail" name="editUserEmail" :value="user.email" required></label>
                 <label>Phone:<input type="tel" id="editUserPhone" name="editUserPhone" pattern="[0-9]{9}" :value="user.phone"></label>
+                <label>Manager:
+                  <select name="editUserManager" id="editUserManager">
+                    <option :value="user.manager_id" selected>current manager: {{getDisplayManagerName(user.manager_id)}}</option>
+                    <option v-for="manager in managersList" :value="manager.employee_id"> {{manager.first_name}} {{manager.second_name}} </option>
+                  </select>
+                </label>
                 <label>change password:<input type="checkbox" id="editUserChangePassword" name="editUserChangePassword" :value="user.change_password" :checked="getDisplayTFValue(user.change_password)"></label>
                 <div>
                   <table>
@@ -336,7 +349,7 @@
                       </td>
                       <td>
                         <label>None
-                          <input type="radio" id="editUserHaveAdmin1" name="editUserHaveAdmin" value="0" v-model="user.admin_rights">
+                          <input type="radio" id="editUserHaveAdmin1" name="editUserHaveAdmin" value="0" v-model="user.admin_rights" required>
                         </label>
                       </td>
                       <td>
