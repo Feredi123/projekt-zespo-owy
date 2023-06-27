@@ -26,6 +26,22 @@
     <script
       src="axios.min.js"
     ></script>
+    <script>
+      var countDownDate = new Date().getTime() + 900002;
+      var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+        }, 1000);
+    </script>
   </head>
 
   <body>
@@ -53,22 +69,6 @@
                    <div class="session">
             Session Time:
             <p id="demo">
-            <script>
-              var countDownDate = new Date().getTime() + 900002;
-              var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countDownDate - now;
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
-                if (distance < 0) {
-                  clearInterval(x);
-                  document.getElementById("demo").innerHTML = "EXPIRED";
-                }
-                }, 1000);
-            </script>
             </p> 
             <img src="styles/refresh.png" alt="refresh" class="refresh" onclick="window.location.reload();">
             </div>
@@ -92,13 +92,13 @@
           </div>
         </div>
 
-        <div class="workspace" id="growth">
+        <div class="workspace" id="vm">
           <div class="growth">
-            <left-side>
+            <div id="left-side">
               <button v-on:click="isPopupOpen = true">Schedule Growth</button>
               <div class="popup" v-if="isPopupOpen">
                 <p class="popup-title">Schedule Growth</p>
-                                  <select name="skills" id="skills" v-model="formSkill">
+                  <select name="skills" id="skills" v-model="formSkill" required>
                     <option value="" disabled selected>Skill</option>
                     <option
                       v-for="skill in skills.data"
@@ -107,7 +107,7 @@
                       {{skill.name}}
                     </option>
                   </select>
-                                    <select name="level" id="level"  v-model="formLevel"required>
+                  <select name="level" id="level"  v-model="formLevel"required>
                     <option value="" disabled selected>Level</option>
                     <option
                       v-for="level in levels"
@@ -133,39 +133,36 @@
               </div>
               <button v-on:click="isPopupOpenDel= true">Delete Growth</button>
                <div class="popup" v-if="isPopupOpenDel">
-                <p class="popup-title">del</p>
+                <p class="popup-title">Delete growth</p>
                                   <select name="growth" id="growth" v-model="delData">
                     <option value="" disabled selected>Growth</option>
                     <option
-                      v-for="grow in growth.data"
+                      v-for="grow in growth.data" :value="grow.growth_id"
                     >
-                      {{grow.growth_id}}
+                      {{grow.skill_name}}  {{grow.level}}
                     </option>
                   </select>
-                  <button v-on:click="deleteData()" @click="isPopupOpenDel= false">Report</button>
+                  <button v-on:click="deleteData()" @click="isPopupOpenDel= false">Delete</button>
                   <button @click="isPopupOpenDel= false">
                     Close
                   </button>
               </div>
               <button v-if="userType > 0" v-on:click="getRaport()">Generate Raport</button>
-            </left-side>
-            <right-side>
-                            <div class="bottom-bar">
+            </div>
+            <div id="right-side">
+              <div class="bottom-bar">
                 <div v-for="q in qInTable">{{q}}</div>
               </div>
               <div
                 v-for="(object, index) in growth.data"
               >
                 <div
-
                   class="bars"
-                  v-bind:style="barSize(index)"
-                >{{object.skill_name}}
-                  {{object.level}}
+                  :style="barSize(index)"
+                >{{object.skill_name}} {{object.level}}
                 </div>
               </div>
-
-            </right-side>
+            </div>
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ async function postGrowthSkill(req, res) {
         const end_date = req.body.end_date;
         await pool.query('INSERT INTO `growth` (`growth_id`, `employees_employee_id`, `skills_skill_id`, `level`, `start_date`, `end_date`) VALUES (NULL, ?, ?, ?, ?, ?);',[employee_id,skill_id,level,start_date,end_date]);
     
-        res.status(201);
+        res.status(201).json();
     
       } catch (err) {
         console.error(err);
@@ -32,7 +32,7 @@ async function postGrowthSkill(req, res) {
         
         await pool.query('UPDATE growth SET skills_skill_id = ?, level = ?, start_date = ?, end_date = ? WHERE growth_id = ? AND employees_employee_id = ?;',[skill_id,level,start_date,end_date,id,employee_id]);
     
-        res.status(200);
+        res.status(204).json();
     
       } catch (err) {
         console.error(err);
@@ -46,7 +46,7 @@ async function postGrowthSkill(req, res) {
         const { id } = req.params;
         await pool.query('DELETE FROM growth WHERE employees_employee_id = ? AND growth_id = ?;',[employee_id,id]);
     
-        res.status(204);
+        res.status(204).json();
     
       } catch (err) {
         console.error(err);

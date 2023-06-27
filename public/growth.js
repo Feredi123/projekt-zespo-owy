@@ -1,4 +1,3 @@
-
 function convertISOToDateFormat(isoDate) {
   const dateObj = new Date(isoDate);
   const year = dateObj.getFullYear();
@@ -46,12 +45,12 @@ const app = Vue.createApp({
   methods: {
     barSize(index) {
       let size;
-      this.dateToday = getDate(0);
+      let dateToday = getDate(0);
       let timestamp = Date.parse(this.growth.data[index].end_date);
       let dateObject = new Date(timestamp);
-      this.dateTable = getDate(365);
-      let lower = timeDifference(this.dateToday, dateObject);
-      let bigger = timeDifference(this.dateToday, this.dateTable);
+      let dateTable = getDate(365);
+      let lower = timeDifference(dateToday, dateObject);
+      let bigger = timeDifference(dateToday, dateTable);
       size = (lower / bigger) * 100;
       if (size <= 100) {
         return { width: size + "%" };
@@ -63,7 +62,6 @@ const app = Vue.createApp({
     async getGrowth() {
       try {
         this.growth = await axios.get("/growth-skill");
-        console.log(this.growth);
       } catch (error) {
         console.error(error);
       }
@@ -71,11 +69,8 @@ const app = Vue.createApp({
     async getSkills() {
       try {
         const response = await axios.get("/skills");
-        if (!Array.isArray(response.data)) {
-          window.location.href = "/login.html";
-        } else {
-          this.skills = response;
-        }
+
+        this.skills = response;
       } catch (error) {
         console.error(error);
       }
@@ -84,20 +79,23 @@ const app = Vue.createApp({
       convertISOToDateFormat(this.formDate);
       this.dateToday2 = getDate(0);
             this.dateToday2 = convertISOToDateFormat(this.dateToday2);
+
       try {
-        const res = await axios.post("/growth-skill", {
+        await axios.post("/growth-skill", {
           skills_id: this.formSkill,
           level: this.formLevel,
           start_date: this.dateToday2,
           end_date: this.formDate,
-        });
+        })
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }
     },
     async deleteData() {
       try {
-        const res = await axios.delete("/growth-skill/" + this.delData);
+        await axios.delete("/growth-skill/" + this.delData);
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }
@@ -130,4 +128,4 @@ const app = Vue.createApp({
   },
 });
 
-app.mount("#growth");
+app.mount("#vm");
