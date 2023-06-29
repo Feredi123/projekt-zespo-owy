@@ -1,5 +1,5 @@
 zainstalować trzeba node i xampp
-w folderze database jest SQL tworzący bazę danych i wypełnia ją 12 pracownikami
+w folderze database jest SQL tworzący bazę danych i wypełnia testowtmi pracownikami
 
 otworzyć konsolę w głównym folderze projektu i
 npm install - żeby zainstalować wymaganie biblioteki
